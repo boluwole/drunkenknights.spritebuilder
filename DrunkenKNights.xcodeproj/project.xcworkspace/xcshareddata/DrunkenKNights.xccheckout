@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>DF44C944-9CAA-4F9E-AF20-62CF3560BD0D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>DrunkenKNights</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>E3A34CD3-D8EA-41CC-AA2F-C0A84F625FDB</key>
+		<string>http://triforce.usc.edu/git/scm/dh/dave-and-huey.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>DrunkenKNights.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>E3A34CD3-D8EA-41CC-AA2F-C0A84F625FDB</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>http://triforce.usc.edu/git/scm/dh/dave-and-huey.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>E3A34CD3-D8EA-41CC-AA2F-C0A84F625FDB</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E3A34CD3-D8EA-41CC-AA2F-C0A84F625FDB</string>
+			<key>IDESourceControlWCCName</key>
+			<string>DrunkenKNights.spritebuilder</string>
+		</dict>
+	</array>
+</dict>
+</plist>
