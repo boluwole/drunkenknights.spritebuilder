@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>DF44C944-9CAA-4F9E-AF20-62CF3560BD0D</string>
+	<string>51B4F4FA-EA9C-4469-9AC0-E0C2A40A4777</string>
 	<key>IDESourceControlProjectName</key>
 	<string>DrunkenKNights</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>E3A34CD3-D8EA-41CC-AA2F-C0A84F625FDB</key>
-		<string>http://triforce.usc.edu/git/scm/dh/dave-and-huey.git</string>
+		<key>6A1C0E90-635C-4E4F-AF90-EDD5293BBAD5</key>
+		<string>http://triforce.usc.edu/git/scm/dh/drunkenknights.spritebuilder.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>DrunkenKNights.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>E3A34CD3-D8EA-41CC-AA2F-C0A84F625FDB</key>
+		<key>6A1C0E90-635C-4E4F-AF90-EDD5293BBAD5</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>http://triforce.usc.edu/git/scm/dh/dave-and-huey.git</string>
+	<string>http://triforce.usc.edu/git/scm/dh/drunkenknights.spritebuilder.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>E3A34CD3-D8EA-41CC-AA2F-C0A84F625FDB</string>
+	<string>6A1C0E90-635C-4E4F-AF90-EDD5293BBAD5</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>E3A34CD3-D8EA-41CC-AA2F-C0A84F625FDB</string>
+			<string>6A1C0E90-635C-4E4F-AF90-EDD5293BBAD5</string>
 			<key>IDESourceControlWCCName</key>
-			<string>DrunkenKNights.spritebuilder</string>
+			<string>drunkenknights.spritebuilder</string>
 		</dict>
 	</array>
 </dict>

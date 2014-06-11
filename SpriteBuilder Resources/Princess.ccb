@@ -41,7 +41,7 @@
 			<key>bodyShape</key>
 			<integer>1</integer>
 			<key>cornerRadius</key>
-			<real>78.2890625</real>
+			<real>72.125</real>
 			<key>density</key>
 			<real>1</real>
 			<key>dynamic</key>
@@ -53,8 +53,8 @@
 			<key>points</key>
 			<array>
 				<array>
-					<real>55.171875</real>
-					<real>63.7734375</real>
+					<real>57.24609375</real>
+					<real>60.238265991210938</real>
 				</array>
 			</array>
 		</dict>
@@ -89,8 +89,8 @@
 				<string>Point</string>
 				<key>value</key>
 				<array>
-					<real>0.5</real>
-					<real>0.5</real>
+					<real>0.417144775390625</real>
+					<real>0.3078765869140625</real>
 				</array>
 			</dict>
 			<dict>

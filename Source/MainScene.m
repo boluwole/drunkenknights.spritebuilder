@@ -24,19 +24,33 @@
 #define PLAYER_REVIVE_TIME (3.0f)
 #define STATUE_REVIVE_TIME (2.0f)
 
+//items
+#define ITEM_DROP_PERIOD (-5)
+
 MainScene{
+    enum ItemType {
+        BARREL = 0,
+        VOMIT = 1,
+        BAIT = 2,
+        POWERUP = 3,
+    };
+    
     CCPhysicsNode *_physicsNode;
     CCPhysicsNode *_backPhysicsNode;
     CCSprite *_dave;
     CCSprite *_huey;
     CCSprite *_princess;
     CCSprite *_stage;
+    CCSprite *_barrel;
+    CCSprite *_vomit;
+    
     
     BOOL validMove;
     
     //drag vector for movement
     CGPoint start;
     CGPoint end;
+    int facingDirection;
     
     //starting locations
     CGPoint daveStart;
@@ -57,10 +71,20 @@ MainScene{
     //ticker for revive
     int reviveCounter[3];
     
+    //game timer
+    NSDate *startTime;
+    NSTimeInterval timeElapsed;
+    
+    //for items
+    BOOL itemHasDroppedForThisPeriod;
 }
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
+    
+    //start game timer
+    startTime = [NSDate date];
+    
     // tell this scene to accept touches
     self.userInteractionEnabled = TRUE;
     
@@ -75,9 +99,12 @@ MainScene{
     daveStart = _dave.position;
     hueyStart = _huey.position;
     princessStart = _princess.position;
-    //daveZ = _dave.zOrder;
-    //hueyZ = _huey.zOrder;
-    //princessZ = _princess.zOrder;
+    
+    _dave.zOrder = _stage.zOrder + 1;
+    _huey.zOrder = _stage.zOrder + 1;
+    _princess.zOrder = _stage.zOrder + 2;
+    
+    facingDirection = 1;
     
     //intialize stage image for falloff detection
     CCRenderTexture *renderer =
@@ -145,6 +172,23 @@ MainScene{
 
 - (void)update:(CCTime)delta {
     
+
+    
+    //items
+    timeElapsed = [startTime timeIntervalSinceNow];
+    
+    if((int)timeElapsed == ITEM_DROP_PERIOD) {
+        startTime = [NSDate date];
+        if(itemHasDroppedForThisPeriod == NO) {
+          //  CCLOG(@"DROP IT!\n");
+            itemHasDroppedForThisPeriod = YES;
+            [self dropItem];
+        }
+    }
+    else {
+        itemHasDroppedForThisPeriod = NO;
+    }
+    
     //detect falloff
     if([self detectFallOff:_dave]) {
         if(falling[DAVE] == NO) [self dropPlayer:_dave :DAVE];
@@ -156,23 +200,90 @@ MainScene{
         if(falling[PRINCESS] == NO) [self dropPlayer:_princess :PRINCESS];
     }
     
-    if(_dave.physicsBody.velocity.x < 0) {
-        if(_dave.scaleX > 0) _dave.scaleX *= -1;
+    //facing direction
+//    if(_dave.physicsBody.velocity.x < 0) {
+//        if(_dave.scaleX > 0) _dave.scaleX *= -1;
+//    }
+//    else {
+//        if(_dave.scaleX < 0) _dave.scaleX *= -1;
+//    }
+    if(facingDirection > 0) {
+        //if(_dave.scaleX < 0) _dave.scaleX *= -1;
+        if(_dave.flipX == YES) _dave.flipX = NO;
     }
     else {
-        if(_dave.scaleX < 0) _dave.scaleX *= -1;
+        //if(_dave.scaleX > 0) _dave.scaleX *= -1;
+        if(_dave.flipX == NO) _dave.flipX = YES;
     }
+
     
-    //damping
+    //damping && zorder check against princess
     if(falling[DAVE] == NO) {
         if(_dave.physicsBody.velocity.x != 0 || _dave.physicsBody.velocity.y != 0) _dave.physicsBody.velocity = ccpMult(_dave.physicsBody.velocity, DAMPING);
+        
+        
+        if(_dave.position.y <= _princess.position.y) _dave.zOrder = _princess.zOrder+1;
+        else _dave.zOrder = _princess.zOrder-1;
     }
     if(falling[HUEY] == NO) {
         if(_huey.physicsBody.velocity.x != 0 || _huey.physicsBody.velocity.y != 0) _huey.physicsBody.velocity = ccpMult(_huey.physicsBody.velocity, DAMPING);
+        
+        if(_huey.position.y <= _princess.position.y) _huey.zOrder = _princess.zOrder+1;
+        else _huey.zOrder = _princess.zOrder-1;
+
     }
     if(falling[PRINCESS] == NO) {
         if(_princess.physicsBody.velocity.x != 0 || _princess.physicsBody.velocity.y != 0) _princess.physicsBody.velocity = ccpMult(_princess.physicsBody.velocity, DAMPING);
     }
+    
+}
+
+
+//items
+   CCNode* currItem;
+- (void)dropItem {
+    int randomNum = rand() % 2;
+    switch(randomNum) {
+        case BARREL:
+            //CCLOG(@"\nBarrel Selected");
+            currItem = [CCBReader load:@"Barrel"];
+            break;
+            
+            
+        case VOMIT:
+           // CCLOG(@"\nVomit Selected");
+            currItem = [CCBReader load:@"Vomit"];
+            break;
+    }
+    currItem.scale*=0.2;
+    [self itemDisplay];
+   // CCLOG(@"\nDave's Position: %f , %f ",_dave.position.x, _dave.position.y);
+}
+
+-(void)itemDisplay{
+    
+ //   CCLOG(@"\nReached this method");
+    
+    [_physicsNode addChild:currItem];
+    
+    CGPoint MidPoint, vToMidPoint, MidPointPerp;
+    
+    CCLOG(@"\nDave: %f, %f",_dave.position.x,_dave.position.y);
+    CCLOG(@"\nHuey: %f, %f",_huey.position.x,_huey.position.y);
+    
+   // MidPoint = ccpAdd(_dave.position, _huey.position);
+    MidPoint = ccpMidpoint(_dave.position, _huey.position);
+    vToMidPoint = ccpSub(MidPoint,_dave.position);
+    MidPointPerp = (rand()%2 == 0) ? ccp(-vToMidPoint.y, vToMidPoint.x) : ccp(vToMidPoint.y, -vToMidPoint.x);
+    MidPointPerp = ccpNormalize(MidPointPerp);
+    currItem.position = ccpAdd(MidPoint, ccpMult(MidPointPerp, 50+(rand()%100)));
+    
+    
+    //currItem.position=ccp(MidPoint.x,MidPoint.y);
+    CCLOG(@"\nItem: %f, %f",MidPoint.x,MidPoint.y);
+
+    
+    CCLOG(@"\nCurr Item: %@",currItem);
     
 }
 
@@ -202,6 +313,8 @@ MainScene{
     }
 }
 
+
+
 - (void)reviveDave:(CCTime)delta {
     
     reviveCounter[DAVE]++;
@@ -210,7 +323,9 @@ MainScene{
     {
         falling[DAVE] = NO;
         reviveCounter[DAVE] = 0;
+        facingDirection = 1;
         _dave.zOrder = _stage.zOrder + 1;
+        _huey.zOrder = _stage.zOrder + 1;
         _princess.zOrder = _dave.zOrder + 1;
         _dave.position = daveStart;
         _dave.physicsBody.collisionMask = NULL;
@@ -227,7 +342,9 @@ MainScene{
     {
         falling[HUEY] = NO;
         reviveCounter[HUEY] = 0;
+        facingDirection = 1;
         _huey.zOrder = _stage.zOrder + 1;
+        _dave.zOrder = _stage.zOrder + 1;
         _princess.zOrder = _huey.zOrder + 1;
         _huey.position = hueyStart;
         _huey.physicsBody.collisionMask = NULL;
@@ -244,7 +361,7 @@ MainScene{
     {
         falling[PRINCESS] = NO;
         reviveCounter[PRINCESS] = 0;
-        _princess.zOrder = _stage.zOrder + 1;
+        _princess.zOrder = _stage.zOrder + 2;
         _princess.position = princessStart;
         _princess.physicsBody.collisionMask = NULL;
         _princess.physicsBody.velocity = ccp(0,0);
@@ -260,6 +377,10 @@ MainScene{
     if (validMove){
         CGPoint touchLocation = [touch locationInNode:self];
         end = touchLocation;
+        
+        //update facing direction
+        if((start.x - end.x) < 0) facingDirection = -1;
+        else facingDirection = 1;
     }
 }
 

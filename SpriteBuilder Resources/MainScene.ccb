@@ -383,6 +383,8 @@
 								<string>Dave.ccb</string>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -474,8 +476,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>291</real>
-									<real>201</real>
+									<real>279</real>
+									<real>193</real>
 									<integer>0</integer>
 									<integer>0</integer>
 									<integer>0</integer>
@@ -503,8 +505,6 @@
 								<string>Princess.ccb</string>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>
