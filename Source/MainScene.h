@@ -10,4 +10,6 @@
 
 @interface MainScene : CCNode <CCPhysicsCollisionDelegate>
 
+//@property (nonatomic, retain) int time;
+
 @end

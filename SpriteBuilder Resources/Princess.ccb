@@ -37,11 +37,11 @@
 			<key>affectedByGravity</key>
 			<false/>
 			<key>allowsRotation</key>
-			<true/>
+			<false/>
 			<key>bodyShape</key>
 			<integer>1</integer>
 			<key>cornerRadius</key>
-			<real>132</real>
+			<real>78.2890625</real>
 			<key>density</key>
 			<real>1</real>
 			<key>dynamic</key>
@@ -53,8 +53,8 @@
 			<key>points</key>
 			<array>
 				<array>
-					<real>48.04296875</real>
-					<real>127.81640625</real>
+					<real>55.171875</real>
+					<real>63.7734375</real>
 				</array>
 			</array>
 		</dict>
