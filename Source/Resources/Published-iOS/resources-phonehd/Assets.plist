@@ -20,7 +20,7 @@
 		<key>Assets/Dave_ressurect.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1139, 1}, {256, 256}}</string>
+			<string>{{515, 1781}, {256, 256}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -46,7 +46,7 @@
 		<key>Assets/Huey_ressurect.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{515, 1781}, {256, 256}}</string>
+			<string>{{1139, 1}, {256, 256}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -55,6 +55,32 @@
 			<string>{{0, 0}, {256, 256}}</string>
 			<key>sourceSize</key>
 			<string>{256, 256}</string>
+		</dict>
+		<key>Assets/arrowBody.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1913, 1}, {50, 50}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {50, 50}}</string>
+			<key>sourceSize</key>
+			<string>{50, 50}</string>
+		</dict>
+		<key>Assets/arrowHead.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1965, 1}, {50, 50}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {50, 50}}</string>
+			<key>sourceSize</key>
+			<string>{50, 50}</string>
 		</dict>
 		<key>Assets/bg.png</key>
 		<dict>

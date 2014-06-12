@@ -20,12 +20,16 @@
 #define MOVE_SPEED (20)
 #define VECTOR_CAP (150)
 #define DAMPING (0.95)
+#define DAMPING_STATUE (0.8)
 
 #define PLAYER_REVIVE_TIME (3.0f)
 #define STATUE_REVIVE_TIME (2.0f)
 
 //items
 #define ITEM_DROP_PERIOD (-5)
+
+#define ARROW_DOTS 10
+
 
 MainScene{
     enum ItemType {
@@ -43,6 +47,8 @@ MainScene{
     CCSprite *_stage;
     CCSprite *_barrel;
     CCSprite *_vomit;
+    
+    CCNode *arrowNode;
     
     
     BOOL validMove;
@@ -118,32 +124,42 @@ MainScene{
     
     uiimage = [renderer getUIImage];
     
-
+    //UI arrow indicator
+    arrowNode = [[CCNode alloc] init];
+    arrowNode.visible = NO;
+    CCNode *arrow;
+    for(int i = 0; i < ARROW_DOTS -1; i++) {
+        arrow = [CCBReader load:@"ArrowBody"];
+        [arrowNode addChild:arrow];
+        arrow.scale *= 0.3;
+        arrow.opacity *= 0.5;
+    }
     
+    
+    arrow = [CCBReader load:@"ArrowHead"];
+    [arrowNode addChild:arrow];
+    //arrow.scale *= 0.7;
+    arrow.opacity *= 0.5;
+
+    [self addChild:arrowNode];
+    
+    //always damp
+    [self schedule:@selector(damping:) interval:0.02];
+
 }
 
-// called on every touch in this scene
-- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
-    
-    CGPoint touchLocation = [touch locationInNode:self];
-    
-    //CCLOG(@"touch began");
-    
-    // start catapult dragging when a touch inside of the catapult arm occurs
-    if (CGRectContainsPoint([_dave boundingBox], touchLocation))
-        //&& abs(_dave.physicsBody.velocity.x) < 0.5 && abs(_dave.physicsBody.velocity.y) < 0.5)
-    {
-        validMove = YES;
-        
-        start = touchLocation;
-        end = touchLocation;
-        
+- (void)damping:(CCTime)delta {
+    //damping && zorder check against princess
+    if(falling[DAVE] == NO) {
+        if(_dave.physicsBody.velocity.x != 0 || _dave.physicsBody.velocity.y != 0) _dave.physicsBody.velocity = ccpMult(_dave.physicsBody.velocity, DAMPING);
     }
-    else
-    {
-        validMove = NO;
+    if(falling[HUEY] == NO) {
+        if(_huey.physicsBody.velocity.x != 0 || _huey.physicsBody.velocity.y != 0) _huey.physicsBody.velocity = ccpMult(_huey.physicsBody.velocity, DAMPING);
     }
- 
+    if(falling[PRINCESS] == NO) {
+        if(_princess.physicsBody.velocity.x != 0 || _princess.physicsBody.velocity.y != 0) _princess.physicsBody.velocity = ccpMult(_princess.physicsBody.velocity, DAMPING_STATUE);
+    }
+
 }
 
 
@@ -219,21 +235,21 @@ MainScene{
     
     //damping && zorder check against princess
     if(falling[DAVE] == NO) {
-        if(_dave.physicsBody.velocity.x != 0 || _dave.physicsBody.velocity.y != 0) _dave.physicsBody.velocity = ccpMult(_dave.physicsBody.velocity, DAMPING);
+        //if(_dave.physicsBody.velocity.x != 0 || _dave.physicsBody.velocity.y != 0) _dave.physicsBody.velocity = ccpMult(_dave.physicsBody.velocity, DAMPING);
         
         
         if(_dave.position.y <= _princess.position.y) _dave.zOrder = _princess.zOrder+1;
         else _dave.zOrder = _princess.zOrder-1;
     }
     if(falling[HUEY] == NO) {
-        if(_huey.physicsBody.velocity.x != 0 || _huey.physicsBody.velocity.y != 0) _huey.physicsBody.velocity = ccpMult(_huey.physicsBody.velocity, DAMPING);
+        //if(_huey.physicsBody.velocity.x != 0 || _huey.physicsBody.velocity.y != 0) _huey.physicsBody.velocity = ccpMult(_huey.physicsBody.velocity, DAMPING);
         
         if(_huey.position.y <= _princess.position.y) _huey.zOrder = _princess.zOrder+1;
         else _huey.zOrder = _princess.zOrder-1;
 
     }
     if(falling[PRINCESS] == NO) {
-        if(_princess.physicsBody.velocity.x != 0 || _princess.physicsBody.velocity.y != 0) _princess.physicsBody.velocity = ccpMult(_princess.physicsBody.velocity, DAMPING);
+       // if(_princess.physicsBody.velocity.x != 0 || _princess.physicsBody.velocity.y != 0) _princess.physicsBody.velocity = ccpMult(_princess.physicsBody.velocity, DAMPING_STATUE);
     }
     
 }
@@ -256,11 +272,13 @@ MainScene{
             break;
     }
     currItem.scale*=0.2;
-    [self itemDisplay];
-   // CCLOG(@"\nDave's Position: %f , %f ",_dave.position.x, _dave.position.y);
+    [self schedule:@selector(itemDropAnim:) interval:1.0f];
+    currItem.position = [self itemDisplay];
+   
+    // CCLOG(@"\nDave's Position: %f , %f ",_dave.position.x, _dave.position.y);
 }
 
--(void)itemDisplay{
+-(CGPoint)itemDisplay{
     
  //   CCLOG(@"\nReached this method");
     
@@ -276,14 +294,18 @@ MainScene{
     vToMidPoint = ccpSub(MidPoint,_dave.position);
     MidPointPerp = (rand()%2 == 0) ? ccp(-vToMidPoint.y, vToMidPoint.x) : ccp(vToMidPoint.y, -vToMidPoint.x);
     MidPointPerp = ccpNormalize(MidPointPerp);
-    currItem.position = ccpAdd(MidPoint, ccpMult(MidPointPerp, 50+(rand()%100)));
-    
+    //currItem.position = ccpAdd(MidPoint, ccpMult(MidPointPerp, 50+(rand()%100)));
+    return ccpAdd(MidPoint, ccpMult(MidPointPerp, 50+(rand()%100)));
     
     //currItem.position=ccp(MidPoint.x,MidPoint.y);
-    CCLOG(@"\nItem: %f, %f",MidPoint.x,MidPoint.y);
+    //CCLOG(@"\nItem: %f, %f",MidPoint.x,MidPoint.y);
 
     
-    CCLOG(@"\nCurr Item: %@",currItem);
+    //CCLOG(@"\nCurr Item: %@",currItem);
+    
+}
+
+- (void)itemDropAnim:(CCTime)delta {
     
 }
 
@@ -370,8 +392,42 @@ MainScene{
     
 }
 
+//TOUCH STUFF
+
+// called on every touch in this scene
+- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
+    
+    CGPoint touchLocation = [touch locationInNode:self];
+    
+    //CCLOG(@"touch began");
+    
+    // start catapult dragging when a touch inside of the catapult arm occurs
+    if (CGRectContainsPoint([_dave boundingBox], touchLocation))
+        //&& abs(_dave.physicsBody.velocity.x) < 0.5 && abs(_dave.physicsBody.velocity.y) < 0.5)
+    {
+        validMove = YES;
+        
+        _dave.physicsBody.velocity = ccp(0,0);
+        
+        start = touchLocation;
+        end = touchLocation;
+        
+        //arrowNode.visible = YES;
+        arrowNode.position = start;
+        
+    }
+    else
+    {
+        validMove = NO;
+    }
+    
+    
+    
+}
+
 - (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
+    
     //CCLOG(@"touch moved");
     // whenever touches move, update the position of the mouseJointNode to the touch position
     if (validMove){
@@ -381,6 +437,20 @@ MainScene{
         //update facing direction
         if((start.x - end.x) < 0) facingDirection = -1;
         else facingDirection = 1;
+        
+        //place arrow
+        
+        CGPoint arrowDirection = ccpSub(end, start);
+        float len = ccpLength(arrowDirection) / ARROW_DOTS;
+        arrowDirection = ccpMult(ccpNormalize(arrowDirection),-1);
+        
+        NSArray *arrowChildren = arrowNode.children;
+        for(int i = 0; i < arrowChildren.count; i++) {
+            CCNode* x = arrowChildren[i];
+            x.position = ccpMult(arrowDirection, len*(i+1));
+        }
+        
+        arrowNode.visible = YES;
     }
 }
 
@@ -394,6 +464,7 @@ MainScene{
     }
     
     validMove = NO;
+    arrowNode.visible = NO;
 }
 
 -(void) touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
