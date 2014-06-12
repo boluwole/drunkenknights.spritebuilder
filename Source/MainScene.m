@@ -19,7 +19,7 @@
 
 #define MOVE_SPEED (20)
 #define VECTOR_CAP (150)
-#define DAMPING (0.95)
+#define DAMPING (0.978)
 #define DAMPING_STATUE (0.8)
 
 #define PLAYER_REVIVE_TIME (3.0f)
@@ -138,7 +138,7 @@ MainScene{
     
     arrow = [CCBReader load:@"ArrowHead"];
     [arrowNode addChild:arrow];
-    //arrow.scale *= 0.7;
+    arrow.scale *= 1.5;
     arrow.opacity *= 0.5;
 
     [self addChild:arrowNode];
@@ -234,23 +234,25 @@ MainScene{
 
     
     //damping && zorder check against princess
-    if(falling[DAVE] == NO) {
-        //if(_dave.physicsBody.velocity.x != 0 || _dave.physicsBody.velocity.y != 0) _dave.physicsBody.velocity = ccpMult(_dave.physicsBody.velocity, DAMPING);
-        
-        
-        if(_dave.position.y <= _princess.position.y) _dave.zOrder = _princess.zOrder+1;
-        else _dave.zOrder = _princess.zOrder-1;
-    }
-    if(falling[HUEY] == NO) {
-        //if(_huey.physicsBody.velocity.x != 0 || _huey.physicsBody.velocity.y != 0) _huey.physicsBody.velocity = ccpMult(_huey.physicsBody.velocity, DAMPING);
-        
-        if(_huey.position.y <= _princess.position.y) _huey.zOrder = _princess.zOrder+1;
-        else _huey.zOrder = _princess.zOrder-1;
-
-    }
     if(falling[PRINCESS] == NO) {
-       // if(_princess.physicsBody.velocity.x != 0 || _princess.physicsBody.velocity.y != 0) _princess.physicsBody.velocity = ccpMult(_princess.physicsBody.velocity, DAMPING_STATUE);
+        if(falling[DAVE] == NO) {
+            //if(_dave.physicsBody.velocity.x != 0 || _dave.physicsBody.velocity.y != 0) _dave.physicsBody.velocity = ccpMult(_dave.physicsBody.velocity, DAMPING);
+            
+            
+            if(_dave.position.y <= _princess.position.y) _dave.zOrder = _princess.zOrder+1;
+            else _dave.zOrder = _princess.zOrder-1;
+        }
+        if(falling[HUEY] == NO) {
+            //if(_huey.physicsBody.velocity.x != 0 || _huey.physicsBody.velocity.y != 0) _huey.physicsBody.velocity = ccpMult(_huey.physicsBody.velocity, DAMPING);
+            
+            if(_huey.position.y <= _princess.position.y) _huey.zOrder = _princess.zOrder+1;
+            else _huey.zOrder = _princess.zOrder-1;
+
+        }
     }
+//    if(falling[PRINCESS] == NO) {
+//       // if(_princess.physicsBody.velocity.x != 0 || _princess.physicsBody.velocity.y != 0) _princess.physicsBody.velocity = ccpMult(_princess.physicsBody.velocity, DAMPING_STATUE);
+//    }
     
 }
 
@@ -403,17 +405,17 @@ MainScene{
     
     // start catapult dragging when a touch inside of the catapult arm occurs
     if (CGRectContainsPoint([_dave boundingBox], touchLocation))
-        //&& abs(_dave.physicsBody.velocity.x) < 0.5 && abs(_dave.physicsBody.velocity.y) < 0.5)
+        //&& abs(ccpLengthSQ(_dave.physicsBody.velocity)) < 64)//abs(_dave.physicsBody.velocity.x) < 0.5 && abs(_dave.physicsBody.velocity.y) < 0.5)
     {
         validMove = YES;
         
-        _dave.physicsBody.velocity = ccp(0,0);
+        //_dave.physicsBody.velocity = ccp(0,0);
         
         start = touchLocation;
         end = touchLocation;
         
         //arrowNode.visible = YES;
-        arrowNode.position = start;
+        //arrowNode.position = start;
         
     }
     else
@@ -434,14 +436,30 @@ MainScene{
         CGPoint touchLocation = [touch locationInNode:self];
         end = touchLocation;
         
+        start = _dave.position;
+        arrowNode.position = start;
+        
         //update facing direction
         if((start.x - end.x) < 0) facingDirection = -1;
         else facingDirection = 1;
         
         //place arrow
-        
         CGPoint arrowDirection = ccpSub(end, start);
-        float len = ccpLength(arrowDirection) / ARROW_DOTS;
+        float len = ccpLength(arrowDirection);
+        
+        if(len > VECTOR_CAP) {
+            arrowDirection = ccpNormalize(arrowDirection);//[self normalize:launchDirection];
+            arrowDirection = ccpMult(arrowDirection, VECTOR_CAP);
+        }
+        
+        //arrowDirection = ccpMult(arrowDirection, MOVE_SPEED);
+        
+        //float dampTime = log((0.1 / len) / MOVE_SPEED) / log(DAMPING);
+        
+        //len = ccpLength(ccpMult(arrowDirection, powf(DAMPING, dampTime))) / ARROW_DOTS;
+        
+        len = ccpLength(arrowDirection) / ARROW_DOTS;
+        
         arrowDirection = ccpMult(ccpNormalize(arrowDirection),-1);
         
         NSArray *arrowChildren = arrowNode.children;
@@ -449,6 +467,7 @@ MainScene{
             CCNode* x = arrowChildren[i];
             x.position = ccpMult(arrowDirection, len*(i+1));
         }
+        
         
         arrowNode.visible = YES;
     }
@@ -483,28 +502,28 @@ MainScene{
 
 
 
-- (double)getLength: (CGPoint) v{
-    
-    return sqrt((v.x*v.x) + (v.y*v.y));
-    
-}
-
-- (CGPoint)normalize: (CGPoint) v{
-    
-    return ccpMult(v, 1/[self getLength:v]);
-    
-}
+//- (double)getLength: (CGPoint) v{
+//    
+//    return sqrt((v.x*v.x) + (v.y*v.y));
+//    
+//}
+//
+//- (CGPoint)normalize: (CGPoint) v{
+//    
+//    return ccpMult(v, 1/[self getLength:v]);
+//    
+//}
 
 - (void)movePlayer: (CCNode *) player {
     
     // manually create & apply a force to launch the knight
     
     CGPoint launchDirection = ccpSub(start, end);
-    double len = [self getLength:launchDirection];
+    double len = ccpLength(launchDirection);//[self getLength:launchDirection];
     //CCLOG(@"vector %f",len);
     
     if(len > VECTOR_CAP) {
-        launchDirection = [self normalize:launchDirection];
+        launchDirection = ccpNormalize(launchDirection);//[self normalize:launchDirection];
         launchDirection = ccpMult(launchDirection, VECTOR_CAP);
     }
     
