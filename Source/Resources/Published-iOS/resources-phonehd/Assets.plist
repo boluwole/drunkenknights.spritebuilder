@@ -4,10 +4,23 @@
 <dict>
 	<key>frames</key>
 	<dict>
+		<key>Assets/Box.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1378, 259}, {235, 215}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {235, 215}}</string>
+			<key>sourceSize</key>
+			<string>{235, 215}</string>
+		</dict>
 		<key>Assets/Dave.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1397, 1}, {256, 256}}</string>
+			<string>{{1139, 1}, {256, 256}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -46,7 +59,7 @@
 		<key>Assets/Huey_ressurect.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1139, 1}, {256, 256}}</string>
+			<string>{{1397, 1}, {256, 256}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>

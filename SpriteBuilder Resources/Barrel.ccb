@@ -32,32 +32,6 @@
 		<string></string>
 		<key>memberVarAssignmentType</key>
 		<integer>0</integer>
-		<key>physicsBody</key>
-		<dict>
-			<key>affectedByGravity</key>
-			<false/>
-			<key>allowsRotation</key>
-			<false/>
-			<key>bodyShape</key>
-			<integer>1</integer>
-			<key>cornerRadius</key>
-			<real>12.5625</real>
-			<key>density</key>
-			<real>1</real>
-			<key>dynamic</key>
-			<false/>
-			<key>elasticity</key>
-			<real>0.30000001192092896</real>
-			<key>friction</key>
-			<real>0.30000001192092896</real>
-			<key>points</key>
-			<array>
-				<array>
-					<real>12</real>
-					<real>12</real>
-				</array>
-			</array>
-		</dict>
 		<key>properties</key>
 		<array>
 			<dict>

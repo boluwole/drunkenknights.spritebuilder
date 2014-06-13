@@ -14,8 +14,5 @@
     self.physicsBody.collisionType = @"item";
 }
 
-- (void)setItemType: (int)t {
-
-}
 
 @end

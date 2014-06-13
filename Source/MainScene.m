@@ -13,22 +13,7 @@
 
 //@synthesize revive = time;
 
-#define DAVE 0
-#define HUEY 1
-#define PRINCESS 2
 
-#define MOVE_SPEED (20)
-#define VECTOR_CAP (150)
-#define DAMPING (0.978)
-#define DAMPING_STATUE (0.8)
-
-#define PLAYER_REVIVE_TIME (3.0f)
-#define STATUE_REVIVE_TIME (2.0f)
-
-//items
-#define ITEM_DROP_PERIOD (-5)
-
-#define ARROW_DOTS 10
 
 
 MainScene{
@@ -47,6 +32,7 @@ MainScene{
     CCSprite *_stage;
     CCSprite *_barrel;
     CCSprite *_vomit;
+    CCNode *itemBox[3];
     
     CCNode *arrowNode;
     
@@ -83,6 +69,13 @@ MainScene{
     
     //for items
     BOOL itemHasDroppedForThisPeriod;
+    //CCNode *itemNode;
+    CCNode* currItem;
+    CCNode* chosenItem;
+    CGPoint itemMid;
+    CCNode* inventory;
+    int itemsHeld;
+    
 }
 
 // is called when CCB file has completed loading
@@ -93,6 +86,8 @@ MainScene{
     
     // tell this scene to accept touches
     self.userInteractionEnabled = TRUE;
+    
+    _physicsNode.collisionDelegate = self;
     
     //initializations
     validMove = NO;
@@ -106,9 +101,7 @@ MainScene{
     hueyStart = _huey.position;
     princessStart = _princess.position;
     
-    _dave.zOrder = _stage.zOrder + 1;
-    _huey.zOrder = _stage.zOrder + 1;
-    _princess.zOrder = _stage.zOrder + 2;
+
     
     facingDirection = 1;
     
@@ -146,6 +139,41 @@ MainScene{
     //always damp
     [self schedule:@selector(damping:) interval:0.02];
 
+    
+    //item node
+    currItem = [[CCNode alloc] init];
+    //[_physicsNode addChild:currItem];
+    //itemNode.zOrder = _dave.zOrder + 1;
+    
+    inventory = [[CCNode alloc] init];
+    [self addChild:inventory];
+    
+    inventory.position = ccp(INVENTORY_POSITION,INVENTORY_POSITION);
+  
+    itemBox[0]=[CCBReader load: @"Box"];
+    itemBox[0].scale *= 0.3;
+    [inventory addChild: itemBox[0]];
+    itemBox[0].position = ccp(0,0);
+    
+    itemBox[1]=[CCBReader load: @"Box"];
+    itemBox[1].scale *= 0.3;
+    [inventory addChild: itemBox[1]];
+    itemBox[1].position = ccp(INVENTORY_DISTANCE,0);
+    
+    itemBox[2]=[CCBReader load: @"Box"];
+    itemBox[2].scale *= 0.3;
+    [inventory addChild: itemBox[2]];
+    itemBox[2].position = ccp(2*INVENTORY_DISTANCE,0);
+    
+    itemsHeld = 0;
+    
+    //z orders
+    currItem.zOrder = _stage.zOrder + ITEM_Z;
+    _dave.zOrder = _stage.zOrder + DAVE_Z;
+    _huey.zOrder = _stage.zOrder + HUEY_Z;
+    _princess.zOrder = _stage.zOrder + PRINCESS_Z;
+    
+    //CCLOG(@"stage: %d item: %d dave: %d huey: %d princess: %d\n",_stage.zOrder,itemNode.zOrder,_dave.zOrder,_huey.zOrder,_princess.zOrder);
 }
 
 - (void)damping:(CCTime)delta {
@@ -163,10 +191,10 @@ MainScene{
 }
 
 
-- (BOOL)detectFallOff:(CCSprite*) player {
+- (BOOL)detectFallOff:(CGPoint) pos {
     
-    int x = player.position.x;
-    int y = player.position.y;
+    int x = pos.x;
+    int y = pos.y;
     
     unsigned char pixel[1] = {0};
     CGContextRef context = CGBitmapContextCreate(pixel,
@@ -193,6 +221,7 @@ MainScene{
     //items
     timeElapsed = [startTime timeIntervalSinceNow];
     
+    //drop item
     if((int)timeElapsed == ITEM_DROP_PERIOD) {
         startTime = [NSDate date];
         if(itemHasDroppedForThisPeriod == NO) {
@@ -201,18 +230,35 @@ MainScene{
             [self dropItem];
         }
     }
-    else {
-        itemHasDroppedForThisPeriod = NO;
+    
+    //kill item
+    if(itemHasDroppedForThisPeriod == YES) {
+        if((int)timeElapsed == ITEM_ALIVE_PERIOD) {
+            [_physicsNode removeChild:currItem];
+            itemHasDroppedForThisPeriod = NO;
+        }
+        else {
+            if(CGRectContainsPoint([_dave boundingBox], currItem.position)) {
+                //CCLOG(@"pickup\n");
+                if(itemsHeld < 3) {
+                    currItem.position = itemBox[itemsHeld].position;
+                    [_physicsNode removeChild:currItem];
+                    [inventory addChild:currItem];
+                    itemsHeld++;
+                    itemHasDroppedForThisPeriod = NO;
+                }
+            }
+        }
     }
     
     //detect falloff
-    if([self detectFallOff:_dave]) {
+    if([self detectFallOff:_dave.position]) {
         if(falling[DAVE] == NO) [self dropPlayer:_dave :DAVE];
     }
-    if([self detectFallOff:_huey]) {
+    if([self detectFallOff:_huey.position]) {
         if(falling[HUEY] == NO) [self dropPlayer:_huey :HUEY];
     }
-    if([self detectFallOff:_princess]) {
+    if([self detectFallOff:_princess.position]) {
         if(falling[PRINCESS] == NO) [self dropPlayer:_princess :PRINCESS];
     }
     
@@ -258,8 +304,12 @@ MainScene{
 
 
 //items
-   CCNode* currItem;
+
 - (void)dropItem {
+    
+    //currItem = [[CCNode alloc] init];
+    
+    
     int randomNum = rand() % 2;
     switch(randomNum) {
         case BARREL:
@@ -273,10 +323,12 @@ MainScene{
             currItem = [CCBReader load:@"Vomit"];
             break;
     }
+    [_physicsNode addChild:currItem];
     currItem.scale*=0.2;
-    [self schedule:@selector(itemDropAnim:) interval:1.0f];
+    //[self schedule:@selector(itemDropAnim:) interval:1.0f];
     currItem.position = [self itemDisplay];
-   
+    //currItem.zOrder = _dave.zOrder - 1;
+    
     // CCLOG(@"\nDave's Position: %f , %f ",_dave.position.x, _dave.position.y);
 }
 
@@ -284,12 +336,12 @@ MainScene{
     
  //   CCLOG(@"\nReached this method");
     
-    [_physicsNode addChild:currItem];
+    //[_physicsNode addChild:currItem];
+    //[itemNode addChild:currItem];
+    CGPoint MidPoint, vToMidPoint, MidPointPerp, result;
     
-    CGPoint MidPoint, vToMidPoint, MidPointPerp;
-    
-    CCLOG(@"\nDave: %f, %f",_dave.position.x,_dave.position.y);
-    CCLOG(@"\nHuey: %f, %f",_huey.position.x,_huey.position.y);
+    //CCLOG(@"\nDave: %f, %f",_dave.position.x,_dave.position.y);
+    //CCLOG(@"\nHuey: %f, %f",_huey.position.x,_huey.position.y);
     
    // MidPoint = ccpAdd(_dave.position, _huey.position);
     MidPoint = ccpMidpoint(_dave.position, _huey.position);
@@ -297,7 +349,19 @@ MainScene{
     MidPointPerp = (rand()%2 == 0) ? ccp(-vToMidPoint.y, vToMidPoint.x) : ccp(vToMidPoint.y, -vToMidPoint.x);
     MidPointPerp = ccpNormalize(MidPointPerp);
     //currItem.position = ccpAdd(MidPoint, ccpMult(MidPointPerp, 50+(rand()%100)));
-    return ccpAdd(MidPoint, ccpMult(MidPointPerp, 50+(rand()%100)));
+    
+    result = ccpAdd(MidPoint, ccpMult(MidPointPerp, 50+(rand()%100)));
+    if([self detectFallOff:result] == NO) {
+        return result;
+    }
+    else {
+        float r = 100;
+        float theta = ((rand()%6)*(360/6))*PI/180;
+        result = ccpAdd(princessStart,ccp(r*cos(theta),r*sin(theta)));
+        return result;
+    }
+    
+   
     
     //currItem.position=ccp(MidPoint.x,MidPoint.y);
     //CCLOG(@"\nItem: %f, %f",MidPoint.x,MidPoint.y);
@@ -309,6 +373,11 @@ MainScene{
 
 - (void)itemDropAnim:(CCTime)delta {
     
+}
+
+- (void) ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair item:(CCNode *)nodeA wildcad:(CCNode *)nodeB
+{
+    CCLOG(@"\nitem hit\n");
 }
 
 //drops the player, sends it behind the platform
@@ -348,9 +417,9 @@ MainScene{
         falling[DAVE] = NO;
         reviveCounter[DAVE] = 0;
         facingDirection = 1;
-        _dave.zOrder = _stage.zOrder + 1;
-        _huey.zOrder = _stage.zOrder + 1;
-        _princess.zOrder = _dave.zOrder + 1;
+        _dave.zOrder = _stage.zOrder + DAVE_Z;
+        //_huey.zOrder = _stage.zOrder + HUEY_Z;
+        //_princess.zOrder = _stage.zOrder + PRINCESS_Z;
         _dave.position = daveStart;
         _dave.physicsBody.collisionMask = NULL;
         _dave.physicsBody.velocity = ccp(0,0);
@@ -367,9 +436,9 @@ MainScene{
         falling[HUEY] = NO;
         reviveCounter[HUEY] = 0;
         facingDirection = 1;
-        _huey.zOrder = _stage.zOrder + 1;
-        _dave.zOrder = _stage.zOrder + 1;
-        _princess.zOrder = _huey.zOrder + 1;
+        //_dave.zOrder = _stage.zOrder + DAVE_Z;
+        _huey.zOrder = _stage.zOrder + HUEY_Z;
+        //_princess.zOrder = _stage.zOrder + PRINCESS_Z;
         _huey.position = hueyStart;
         _huey.physicsBody.collisionMask = NULL;
         _huey.physicsBody.velocity = ccp(0,0);
@@ -385,7 +454,9 @@ MainScene{
     {
         falling[PRINCESS] = NO;
         reviveCounter[PRINCESS] = 0;
-        _princess.zOrder = _stage.zOrder + 2;
+        //_dave.zOrder = _stage.zOrder + DAVE_Z;
+        //_huey.zOrder = _stage.zOrder + HUEY_Z;
+        _princess.zOrder = _stage.zOrder + PRINCESS_Z;
         _princess.position = princessStart;
         _princess.physicsBody.collisionMask = NULL;
         _princess.physicsBody.velocity = ccp(0,0);
