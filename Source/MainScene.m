@@ -7,7 +7,7 @@
 //
 
 #import "MainScene.h"
-#import "Dave.h"
+
 
 @implementation
 
@@ -106,11 +106,8 @@ MainScene{
         [CCRenderTexture renderTextureWithWidth:_stage.contentSize.width height:_stage.contentSize.height];
     _stage.anchorPoint = CGPointZero;
     [renderer begin];
-    
     [_stage visit];
-    
     [renderer end];
-    
     uiimage = [renderer getUIImage];
     
     //UI arrow indicator
@@ -138,9 +135,6 @@ MainScene{
     
     //item node
     currItem = [[CCNode alloc] init];
-    //[_physicsNode addChild:currItem];
-    //itemNode.zOrder = _dave.zOrder + 1;
-    
     inventory = [[CCNode alloc] init];
     [self addChild:inventory];
     
@@ -162,14 +156,12 @@ MainScene{
     _huey.zOrder = _stage.zOrder + HUEY_Z;
     _princess.zOrder = _stage.zOrder + PRINCESS_Z;
     
+    //networking
+    [[AppWarpHelper sharedAppWarpHelper] initializeAppWarp];
+    [[AppWarpHelper sharedAppWarpHelper] connectToWarp];
+    
 }
 
-- (void)damping:(CCTime)delta {
-    //damping && zorder check against princess
-    if(falling[DAVE] == NO) [PhysicsManager doDamping:_dave :DAMPING];
-    if(falling[HUEY] == NO) [PhysicsManager doDamping:_huey :DAMPING];
-    if(falling[PRINCESS] == NO) [PhysicsManager doDamping:_princess :DAMPING_STATUE];
-}
 
 - (void)update:(CCTime)delta {
     
@@ -178,6 +170,7 @@ MainScene{
     
     //drop item
     if((int)timeElapsed == ITEM_DROP_PERIOD) {
+        
         startTime = [NSDate date];
         if(itemHasDroppedForThisPeriod == NO) {
           //  CCLOG(@"DROP IT!\n");
@@ -231,6 +224,13 @@ MainScene{
     }
 }
 
+//damping
+- (void)damping:(CCTime)delta {
+    //damping && zorder check against princess
+    if(falling[DAVE] == NO) [PhysicsManager doDamping:_dave :DAMPING];
+    if(falling[HUEY] == NO) [PhysicsManager doDamping:_huey :DAMPING];
+    if(falling[PRINCESS] == NO) [PhysicsManager doDamping:_princess :DAMPING_STATUE];
+}
 
 //items
 
@@ -249,6 +249,7 @@ MainScene{
             currItem = [CCBReader load:@"Vomit"];
             break;
     }
+   
     [_physicsNode addChild:currItem];
     currItem.scale*=0.2;
     currItem.position = [self itemDisplay];

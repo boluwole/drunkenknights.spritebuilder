@@ -25,6 +25,7 @@
 
 #import "cocos2d.h"
 
+#import "AppWarpHelper.h"
 #import "AppDelegate.h"
 #import "CCBuilderReader.h"
 

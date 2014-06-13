@@ -10,7 +10,9 @@
 #import "GameConstants.h"
 #import "MoveManager.h"
 #import "PhysicsManager.h"
-
+#import "ItemManager.h"
+#import "AppWarpHelper.h"
+#import <AppWarp_iOS_SDK/AppWarp_iOS_SDK.h>
 
 @interface MainScene : CCNode <CCPhysicsCollisionDelegate>
 
