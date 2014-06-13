@@ -39,6 +39,8 @@
 		B77F1B4017B978D7009739AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3F17B978D7009739AE /* CoreGraphics.framework */; };
 		B77F1B4217B978D7009739AE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B4117B978D7009739AE /* CoreText.framework */; };
 		F5385AC8194A9C1000690095 /* Box.m in Sources */ = {isa = PBXBuildFile; fileRef = F5385AC7194A9C1000690095 /* Box.m */; };
+		F594CD0D194B7E6F00FE0029 /* MoveManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F594CD0C194B7E6F00FE0029 /* MoveManager.m */; };
+		F594CD14194B93BA00FE0029 /* PhysicsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F594CD13194B93BA00FE0029 /* PhysicsManager.m */; };
 		F59F9FE0194854EC00AD2AEC /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = F59F9FDF194854EC00AD2AEC /* Item.m */; };
 		F59F9FEC1949579200AD2AEC /* ArrowHead.m in Sources */ = {isa = PBXBuildFile; fileRef = F59F9FEB1949579200AD2AEC /* ArrowHead.m */; };
 		F59F9FF0194957B100AD2AEC /* ArrowBody.m in Sources */ = {isa = PBXBuildFile; fileRef = F59F9FEF194957B100AD2AEC /* ArrowBody.m */; };
@@ -103,6 +105,11 @@
 		B7B3713D180358F1007369CC /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libObjectiveChipmunk.a; path = "../libs/cocos2d-iphone/external/Chipmunk/xcode/build/Debug-iphoneos/libObjectiveChipmunk.a"; sourceTree = "<group>"; };
 		F5385AC6194A9C1000690095 /* Box.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Box.h; path = Source/Box.h; sourceTree = "<group>"; };
 		F5385AC7194A9C1000690095 /* Box.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Box.m; path = Source/Box.m; sourceTree = "<group>"; };
+		F594CD0B194B7E6F00FE0029 /* MoveManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoveManager.h; path = Source/MoveManager.h; sourceTree = "<group>"; };
+		F594CD0C194B7E6F00FE0029 /* MoveManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MoveManager.m; path = Source/MoveManager.m; sourceTree = "<group>"; };
+		F594CD0F194B8A7700FE0029 /* GameConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameConstants.h; path = Source/GameConstants.h; sourceTree = "<group>"; };
+		F594CD12194B93BA00FE0029 /* PhysicsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhysicsManager.h; path = Source/PhysicsManager.h; sourceTree = "<group>"; };
+		F594CD13194B93BA00FE0029 /* PhysicsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhysicsManager.m; path = Source/PhysicsManager.m; sourceTree = "<group>"; };
 		F59F9FDE194854EC00AD2AEC /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Item.h; path = Source/Item.h; sourceTree = "<group>"; };
 		F59F9FDF194854EC00AD2AEC /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Item.m; path = Source/Item.m; sourceTree = "<group>"; };
 		F59F9FEA1949579200AD2AEC /* ArrowHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArrowHead.h; path = Source/ArrowHead.h; sourceTree = "<group>"; };
@@ -143,24 +150,13 @@
 		B737893C1807616C0076A88C /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				F594CD11194B8AD200FE0029 /* GameObjects */,
+				F594CD10194B8AC200FE0029 /* Managers */,
 				B737893D1807617C0076A88C /* AppDelegate.h */,
 				B737893E1807617C0076A88C /* AppDelegate.m */,
 				B7378992180767190076A88C /* MainScene.h */,
 				B7378993180767190076A88C /* MainScene.m */,
-				859AC0B81943EE8400F68F35 /* Princess.h */,
-				859AC0B91943EE8400F68F35 /* Princess.m */,
-				853E680E1944C53200C3DA9B /* Dave.h */,
-				853E680F1944C53200C3DA9B /* Dave.m */,
-				F59F9FDE194854EC00AD2AEC /* Item.h */,
-				F59F9FDF194854EC00AD2AEC /* Item.m */,
-				853E68141944CDD200C3DA9B /* Huey.h */,
-				853E68151944CDD200C3DA9B /* Huey.m */,
-				F59F9FEA1949579200AD2AEC /* ArrowHead.h */,
-				F59F9FEB1949579200AD2AEC /* ArrowHead.m */,
-				F59F9FEE194957B100AD2AEC /* ArrowBody.h */,
-				F59F9FEF194957B100AD2AEC /* ArrowBody.m */,
-				F5385AC6194A9C1000690095 /* Box.h */,
-				F5385AC7194A9C1000690095 /* Box.m */,
+				F594CD0F194B8A7700FE0029 /* GameConstants.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -248,6 +244,38 @@
 				B73789861807631A0076A88C /* Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F594CD10194B8AC200FE0029 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				F594CD0B194B7E6F00FE0029 /* MoveManager.h */,
+				F594CD0C194B7E6F00FE0029 /* MoveManager.m */,
+				F594CD12194B93BA00FE0029 /* PhysicsManager.h */,
+				F594CD13194B93BA00FE0029 /* PhysicsManager.m */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		F594CD11194B8AD200FE0029 /* GameObjects */ = {
+			isa = PBXGroup;
+			children = (
+				859AC0B81943EE8400F68F35 /* Princess.h */,
+				859AC0B91943EE8400F68F35 /* Princess.m */,
+				853E680E1944C53200C3DA9B /* Dave.h */,
+				853E680F1944C53200C3DA9B /* Dave.m */,
+				F59F9FDE194854EC00AD2AEC /* Item.h */,
+				F59F9FDF194854EC00AD2AEC /* Item.m */,
+				853E68141944CDD200C3DA9B /* Huey.h */,
+				853E68151944CDD200C3DA9B /* Huey.m */,
+				F59F9FEA1949579200AD2AEC /* ArrowHead.h */,
+				F59F9FEB1949579200AD2AEC /* ArrowHead.m */,
+				F59F9FEE194957B100AD2AEC /* ArrowBody.h */,
+				F59F9FEF194957B100AD2AEC /* ArrowBody.m */,
+				F5385AC6194A9C1000690095 /* Box.h */,
+				F5385AC7194A9C1000690095 /* Box.m */,
+			);
+			name = GameObjects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -355,8 +383,10 @@
 			files = (
 				853E68101944C53200C3DA9B /* Dave.m in Sources */,
 				859AC0BA1943EE8400F68F35 /* Princess.m in Sources */,
+				F594CD0D194B7E6F00FE0029 /* MoveManager.m in Sources */,
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
 				F59F9FEC1949579200AD2AEC /* ArrowHead.m in Sources */,
+				F594CD14194B93BA00FE0029 /* PhysicsManager.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
 				F5385AC8194A9C1000690095 /* Box.m in Sources */,
 				853E68161944CDD200C3DA9B /* Huey.m in Sources */,

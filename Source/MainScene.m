@@ -14,8 +14,6 @@
 //@synthesize revive = time;
 
 
-
-
 MainScene{
     enum ItemType {
         BARREL = 0,
@@ -42,7 +40,8 @@ MainScene{
     //drag vector for movement
     CGPoint start;
     CGPoint end;
-    int facingDirection;
+    CGPoint launchDirection;
+    //int facingDirection;
     
     //starting locations
     CGPoint daveStart;
@@ -100,10 +99,7 @@ MainScene{
     daveStart = _dave.position;
     hueyStart = _huey.position;
     princessStart = _princess.position;
-    
 
-    
-    facingDirection = 1;
     
     //intialize stage image for falloff detection
     CCRenderTexture *renderer =
@@ -150,20 +146,13 @@ MainScene{
     
     inventory.position = ccp(INVENTORY_POSITION,INVENTORY_POSITION);
   
-    itemBox[0]=[CCBReader load: @"Box"];
-    itemBox[0].scale *= 0.3;
-    [inventory addChild: itemBox[0]];
-    itemBox[0].position = ccp(0,0);
-    
-    itemBox[1]=[CCBReader load: @"Box"];
-    itemBox[1].scale *= 0.3;
-    [inventory addChild: itemBox[1]];
-    itemBox[1].position = ccp(INVENTORY_DISTANCE,0);
-    
-    itemBox[2]=[CCBReader load: @"Box"];
-    itemBox[2].scale *= 0.3;
-    [inventory addChild: itemBox[2]];
-    itemBox[2].position = ccp(2*INVENTORY_DISTANCE,0);
+    for(int i = 0; i < 3; i++) {
+        itemBox[i]=[CCBReader load: @"Box"];
+        itemBox[i].scale *= 0.3;
+        [inventory addChild: itemBox[i]];
+        itemBox[i].position = ccp(INVENTORY_DISTANCE*i,0);
+        itemBox[i].opacity *= 0.6;
+    }
     
     itemsHeld = 0;
     
@@ -173,50 +162,16 @@ MainScene{
     _huey.zOrder = _stage.zOrder + HUEY_Z;
     _princess.zOrder = _stage.zOrder + PRINCESS_Z;
     
-    //CCLOG(@"stage: %d item: %d dave: %d huey: %d princess: %d\n",_stage.zOrder,itemNode.zOrder,_dave.zOrder,_huey.zOrder,_princess.zOrder);
 }
 
 - (void)damping:(CCTime)delta {
     //damping && zorder check against princess
-    if(falling[DAVE] == NO) {
-        if(_dave.physicsBody.velocity.x != 0 || _dave.physicsBody.velocity.y != 0) _dave.physicsBody.velocity = ccpMult(_dave.physicsBody.velocity, DAMPING);
-    }
-    if(falling[HUEY] == NO) {
-        if(_huey.physicsBody.velocity.x != 0 || _huey.physicsBody.velocity.y != 0) _huey.physicsBody.velocity = ccpMult(_huey.physicsBody.velocity, DAMPING);
-    }
-    if(falling[PRINCESS] == NO) {
-        if(_princess.physicsBody.velocity.x != 0 || _princess.physicsBody.velocity.y != 0) _princess.physicsBody.velocity = ccpMult(_princess.physicsBody.velocity, DAMPING_STATUE);
-    }
-
+    if(falling[DAVE] == NO) [PhysicsManager doDamping:_dave :DAMPING];
+    if(falling[HUEY] == NO) [PhysicsManager doDamping:_huey :DAMPING];
+    if(falling[PRINCESS] == NO) [PhysicsManager doDamping:_princess :DAMPING_STATUE];
 }
-
-
-- (BOOL)detectFallOff:(CGPoint) pos {
-    
-    int x = pos.x;
-    int y = pos.y;
-    
-    unsigned char pixel[1] = {0};
-    CGContextRef context = CGBitmapContextCreate(pixel,
-                                                 1, 1, 8, 1, NULL,
-                                                 (CGBitmapInfo)kCGImageAlphaOnly);
-    UIGraphicsPushContext(context);
-    [uiimage drawAtPoint:CGPointMake(-x, -y)];
-    UIGraphicsPopContext();
-    CGContextRelease(context);
-    CGFloat alpha = pixel[0]/255.0;
-
-    if(alpha < 0.001) {
-        return YES;
-    }
-    else return NO;
-
-}
-
 
 - (void)update:(CCTime)delta {
-    
-
     
     //items
     timeElapsed = [startTime timeIntervalSinceNow];
@@ -252,64 +207,35 @@ MainScene{
     }
     
     //detect falloff
-    if([self detectFallOff:_dave.position]) {
+    if([PhysicsManager detectFallOff:_dave.position :uiimage]) {
         if(falling[DAVE] == NO) [self dropPlayer:_dave :DAVE];
     }
-    if([self detectFallOff:_huey.position]) {
+    if([PhysicsManager detectFallOff:_huey.position :uiimage]) {
         if(falling[HUEY] == NO) [self dropPlayer:_huey :HUEY];
     }
-    if([self detectFallOff:_princess.position]) {
+    if([PhysicsManager detectFallOff:_princess.position :uiimage]) {
         if(falling[PRINCESS] == NO) [self dropPlayer:_princess :PRINCESS];
     }
     
-    //facing direction
-//    if(_dave.physicsBody.velocity.x < 0) {
-//        if(_dave.scaleX > 0) _dave.scaleX *= -1;
-//    }
-//    else {
-//        if(_dave.scaleX < 0) _dave.scaleX *= -1;
-//    }
-    if(facingDirection > 0) {
-        //if(_dave.scaleX < 0) _dave.scaleX *= -1;
-        if(_dave.flipX == YES) _dave.flipX = NO;
-    }
-    else {
-        //if(_dave.scaleX > 0) _dave.scaleX *= -1;
-        if(_dave.flipX == NO) _dave.flipX = YES;
-    }
-
-    
-    //damping && zorder check against princess
+    //zorder check against princess
     if(falling[PRINCESS] == NO) {
         if(falling[DAVE] == NO) {
-            //if(_dave.physicsBody.velocity.x != 0 || _dave.physicsBody.velocity.y != 0) _dave.physicsBody.velocity = ccpMult(_dave.physicsBody.velocity, DAMPING);
-            
-            
             if(_dave.position.y <= _princess.position.y) _dave.zOrder = _princess.zOrder+1;
             else _dave.zOrder = _princess.zOrder-1;
         }
         if(falling[HUEY] == NO) {
-            //if(_huey.physicsBody.velocity.x != 0 || _huey.physicsBody.velocity.y != 0) _huey.physicsBody.velocity = ccpMult(_huey.physicsBody.velocity, DAMPING);
-            
             if(_huey.position.y <= _princess.position.y) _huey.zOrder = _princess.zOrder+1;
             else _huey.zOrder = _princess.zOrder-1;
 
         }
     }
-//    if(falling[PRINCESS] == NO) {
-//       // if(_princess.physicsBody.velocity.x != 0 || _princess.physicsBody.velocity.y != 0) _princess.physicsBody.velocity = ccpMult(_princess.physicsBody.velocity, DAMPING_STATUE);
-//    }
-    
 }
 
 
 //items
 
 - (void)dropItem {
-    
-    //currItem = [[CCNode alloc] init];
-    
-    
+
     int randomNum = rand() % 2;
     switch(randomNum) {
         case BARREL:
@@ -325,33 +251,23 @@ MainScene{
     }
     [_physicsNode addChild:currItem];
     currItem.scale*=0.2;
-    //[self schedule:@selector(itemDropAnim:) interval:1.0f];
     currItem.position = [self itemDisplay];
-    //currItem.zOrder = _dave.zOrder - 1;
-    
-    // CCLOG(@"\nDave's Position: %f , %f ",_dave.position.x, _dave.position.y);
+
 }
 
 -(CGPoint)itemDisplay{
     
  //   CCLOG(@"\nReached this method");
     
-    //[_physicsNode addChild:currItem];
-    //[itemNode addChild:currItem];
     CGPoint MidPoint, vToMidPoint, MidPointPerp, result;
     
-    //CCLOG(@"\nDave: %f, %f",_dave.position.x,_dave.position.y);
-    //CCLOG(@"\nHuey: %f, %f",_huey.position.x,_huey.position.y);
-    
-   // MidPoint = ccpAdd(_dave.position, _huey.position);
     MidPoint = ccpMidpoint(_dave.position, _huey.position);
     vToMidPoint = ccpSub(MidPoint,_dave.position);
     MidPointPerp = (rand()%2 == 0) ? ccp(-vToMidPoint.y, vToMidPoint.x) : ccp(vToMidPoint.y, -vToMidPoint.x);
     MidPointPerp = ccpNormalize(MidPointPerp);
-    //currItem.position = ccpAdd(MidPoint, ccpMult(MidPointPerp, 50+(rand()%100)));
     
     result = ccpAdd(MidPoint, ccpMult(MidPointPerp, 50+(rand()%100)));
-    if([self detectFallOff:result] == NO) {
+    if([PhysicsManager detectFallOff:result :uiimage] == NO) {
         return result;
     }
     else {
@@ -360,24 +276,10 @@ MainScene{
         result = ccpAdd(princessStart,ccp(r*cos(theta),r*sin(theta)));
         return result;
     }
-    
-   
-    
-    //currItem.position=ccp(MidPoint.x,MidPoint.y);
-    //CCLOG(@"\nItem: %f, %f",MidPoint.x,MidPoint.y);
-
-    
-    //CCLOG(@"\nCurr Item: %@",currItem);
-    
 }
 
 - (void)itemDropAnim:(CCTime)delta {
     
-}
-
-- (void) ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair item:(CCNode *)nodeA wildcad:(CCNode *)nodeB
-{
-    CCLOG(@"\nitem hit\n");
 }
 
 //drops the player, sends it behind the platform
@@ -386,9 +288,9 @@ MainScene{
     player.zOrder = _stage.zOrder - 1;
     player.physicsBody.collisionMask = @[];
     
-    CGPoint launchDirection = ccp(0, -1);
+    CGPoint fallDirection = ccp(0, -1);
     float fallSpeed = (playerNum < PRINCESS) ? 6000 : 10000;
-    CGPoint impulse = ccpMult(launchDirection, fallSpeed);
+    CGPoint impulse = ccpMult(fallDirection, fallSpeed);
     [player.physicsBody applyImpulse:impulse];
     
     falling[playerNum] = YES;
@@ -416,10 +318,9 @@ MainScene{
     {
         falling[DAVE] = NO;
         reviveCounter[DAVE] = 0;
-        facingDirection = 1;
+        //facingDirection = 1;
+        _dave.flipX = NO;
         _dave.zOrder = _stage.zOrder + DAVE_Z;
-        //_huey.zOrder = _stage.zOrder + HUEY_Z;
-        //_princess.zOrder = _stage.zOrder + PRINCESS_Z;
         _dave.position = daveStart;
         _dave.physicsBody.collisionMask = NULL;
         _dave.physicsBody.velocity = ccp(0,0);
@@ -435,10 +336,9 @@ MainScene{
     {
         falling[HUEY] = NO;
         reviveCounter[HUEY] = 0;
-        facingDirection = 1;
-        //_dave.zOrder = _stage.zOrder + DAVE_Z;
+        //facingDirection = 1;
+        _huey.flipX = NO;
         _huey.zOrder = _stage.zOrder + HUEY_Z;
-        //_princess.zOrder = _stage.zOrder + PRINCESS_Z;
         _huey.position = hueyStart;
         _huey.physicsBody.collisionMask = NULL;
         _huey.physicsBody.velocity = ccp(0,0);
@@ -454,8 +354,6 @@ MainScene{
     {
         falling[PRINCESS] = NO;
         reviveCounter[PRINCESS] = 0;
-        //_dave.zOrder = _stage.zOrder + DAVE_Z;
-        //_huey.zOrder = _stage.zOrder + HUEY_Z;
         _princess.zOrder = _stage.zOrder + PRINCESS_Z;
         _princess.position = princessStart;
         _princess.physicsBody.collisionMask = NULL;
@@ -480,13 +378,8 @@ MainScene{
     {
         validMove = YES;
         
-        //_dave.physicsBody.velocity = ccp(0,0);
-        
         start = touchLocation;
         end = touchLocation;
-        
-        //arrowNode.visible = YES;
-        //arrowNode.position = start;
         
     }
     else
@@ -511,32 +404,20 @@ MainScene{
         arrowNode.position = start;
         
         //update facing direction
-        if((start.x - end.x) < 0) facingDirection = -1;
-        else facingDirection = 1;
+        if((start.x - end.x) < 0) { if(_dave.flipX == NO) _dave.flipX = YES; }
+        else { if(_dave.flipX == YES) _dave.flipX = NO; }
         
         //place arrow
-        CGPoint arrowDirection = ccpSub(end, start);
-        float len = ccpLength(arrowDirection);
+        launchDirection = [MoveManager calculateMoveVector:start :end];
         
-        if(len > VECTOR_CAP) {
-            arrowDirection = ccpNormalize(arrowDirection);//[self normalize:launchDirection];
-            arrowDirection = ccpMult(arrowDirection, VECTOR_CAP);
-        }
-        
-        //arrowDirection = ccpMult(arrowDirection, MOVE_SPEED);
-        
-        //float dampTime = log((0.1 / len) / MOVE_SPEED) / log(DAMPING);
-        
-        //len = ccpLength(ccpMult(arrowDirection, powf(DAMPING, dampTime))) / ARROW_DOTS;
-        
-        len = ccpLength(arrowDirection) / ARROW_DOTS;
-        
-        arrowDirection = ccpMult(ccpNormalize(arrowDirection),-1);
+        float len = ccpLength(launchDirection) / ARROW_DOTS;
+
+        CGPoint arrowDirection = (ccpNormalize(launchDirection));
         
         NSArray *arrowChildren = arrowNode.children;
         for(int i = 0; i < arrowChildren.count; i++) {
-            CCNode* x = arrowChildren[i];
-            x.position = ccpMult(arrowDirection, len*(i+1));
+            CCNode* dots = arrowChildren[i];
+            dots.position = ccpMult(arrowDirection, len*(i+1));
         }
         
         
@@ -548,9 +429,7 @@ MainScene{
     
     if(validMove) {
         
-        //CGPoint touchLocation = [touch locationInNode:self];
-        //end = touchLocation;
-        [self movePlayer:_dave];
+        [MoveManager movePlayer:_dave :launchDirection];
     }
     
     validMove = NO;
@@ -559,49 +438,17 @@ MainScene{
 
 -(void) touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    //CCLOG(@"touch end");
     // when touches end, meaning the user releases their finger, release the catapult
     [self releaseTouch];
 }
 
 -(void) touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    //CCLOG(@"touch cancel");
     // when touches are cancelled, meaning the user drags their finger off the screen or onto something else, release the catapult
     [self releaseTouch];
 }
 
 
 
-//- (double)getLength: (CGPoint) v{
-//    
-//    return sqrt((v.x*v.x) + (v.y*v.y));
-//    
-//}
-//
-//- (CGPoint)normalize: (CGPoint) v{
-//    
-//    return ccpMult(v, 1/[self getLength:v]);
-//    
-//}
-
-- (void)movePlayer: (CCNode *) player {
-    
-    // manually create & apply a force to launch the knight
-    
-    CGPoint launchDirection = ccpSub(start, end);
-    double len = ccpLength(launchDirection);//[self getLength:launchDirection];
-    //CCLOG(@"vector %f",len);
-    
-    if(len > VECTOR_CAP) {
-        launchDirection = ccpNormalize(launchDirection);//[self normalize:launchDirection];
-        launchDirection = ccpMult(launchDirection, VECTOR_CAP);
-    }
-    
-    CGPoint impulse = ccpMult(launchDirection, MOVE_SPEED);
-
-    [player.physicsBody applyImpulse:impulse];
-    
-}
 
 @end
