@@ -7,8 +7,14 @@
 //
 
 #import "Dave.h"
-
+#import "GameConstants.h"
 
 @implementation Dave
+
+- (void)didLoadFromCCB {
+
+    _dave = self;
+
+}
 
 @end

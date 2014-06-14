@@ -9,76 +9,29 @@
 #import "MainScene.h"
 
 
-@implementation
-
-//@synthesize revive = time;
-
-
-MainScene{
-    enum ItemType {
-        BARREL = 0,
-        VOMIT = 1,
-        BAIT = 2,
-        POWERUP = 3,
-    };
-    
-    CCPhysicsNode *_physicsNode;
-    CCPhysicsNode *_backPhysicsNode;
-    CCSprite *_dave;
-    CCSprite *_huey;
-    CCSprite *_princess;
-    CCSprite *_stage;
-    CCSprite *_barrel;
-    CCSprite *_vomit;
-    CCNode *itemBox[3];
-    
-    CCNode *arrowNode;
-    
-    
-    BOOL validMove;
-    
-    //drag vector for movement
-    CGPoint start;
-    CGPoint end;
-    CGPoint launchDirection;
-    //int facingDirection;
-    
-    //starting locations
-    CGPoint daveStart;
-    CGPoint hueyStart;
-    CGPoint princessStart;
-    
-    //starting z order
-    int daveZ;
-    int hueyZ;
-    int princessZ;
-    
-    //stage image for falloff detection
-    UIImage* uiimage;
-    
-    //check if falling
-    BOOL falling[3];
-    
-    //ticker for revive
-    int reviveCounter[3];
-    
-    //game timer
-    NSDate *startTime;
-    NSTimeInterval timeElapsed;
-    
-    //for items
-    BOOL itemHasDroppedForThisPeriod;
-    //CCNode *itemNode;
-    CCNode* currItem;
-    CCNode* chosenItem;
-    CGPoint itemMid;
-    CCNode* inventory;
-    int itemsHeld;
+@implementation MainScene{
+  
     
 }
 
+
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
+
+    _dave = [CCBReader load:@"Dave"];
+    [_physicsNode addChild:_dave];
+    _dave.position = ccp(63,155);
+    _dave.scale *= 0.25;
+    
+    _huey = [CCBReader load:@"Huey"];
+    [_physicsNode addChild:_huey];
+    _huey.position = ccp(519,155);
+    _huey.scale *= 0.25;
+    
+    _princess = [CCBReader load:@"Princess"];
+    [_physicsNode addChild:_princess];
+    _princess.position = ccp(278,189);
+    _princess.scale *= 0.30;
     
     //start game timer
     startTime = [NSDate date];
@@ -157,6 +110,9 @@ MainScene{
     _princess.zOrder = _stage.zOrder + PRINCESS_Z;
     
     //networking
+    //_networkManager = [[NetworkManager alloc] init];
+    //[_networkManager setOpponentAndPrincess:_huey :_princess];
+    
     [[AppWarpHelper sharedAppWarpHelper] initializeAppWarp];
     [[AppWarpHelper sharedAppWarpHelper] connectToWarp];
     
@@ -222,6 +178,7 @@ MainScene{
 
         }
     }
+
 }
 
 //damping
@@ -430,11 +387,17 @@ MainScene{
     
     if(validMove) {
         
+        [NetworkManager sendCGPointToServer:launchDirection];
         [MoveManager movePlayer:_dave :launchDirection];
     }
     
     validMove = NO;
     arrowNode.visible = NO;
+}
+
++ (void)updateOpponent:(CGPoint) msg {
+    CCLOG(@"\n\nupdating: %f, %f\n\n",msg.x,msg.y);
+    [MoveManager movePlayer:_huey :msg];
 }
 
 -(void) touchEnded:(UITouch *)touch withEvent:(UIEvent *)event

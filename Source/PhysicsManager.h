@@ -15,7 +15,7 @@
 }
 
 + (void) doDamping: (CCSprite*) player :(float) dampVal;
-+ (BOOL)detectFallOff:(CGPoint) pos :(UIImage*) uiimage;
++ (BOOL) detectFallOff:(CGPoint) pos :(UIImage*) uiimage;
 
 
 @end

@@ -62,7 +62,11 @@ static NFStoryBoardManager *nFStoryBoardManager;
 -(void)updateInformation:(NSDictionary*)dataDict{
     NSLog(@"==updateInformation==");
     _New_impulse = CGPointFromString([dataDict objectForKey:@"impulse"]);
-    NSLog(@"Testtt %@", NSStringFromCGPoint( _New_impulse));
+   // NSLog(@"Testtt %@", NSStringFromCGPoint( _New_impulse));
+    
+    [NetworkManager receiveCGPointFromServer:_New_impulse];
+    
+    
     //[[MainScene sharedMainScene] movePlayer: [[MainScene sharedMainScene] dave]];
     //[[[MainScene sharedMainScene] dave] physicsBody applyImpulse _New_impulse];
 //    [[MainScene sharedMainScene] moveDave:_New_impulse];
@@ -71,7 +75,7 @@ static NFStoryBoardManager *nFStoryBoardManager;
 
 -(void)moveDave:(CGPoint) im{
     //    [self movePlayer:_dave];
-    NSLog(@"MOVEDAVE");
+    //NSLog(@"MOVEDAVE");
     NSLog(@"=%@", NSStringFromCGPoint(im));
     //NSLog(@"TESTETSETSE= %@", NSStringFromCGPoint(start));
     //[_dave.physicsBody applyImpulse: im];

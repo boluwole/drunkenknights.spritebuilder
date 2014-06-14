@@ -1,3 +1,8 @@
+
+static CCSprite *_dave;
+static CCSprite *_huey;
+static CCSprite *_princess;
+
 #define PI (3.14159265359)
 
 #define DAVE 0

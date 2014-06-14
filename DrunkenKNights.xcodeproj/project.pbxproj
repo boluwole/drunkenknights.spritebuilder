@@ -49,6 +49,8 @@
 		F594CD37194BB62E00FE0029 /* RoomListener.m in Sources */ = {isa = PBXBuildFile; fileRef = F594CD32194BB62E00FE0029 /* RoomListener.m */; };
 		F594CD39194BB67B00FE0029 /* AppWarp_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F594CD38194BB67B00FE0029 /* AppWarp_iOS_SDK.framework */; };
 		F594CD3B194BB68400FE0029 /* Shephertz_App42_iOS_API.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F594CD3A194BB68400FE0029 /* Shephertz_App42_iOS_API.framework */; };
+		F594CD41194BC68200FE0029 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F594CD40194BC68200FE0029 /* NetworkManager.m */; };
+		F594CD43194BCD2000FE0029 /* ManagerIncludes.h in Resources */ = {isa = PBXBuildFile; fileRef = F594CD42194BCD2000FE0029 /* ManagerIncludes.h */; };
 		F59F9FE0194854EC00AD2AEC /* GameItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F59F9FDF194854EC00AD2AEC /* GameItem.m */; };
 		F59F9FEC1949579200AD2AEC /* ArrowHead.m in Sources */ = {isa = PBXBuildFile; fileRef = F59F9FEB1949579200AD2AEC /* ArrowHead.m */; };
 		F59F9FF0194957B100AD2AEC /* ArrowBody.m in Sources */ = {isa = PBXBuildFile; fileRef = F59F9FEF194957B100AD2AEC /* ArrowBody.m */; };
@@ -132,6 +134,9 @@
 		F594CD32194BB62E00FE0029 /* RoomListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomListener.m; sourceTree = "<group>"; };
 		F594CD38194BB67B00FE0029 /* AppWarp_iOS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AppWarp_iOS_SDK.framework; sourceTree = "<group>"; };
 		F594CD3A194BB68400FE0029 /* Shephertz_App42_iOS_API.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Shephertz_App42_iOS_API.framework; sourceTree = "<group>"; };
+		F594CD3F194BC68200FE0029 /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkManager.h; path = Source/NetworkManager.h; sourceTree = "<group>"; };
+		F594CD40194BC68200FE0029 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetworkManager.m; path = Source/NetworkManager.m; sourceTree = "<group>"; };
+		F594CD42194BCD2000FE0029 /* ManagerIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ManagerIncludes.h; path = Source/ManagerIncludes.h; sourceTree = "<group>"; };
 		F59F9FDE194854EC00AD2AEC /* GameItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameItem.h; path = Source/GameItem.h; sourceTree = "<group>"; };
 		F59F9FDF194854EC00AD2AEC /* GameItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameItem.m; path = Source/GameItem.m; sourceTree = "<group>"; };
 		F59F9FEA1949579200AD2AEC /* ArrowHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArrowHead.h; path = Source/ArrowHead.h; sourceTree = "<group>"; };
@@ -182,6 +187,7 @@
 				B7378992180767190076A88C /* MainScene.h */,
 				B7378993180767190076A88C /* MainScene.m */,
 				F594CD0F194B8A7700FE0029 /* GameConstants.h */,
+				F594CD42194BCD2000FE0029 /* ManagerIncludes.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -282,6 +288,8 @@
 				F594CD13194B93BA00FE0029 /* PhysicsManager.m */,
 				F594CD15194BAC9400FE0029 /* ItemManager.h */,
 				F594CD16194BAC9400FE0029 /* ItemManager.m */,
+				F594CD3F194BC68200FE0029 /* NetworkManager.h */,
+				F594CD40194BC68200FE0029 /* NetworkManager.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -403,6 +411,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B71F5919188484E7003F4D28 /* Settings.png in Resources */,
+				F594CD43194BCD2000FE0029 /* ManagerIncludes.h in Resources */,
 				B7378978180762440076A88C /* Default@2x.png in Resources */,
 				B71F5914188484E7003F4D28 /* iPad@2x.png in Resources */,
 				B71F5913188484E7003F4D28 /* iPad.png in Resources */,
@@ -440,6 +449,7 @@
 				F594CD33194BB62E00FE0029 /* AppWarpHelper.m in Sources */,
 				F5385AC8194A9C1000690095 /* Box.m in Sources */,
 				F594CD36194BB62E00FE0029 /* NotificationListener.m in Sources */,
+				F594CD41194BC68200FE0029 /* NetworkManager.m in Sources */,
 				853E68161944CDD200C3DA9B /* Huey.m in Sources */,
 				F59F9FE0194854EC00AD2AEC /* GameItem.m in Sources */,
 				F594CD17194BAC9400FE0029 /* ItemManager.m in Sources */,
