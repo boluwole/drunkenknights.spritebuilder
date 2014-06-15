@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8517F45D194D4CD900AD4D85 /* SplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 8517F45C194D4CD900AD4D85 /* SplashScreen.m */; };
+		8517F461194D4CF000AD4D85 /* ItemShop.m in Sources */ = {isa = PBXBuildFile; fileRef = 8517F460194D4CF000AD4D85 /* ItemShop.m */; };
 		853E68101944C53200C3DA9B /* Dave.m in Sources */ = {isa = PBXBuildFile; fileRef = 853E680F1944C53200C3DA9B /* Dave.m */; };
 		853E68161944CDD200C3DA9B /* Huey.m in Sources */ = {isa = PBXBuildFile; fileRef = 853E68151944CDD200C3DA9B /* Huey.m */; };
 		859AC0BA1943EE8400F68F35 /* Princess.m in Sources */ = {isa = PBXBuildFile; fileRef = 859AC0B91943EE8400F68F35 /* Princess.m */; };
@@ -74,6 +76,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8517F45B194D4CD900AD4D85 /* SplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SplashScreen.h; path = Source/SplashScreen.h; sourceTree = "<group>"; };
+		8517F45C194D4CD900AD4D85 /* SplashScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SplashScreen.m; path = Source/SplashScreen.m; sourceTree = "<group>"; };
+		8517F45F194D4CF000AD4D85 /* ItemShop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemShop.h; path = Source/ItemShop.h; sourceTree = "<group>"; };
+		8517F460194D4CF000AD4D85 /* ItemShop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ItemShop.m; path = Source/ItemShop.m; sourceTree = "<group>"; };
 		853E680E1944C53200C3DA9B /* Dave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dave.h; path = Source/Dave.h; sourceTree = "<group>"; };
 		853E680F1944C53200C3DA9B /* Dave.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Dave.m; path = Source/Dave.m; sourceTree = "<group>"; };
 		853E68141944CDD200C3DA9B /* Huey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Huey.h; path = Source/Huey.h; sourceTree = "<group>"; };
@@ -184,10 +190,14 @@
 				F594CD10194B8AC200FE0029 /* Managers */,
 				B737893D1807617C0076A88C /* AppDelegate.h */,
 				B737893E1807617C0076A88C /* AppDelegate.m */,
+				8517F45F194D4CF000AD4D85 /* ItemShop.h */,
+				8517F460194D4CF000AD4D85 /* ItemShop.m */,
 				B7378992180767190076A88C /* MainScene.h */,
 				B7378993180767190076A88C /* MainScene.m */,
 				F594CD0F194B8A7700FE0029 /* GameConstants.h */,
 				F594CD42194BCD2000FE0029 /* ManagerIncludes.h */,
+				8517F45B194D4CD900AD4D85 /* SplashScreen.h */,
+				8517F45C194D4CD900AD4D85 /* SplashScreen.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -440,6 +450,7 @@
 				859AC0BA1943EE8400F68F35 /* Princess.m in Sources */,
 				F594CD0D194B7E6F00FE0029 /* MoveManager.m in Sources */,
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
+				8517F45D194D4CD900AD4D85 /* SplashScreen.m in Sources */,
 				F594CD34194BB62E00FE0029 /* ConnectionListener.m in Sources */,
 				F59F9FEC1949579200AD2AEC /* ArrowHead.m in Sources */,
 				F594CD14194B93BA00FE0029 /* PhysicsManager.m in Sources */,
@@ -450,6 +461,7 @@
 				F5385AC8194A9C1000690095 /* Box.m in Sources */,
 				F594CD36194BB62E00FE0029 /* NotificationListener.m in Sources */,
 				F594CD41194BC68200FE0029 /* NetworkManager.m in Sources */,
+				8517F461194D4CF000AD4D85 /* ItemShop.m in Sources */,
 				853E68161944CDD200C3DA9B /* Huey.m in Sources */,
 				F59F9FE0194854EC00AD2AEC /* GameItem.m in Sources */,
 				F594CD17194BAC9400FE0029 /* ItemManager.m in Sources */,
