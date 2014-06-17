@@ -14,13 +14,6 @@
 
 @interface MainScene : CCScene <CCPhysicsCollisionDelegate> {
     
-    enum ItemType {
-        BARREL = 0,
-        VOMIT = 1,
-        BAIT = 2,
-        POWERUP = 3,
-    };
-    
     CCPhysicsNode *_physicsNode;
     CCPhysicsNode *_backPhysicsNode;
 
@@ -50,9 +43,7 @@
     int daveZ;
     int hueyZ;
     int princessZ;
-    
-    //stage image for falloff detection
-    UIImage* uiimage;
+
     
     //check if falling
     BOOL falling[3];
@@ -68,8 +59,6 @@
     BOOL itemHasDroppedForThisPeriod;
     //CCNode *itemNode;
     CCNode* currItem;
-    CCNode* chosenItem;
-    CGPoint itemMid;
     CCNode* inventory;
     int itemsHeld;
 }

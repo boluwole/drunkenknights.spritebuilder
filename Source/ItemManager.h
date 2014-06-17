@@ -8,9 +8,21 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
+#import "GameConstants.h"
+#import "PhysicsManager.h"
 
 @interface ItemManager : CCNode {
     
 }
+
+enum ItemType {
+    BARREL = 0,
+    VOMIT = 1,
+    BAIT = 2,
+    POWERUP = 3,
+};
+
++ (CCNode*)dropItem;;
++ (CGPoint)itemDisplay;
 
 @end

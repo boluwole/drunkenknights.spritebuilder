@@ -11,6 +11,7 @@
 
 @implementation PhysicsManager
 
+
 + (void) doDamping: (CCSprite*) player :(float) dampVal {
     if(player.physicsBody.velocity.x != 0 || player.physicsBody.velocity.y != 0) player.physicsBody.velocity = ccpMult(player.physicsBody.velocity, dampVal);
     if(ccpLengthSQ(player.physicsBody.velocity) < 0.000001) player.physicsBody.velocity = ccp(0,0);
