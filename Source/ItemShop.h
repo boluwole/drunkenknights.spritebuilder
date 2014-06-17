@@ -13,4 +13,6 @@
     
 }
 
+- (void) loadItem: (int) itemIndex : (CCSprite*) loadableItem;
+
 @end

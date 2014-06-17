@@ -11,7 +11,9 @@
 #define NUM_ITEMS 4
 
 @interface GameItem : CCSprite {
-    
+ 
 }
+
++ (NSArray*) getGameItems;
 
 @end
