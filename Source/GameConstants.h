@@ -1,4 +1,5 @@
 
+static UIImage* uiimage;
 static CCSprite *_dave;
 static CCSprite *_huey;
 static CCSprite *_princess;
@@ -9,6 +10,10 @@ static CCSprite *_princess;
 #define HUEY 1
 #define PRINCESS 2
 
+#define DAVE_START ccp(65,165)
+#define HUEY_START ccp(505,165)
+#define PRINCESS_START ccp(280,189)
+
 #define MOVE_SPEED (20)
 #define VECTOR_CAP (150)
 #define DAMPING (0.978)
@@ -18,8 +23,8 @@ static CCSprite *_princess;
 #define STATUE_REVIVE_TIME (2.0f)
 
 //items
-#define ITEM_DROP_PERIOD (-10)
-#define ITEM_ALIVE_PERIOD (-8)
+#define ITEM_DROP_PERIOD (-5)
+#define ITEM_ALIVE_PERIOD (-4)
 #define INVENTORY_DISTANCE (40)
 #define INVENTORY_POSITION (30)
 
@@ -30,8 +35,11 @@ static CCSprite *_princess;
 #define HUEY_Z 2
 #define ITEM_Z 1
 #define PRINCESS_Z 3
+#define INVENTORY_Z 5
 
 //networking
+#define NETWORKED NO
+
 #define APPWARP_APP_KEY     @"85faf7f29c1ca6c43991cdcbabf81738b0fc3e4db4730fe138e5fc0c776734c1"
 #define APPWARP_SECRET_KEY  @"3a37f88e7db04ead6a809e74fef33213cac24f362786c4b875e888c3ebc69580"
 

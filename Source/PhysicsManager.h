@@ -11,7 +11,7 @@
 #import "GameConstants.h"
 
 @interface PhysicsManager : CCNode {
-    
+
 }
 
 + (void) doDamping: (CCSprite*) player :(float) dampVal;

@@ -18,28 +18,39 @@
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
 
-    _dave = [CCBReader load:@"Dave"];
+    //load players & statue
+    _dave = (CCSprite*)[CCBReader load:@"Dave"];
     [_physicsNode addChild:_dave];
-    _dave.position = ccp(63,155);
+    _dave.position = DAVE_START;
     _dave.scale *= 0.25;
+    daveStart = _dave.position;
     
-    _huey = [CCBReader load:@"Huey"];
+    _huey = (CCSprite*)[CCBReader load:@"Huey"];
     [_physicsNode addChild:_huey];
-    _huey.position = ccp(519,155);
+    _huey.position = HUEY_START;
     _huey.scale *= 0.25;
+    hueyStart = _huey.position;
     
-    _princess = [CCBReader load:@"Princess"];
+    _princess = (CCSprite*)[CCBReader load:@"Princess"];
     [_physicsNode addChild:_princess];
-    _princess.position = ccp(278,189);
+    _princess.position = PRINCESS_START;
     _princess.scale *= 0.30;
+    princessStart = _princess.position;
     
-    //start game timer
-    startTime = [NSDate date];
     
     // tell this scene to accept touches
     self.userInteractionEnabled = TRUE;
+
+    //uiimage for stage falloff detection
+    //intialize stage image for falloff detection
+    CCRenderTexture *renderer =
+    [CCRenderTexture renderTextureWithWidth:_stage.contentSize.width height:_stage.contentSize.height];
+    _stage.anchorPoint = CGPointZero;
+    [renderer begin];
+    [_stage visit];
+    [renderer end];
+    uiimage = [renderer getUIImage];
     
-    _physicsNode.collisionDelegate = self;
     
     //initializations
     validMove = NO;
@@ -48,20 +59,8 @@
         falling[i] = NO;
         reviveCounter[i] = 0;
     }
-    
-    daveStart = _dave.position;
-    hueyStart = _huey.position;
-    princessStart = _princess.position;
 
-    
-    //intialize stage image for falloff detection
-    CCRenderTexture *renderer =
-        [CCRenderTexture renderTextureWithWidth:_stage.contentSize.width height:_stage.contentSize.height];
-    _stage.anchorPoint = CGPointZero;
-    [renderer begin];
-    [_stage visit];
-    [renderer end];
-    uiimage = [renderer getUIImage];
+
     
     //UI arrow indicator
     arrowNode = [[CCNode alloc] init];
@@ -90,15 +89,18 @@
     currItem = [[CCNode alloc] init];
     inventory = [[CCNode alloc] init];
     [self addChild:inventory];
-    
     inventory.position = ccp(INVENTORY_POSITION,INVENTORY_POSITION);
+    //inventory.zOrder = _stage.zOrder + INVENTORY_Z;
   
     for(int i = 0; i < 3; i++) {
         itemBox[i]=[CCBReader load: @"Box"];
         itemBox[i].scale *= 0.3;
-        [inventory addChild: itemBox[i]];
-        itemBox[i].position = ccp(INVENTORY_DISTANCE*i,0);
+        //[inventory addChild: itemBox[i]];
+        [self addChild:itemBox[i]];
+        itemBox[i].position = ccp(INVENTORY_POSITION + INVENTORY_DISTANCE*i,INVENTORY_POSITION);
+        //itemBox[i].position = ccp(INVENTORY_DISTANCE*i,0);
         itemBox[i].opacity *= 0.6;
+        itemBox[i].zOrder = _stage.zOrder + INVENTORY_Z;
     }
     
     itemsHeld = 0;
@@ -112,9 +114,13 @@
     //networking
     //_networkManager = [[NetworkManager alloc] init];
     //[_networkManager setOpponentAndPrincess:_huey :_princess];
+    if(NETWORKED) {
+        [[AppWarpHelper sharedAppWarpHelper] initializeAppWarp];
+        [[AppWarpHelper sharedAppWarpHelper] connectToWarp];
+    }
     
-    [[AppWarpHelper sharedAppWarpHelper] initializeAppWarp];
-    [[AppWarpHelper sharedAppWarpHelper] connectToWarp];
+    //start game timer
+    startTime = [NSDate date];
     
 }
 
@@ -131,7 +137,8 @@
         if(itemHasDroppedForThisPeriod == NO) {
           //  CCLOG(@"DROP IT!\n");
             itemHasDroppedForThisPeriod = YES;
-            [self dropItem];
+            currItem = [ItemManager dropItem];
+            [_physicsNode addChild:currItem];
         }
     }
     
@@ -142,14 +149,22 @@
             itemHasDroppedForThisPeriod = NO;
         }
         else {
+            //item pickup
             if(CGRectContainsPoint([_dave boundingBox], currItem.position)) {
                 //CCLOG(@"pickup\n");
                 if(itemsHeld < 3) {
-                    currItem.position = itemBox[itemsHeld].position;
+                    currItem.anchorPoint = ccp(-0.15,-0.10);
+                    currItem.scale = 0.7;
+                    currItem.position = CGPointZero;
+                    currItem.zOrder = itemBox[itemsHeld].zOrder - 1;
+                    
                     [_physicsNode removeChild:currItem];
-                    [inventory addChild:currItem];
+                    //[inventory addChild:currItem];
+                    [itemBox[itemsHeld] addChild:currItem];
+                    
                     itemsHeld++;
                     itemHasDroppedForThisPeriod = NO;
+                    //send event over to kill this item and update _dave's inventory on huey's side too
                 }
             }
         }
@@ -187,57 +202,6 @@
     if(falling[DAVE] == NO) [PhysicsManager doDamping:_dave :DAMPING];
     if(falling[HUEY] == NO) [PhysicsManager doDamping:_huey :DAMPING];
     if(falling[PRINCESS] == NO) [PhysicsManager doDamping:_princess :DAMPING_STATUE];
-}
-
-//items
-
-- (void)dropItem {
-
-    int randomNum = rand() % 2;
-    switch(randomNum) {
-        case BARREL:
-            //CCLOG(@"\nBarrel Selected");
-            currItem = [CCBReader load:@"Barrel"];
-            break;
-            
-            
-        case VOMIT:
-           // CCLOG(@"\nVomit Selected");
-            currItem = [CCBReader load:@"Vomit"];
-            break;
-    }
-   
-    [_physicsNode addChild:currItem];
-    currItem.scale*=0.2;
-    currItem.position = [self itemDisplay];
-
-}
-
--(CGPoint)itemDisplay{
-    
- //   CCLOG(@"\nReached this method");
-    
-    CGPoint MidPoint, vToMidPoint, MidPointPerp, result;
-    
-    MidPoint = ccpMidpoint(_dave.position, _huey.position);
-    vToMidPoint = ccpSub(MidPoint,_dave.position);
-    MidPointPerp = (rand()%2 == 0) ? ccp(-vToMidPoint.y, vToMidPoint.x) : ccp(vToMidPoint.y, -vToMidPoint.x);
-    MidPointPerp = ccpNormalize(MidPointPerp);
-    
-    result = ccpAdd(MidPoint, ccpMult(MidPointPerp, 50+(rand()%100)));
-    if([PhysicsManager detectFallOff:result :uiimage] == NO) {
-        return result;
-    }
-    else {
-        float r = 100;
-        float theta = ((rand()%6)*(360/6))*PI/180;
-        result = ccpAdd(princessStart,ccp(r*cos(theta),r*sin(theta)));
-        return result;
-    }
-}
-
-- (void)itemDropAnim:(CCTime)delta {
-    
 }
 
 //drops the player, sends it behind the platform
@@ -345,7 +309,26 @@
         validMove = NO;
     }
     
-    
+    //item usage
+    for(int i = 0; i < itemsHeld; i++) {
+        if(CGRectContainsPoint([itemBox[i] boundingBox], touchLocation)) {
+            CCLOG(@"used %d item",i);
+            [itemBox[i] removeAllChildren];
+           
+            
+            for(int j = i+1; j < itemsHeld; j++) {
+                NSArray* child = itemBox[j].children;
+                CCNode* temp = (CCNode*)child[0];
+                if(temp != nil) {
+                [itemBox[j] removeChild:temp];
+                [itemBox[j-1] addChild:temp];
+                }
+            }
+            
+            itemsHeld--;
+            break;
+        }
+    }
     
 }
 
@@ -396,7 +379,7 @@
 }
 
 + (void)updateOpponent:(CGPoint) msg {
-    CCLOG(@"\n\nupdating: %f, %f\n\n",msg.x,msg.y);
+    //CCLOG(@"\n\nupdating: %f, %f\n\n",msg.x,msg.y);
     [MoveManager movePlayer:_huey :msg];
 }
 
