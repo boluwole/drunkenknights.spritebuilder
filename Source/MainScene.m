@@ -2,7 +2,7 @@
 //  MainScene.m
 //  PROJECTNAME
 //
-//  Created by Viktor on 10/10/13.
+//  Created by Viktor on 10ƒ/10/13.
 //  Copyright (c) 2013 Apportable. All rights reserved.
 //
 
@@ -15,9 +15,12 @@
 }
 
 
+
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
 
+    
+    checkEnd=YES;
     //load players & statue
     _dave = (CCSprite*)[CCBReader load:@"Dave"];
     [_physicsNode addChild:_dave];
@@ -37,6 +40,14 @@
     _princess.scale *= 0.30;
     princessStart = _princess.position;
     
+    daveRess = (CCSprite*)[CCBReader load:@"DaveRess"];
+    hueyRess = (CCSprite*)[CCBReader load:@"HueyRess"];
+    [_physicsNode addChild: daveRess];
+    [_physicsNode addChild: hueyRess];
+    daveRess.position= DAVE_RESS;
+    hueyRess.position= HUEY_RESS;
+    daveRess.scale *= 0.4;
+    hueyRess.scale *= 0.4;
     
     // tell this scene to accept touches
     self.userInteractionEnabled = TRUE;
@@ -128,6 +139,27 @@
     startTime = [NSDate date];
     
 }
+-(void)checkGameEnd{
+
+
+   if(checkEnd && (CGRectContainsPoint([daveRess boundingBox], _princess.position) || CGRectContainsPoint([hueyRess boundingBox], _princess.position))) {
+    
+        CCLOG(@"\n BITCH IS HOME... FUCK U ASSHOLE");
+        checkEnd=NO;
+        [[CCDirector sharedDirector] pushScene:[CCBReader loadAsScene:@"SplashScreen"]];
+    }
+    
+    
+ /*   if(checkEnd && (ccpDistanceSQ(daveRess.position, _princess.position) <= 25 || ccpDistanceSQ(hueyRess.position, _princess.position) <= 25)){
+        
+        CCLOG(@"\n BITCH IS HOME...");
+        checkEnd=NO;
+        
+    }*/
+    
+    
+}
+
 
 
 - (void)update:(CCTime)delta {
@@ -146,7 +178,7 @@
             [_physicsNode addChild:currItem];
         }
     }
-    
+    [self checkGameEnd];
     //kill item
     if(itemHasDroppedForThisPeriod == YES) {
         if((int)timeElapsed == ITEM_ALIVE_PERIOD) {

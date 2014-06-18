@@ -18,8 +18,6 @@
     CCPhysicsNode *_backPhysicsNode;
 
     CCSprite *_stage;
-    CCSprite *_barrel;
-    CCSprite *_vomit;
     CCNode *itemBox[3];
     
     CCNode *arrowNode;
@@ -65,8 +63,16 @@
     int activatedItemIndex;
     int itemsHeld;
     
+
     //item effects
     CCNode* activeVomits;
+
+
+    //for RessStones
+    CCNode* daveRess;
+    CCNode* hueyRess;
+    BOOL checkEnd;
+
 }
 
 +(void) updateOpponent :(CGPoint) msg;
