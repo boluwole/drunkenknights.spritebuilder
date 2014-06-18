@@ -28,6 +28,7 @@
 #import "AppWarpHelper.h"
 #import "AppDelegate.h"
 #import "CCBuilderReader.h"
+#import "GameConstants.h"
 
 @implementation AppController
 
@@ -60,7 +61,8 @@
 
 - (CCScene*) startScene
 {
-    return [CCBReader loadAsScene:@"MainScene"];
+    if(NETWORKED) return [CCBReader loadAsScene:@"SplashScreen"];
+    else return [CCBReader loadAsScene:@"MainScene"];
 }
 
 @end

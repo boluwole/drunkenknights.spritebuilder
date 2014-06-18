@@ -124,7 +124,7 @@ static AppWarpHelper *appWarpHelper;
 {
     NSLog(@"\n==connectToWarp==\n");
 
-    [[WarpClient getInstance] connectWithUserName:@"Ethan"];
+    [[WarpClient getInstance] connectWithUserName:@"ETHAN"];
 }
 
 -(void)scheduleRecover
@@ -432,7 +432,7 @@ static AppWarpHelper *appWarpHelper;
     {
 		NSLog(@"user pressed OK");
         //[[NFStoryBoardManager sharedNFStoryBoardManager] showUserNameView];
-        [[AppWarpHelper sharedAppWarpHelper] connectToWarp];
+        //[[AppWarpHelper sharedAppWarpHelper] connectToWarp];
 	}
 	else
     {
