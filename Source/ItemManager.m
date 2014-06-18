@@ -57,4 +57,22 @@
     }
 }
 
+
++ (int) useItem : (__strong CCNode*[]) itemBoxes : (int) index : (int) itemsHeld {
+    //[itemBoxes[index] removeAllChildren];
+
+
+    for(int j = index+1; j < itemsHeld; j++) {
+        NSArray* child = itemBoxes[j].children;
+        CCNode* temp = (CCNode*)child[0];
+        if(temp != nil) {
+            [itemBoxes[j] removeChild:temp];
+            [itemBoxes[j-1] addChild:temp];
+        }
+    }
+
+     return itemsHeld-1;
+}
+
+
 @end

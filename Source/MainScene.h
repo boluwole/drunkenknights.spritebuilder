@@ -27,6 +27,7 @@
     //network manager
 
     BOOL validMove;
+    BOOL validItemMove;
     
     //drag vector for movement
     CGPoint start;
@@ -60,6 +61,8 @@
     //CCNode *itemNode;
     CCNode* currItem;
     CCNode* inventory;
+    CCNode* activatedItem;
+    int activatedItemIndex;
     int itemsHeld;
 }
 

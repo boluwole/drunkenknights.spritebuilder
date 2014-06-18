@@ -60,7 +60,7 @@
 
 - (CCScene*) startScene
 {
-    return [CCBReader loadAsScene:@"SplashScreen"];
+    return [CCBReader loadAsScene:@"MainScene"];
 }
 
 @end

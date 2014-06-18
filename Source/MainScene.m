@@ -54,6 +54,7 @@
     
     //initializations
     validMove = NO;
+    validItemMove = NO;
 
     for(int i = DAVE; i < HUEY; i++) {
         falling[i] = NO;
@@ -150,9 +151,11 @@
         }
         else {
             //item pickup
+            currItem.rotation+=10;
             if(CGRectContainsPoint([_dave boundingBox], currItem.position)) {
                 //CCLOG(@"pickup\n");
                 if(itemsHeld < 3) {
+                    currItem.rotation = 0;
                     currItem.anchorPoint = ccp(-0.15,-0.10);
                     currItem.scale = 0.7;
                     currItem.position = CGPointZero;
@@ -312,20 +315,10 @@
     //item usage
     for(int i = 0; i < itemsHeld; i++) {
         if(CGRectContainsPoint([itemBox[i] boundingBox], touchLocation)) {
-            CCLOG(@"used %d item",i);
-            [itemBox[i] removeAllChildren];
-           
-            
-            for(int j = i+1; j < itemsHeld; j++) {
-                NSArray* child = itemBox[j].children;
-                CCNode* temp = (CCNode*)child[0];
-                if(temp != nil) {
-                [itemBox[j] removeChild:temp];
-                [itemBox[j-1] addChild:temp];
-                }
-            }
-            
-            itemsHeld--;
+            NSArray* child = itemBox[i].children;
+            activatedItem = (CCNode*)child[0];
+            activatedItemIndex = i;
+            validItemMove = YES;
             break;
         }
     }
@@ -335,10 +328,11 @@
 - (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
     
+    CGPoint touchLocation = [touch locationInNode:self];
     //CCLOG(@"touch moved");
     // whenever touches move, update the position of the mouseJointNode to the touch position
     if (validMove){
-        CGPoint touchLocation = [touch locationInNode:self];
+        
         end = touchLocation;
         
         start = _dave.position;
@@ -364,6 +358,16 @@
         
         arrowNode.visible = YES;
     }
+    
+    if(validItemMove) {
+        //touchLocation = [touch locationInNode:self];
+        [activatedItem.parent removeChild:activatedItem];
+        [_physicsNode addChild:activatedItem];
+        activatedItem.scale = 0.3;
+        activatedItem.anchorPoint = ccp(0.5,0.5);
+        activatedItem.opacity = 0.5;
+        activatedItem.position = touchLocation;
+    }
 }
 
 - (void)releaseTouch {
@@ -376,6 +380,7 @@
     
     validMove = NO;
     arrowNode.visible = NO;
+    
 }
 
 + (void)updateOpponent:(CGPoint) msg {
@@ -387,15 +392,48 @@
 {
     // when touches end, meaning the user releases their finger, release the catapult
     [self releaseTouch];
+    
+    CGPoint touchLocation = [touch locationInNode:self];
+    if(validItemMove && (![PhysicsManager detectFallOff:touchLocation :uiimage])) {
+        itemsHeld = [ItemManager useItem:(itemBox) :activatedItemIndex :itemsHeld];
+        activatedItem.opacity = 1.0;
+         //activatedItem.p
+        activatedItem.scale = 0.2;
+        validItemMove = NO;
+    }
+    else if(validItemMove) {
+        activatedItem.anchorPoint = ccp(-0.15,-0.10);
+        activatedItem.scale = 0.7;
+        activatedItem.position = CGPointZero;
+        activatedItem.zOrder = itemBox[activatedItemIndex].zOrder - 1;
+        
+        [_physicsNode removeChild:currItem];
+        //[inventory addChild:currItem];
+        [itemBox[activatedItemIndex] addChild:currItem];
+
+        validItemMove = NO;
+    }
 }
 
 -(void) touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
 {
     // when touches are cancelled, meaning the user drags their finger off the screen or onto something else, release the catapult
     [self releaseTouch];
+//    CGPoint touchLocation = [touch locationInNode:self];
+//    if(validItemMove && [PhysicsManager detectFallOff:touchLocation :uiimage]) {
+//        itemsHeld = [ItemManager useItem:(itemBox) :activateItemIndex :itemsHeld];
+//        [_physicsNode addChild:activatedItem];
+//        activatedItem.anchorPoint = CGPointZero;
+//        activatedItem.scale = 0.3;
+//        activatedItem.position = touchLocation;
+//        
+//        validItemMove = NO;
+//    }
+//    else {
+//        activatedItem.position = itemBox[activateItemIndex].position;
+//        validItemMove = NO;
+//    }
+
 }
-
-
-
 
 @end

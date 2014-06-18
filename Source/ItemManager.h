@@ -24,5 +24,6 @@ enum ItemType {
 
 + (CCNode*)dropItem;;
 + (CGPoint)itemDisplay;
++ (int) useItem : (__strong CCNode*[]) itemBoxes : (int) index : (int) itemsHeld;
 
 @end
