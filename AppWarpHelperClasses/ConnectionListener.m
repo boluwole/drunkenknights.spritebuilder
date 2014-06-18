@@ -24,7 +24,12 @@
     {
         NSLog(@"connection success");
         //[[WarpClient getInstance] joinRoom:[[AppWarpHelper sharedAppWarpHelper] roomId]];
-        [[WarpClient getInstance] joinRoomInRangeBetweenMinUsers:0 andMaxUsers:1 maxPrefered:YES];
+        //[[WarpClient getInstance] joinRoomInRangeBetweenMinUsers:0 andMaxUsers:1 maxPrefered:YES];
+        [[WarpClient getInstance] getAllRooms];
+        //[WarpClient getInstance]joinRoom:<#(NSString *)#>
+        //[WarpClient getInstance] createRoomWithRoomName:<#(NSString *)#> roomOwner:<#(NSString *)#> properties:<#(NSDictionary *)#> maxUsers:<#(int)#>
+        
+        
     }
     else if (event.result==SUCCESS_RECOVERED)
     {
@@ -108,6 +113,9 @@
 -(void)onGetAllRoomsDone:(AllRoomsEvent*)event{
     if (event.result == SUCCESS) {
         //[[WarpClient getInstance]getOnlineUsers];
+        for (NSMutableArray *room in event.roomIds) {
+            NSLog(@"%@", room);
+        }
     }
     else {
     }

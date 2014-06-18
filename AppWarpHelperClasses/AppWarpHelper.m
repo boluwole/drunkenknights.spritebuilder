@@ -432,6 +432,7 @@ static AppWarpHelper *appWarpHelper;
     {
 		NSLog(@"user pressed OK");
         //[[NFStoryBoardManager sharedNFStoryBoardManager] showUserNameView];
+        [[AppWarpHelper sharedAppWarpHelper] connectToWarp];
 	}
 	else
     {
