@@ -10,14 +10,14 @@ static CCSprite *_princess;
 #define HUEY 1
 #define PRINCESS 2
 
-#define DAVE_START ccp(65,165)
-#define HUEY_START ccp(505,165)
+#define DAVE_START ccp(130,165)
+#define HUEY_START ccp(450,165)
 #define PRINCESS_START ccp(280,189)
 
 #define MOVE_SPEED (20)
 #define VECTOR_CAP (150)
 #define DAMPING (0.978)
-#define DAMPING_STATUE (0.8)
+#define DAMPING_STATUE (0.9)
 
 #define PLAYER_REVIVE_TIME (3.0f)
 #define STATUE_REVIVE_TIME (2.0f)
@@ -27,6 +27,8 @@ static CCSprite *_princess;
 #define ITEM_ALIVE_PERIOD (-4)
 #define INVENTORY_DISTANCE (40)
 #define INVENTORY_POSITION (30)
+#define DAVE_RESS ccp(35,165)
+#define HUEY_RESS ccp(510,165)
 
 #define ARROW_DOTS 10
 
@@ -38,7 +40,7 @@ static CCSprite *_princess;
 #define INVENTORY_Z 5
 
 //networking
-#define NETWORKED YES
+#define NETWORKED NO
 
 #define APPWARP_APP_KEY     @"85faf7f29c1ca6c43991cdcbabf81738b0fc3e4db4730fe138e5fc0c776734c1"
 #define APPWARP_SECRET_KEY  @"3a37f88e7db04ead6a809e74fef33213cac24f362786c4b875e888c3ebc69580"
