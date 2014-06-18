@@ -32,6 +32,32 @@
 		<string></string>
 		<key>memberVarAssignmentType</key>
 		<integer>0</integer>
+		<key>physicsBody</key>
+		<dict>
+			<key>affectedByGravity</key>
+			<false/>
+			<key>allowsRotation</key>
+			<false/>
+			<key>bodyShape</key>
+			<integer>1</integer>
+			<key>cornerRadius</key>
+			<real>56.78515625</real>
+			<key>density</key>
+			<real>1</real>
+			<key>dynamic</key>
+			<false/>
+			<key>elasticity</key>
+			<real>0.30000001192092896</real>
+			<key>friction</key>
+			<real>1</real>
+			<key>points</key>
+			<array>
+				<array>
+					<real>58.09375</real>
+					<real>60.734375</real>
+				</array>
+			</array>
+		</dict>
 		<key>properties</key>
 		<array>
 			<dict>
@@ -40,7 +66,7 @@
 				<key>type</key>
 				<string>StringSimple</string>
 				<key>value</key>
-				<string></string>
+				<string>Barrel</string>
 			</dict>
 			<dict>
 				<key>name</key>
@@ -88,7 +114,7 @@
 				<key>value</key>
 				<array>
 					<string></string>
-					<string>Assets/Huey_ressurect.png</string>
+					<string>Assets/barrel.png</string>
 				</array>
 			</dict>
 			<dict>
@@ -98,9 +124,9 @@
 				<string>Color3</string>
 				<key>value</key>
 				<array>
-					<real>0.32797911763191223</real>
-					<real>0.23308366537094116</real>
-					<real>0.19099558889865875</real>
+					<real>1</real>
+					<real>1</real>
+					<real>1</real>
 					<real>1</real>
 				</array>
 			</dict>

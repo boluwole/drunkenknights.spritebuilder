@@ -39,6 +39,32 @@
 		<string></string>
 		<key>memberVarAssignmentType</key>
 		<integer>0</integer>
+		<key>physicsBody</key>
+		<dict>
+			<key>affectedByGravity</key>
+			<false/>
+			<key>allowsRotation</key>
+			<false/>
+			<key>bodyShape</key>
+			<integer>1</integer>
+			<key>cornerRadius</key>
+			<real>58.7890625</real>
+			<key>density</key>
+			<real>100</real>
+			<key>dynamic</key>
+			<false/>
+			<key>elasticity</key>
+			<real>0.30000001192092896</real>
+			<key>friction</key>
+			<real>0.30000001192092896</real>
+			<key>points</key>
+			<array>
+				<array>
+					<real>62.31640625</real>
+					<real>41.26171875</real>
+				</array>
+			</array>
+		</dict>
 		<key>properties</key>
 		<array>
 			<dict>
@@ -47,7 +73,7 @@
 				<key>type</key>
 				<string>StringSimple</string>
 				<key>value</key>
-				<string></string>
+				<string>Vomit</string>
 			</dict>
 			<dict>
 				<key>name</key>
@@ -95,7 +121,7 @@
 				<key>value</key>
 				<array>
 					<string></string>
-					<string>Assets/Dave_ressurect.png</string>
+					<string>Assets/vomit.png</string>
 				</array>
 			</dict>
 			<dict>
@@ -106,8 +132,8 @@
 				<key>value</key>
 				<array>
 					<real>1</real>
-					<real>0.80669891834259033</real>
-					<real>0.19534248113632202</real>
+					<real>1</real>
+					<real>1</real>
 					<real>1</real>
 				</array>
 			</dict>

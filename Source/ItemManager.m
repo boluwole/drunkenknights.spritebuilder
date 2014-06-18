@@ -28,8 +28,10 @@
     }
     
     //[_physicsNode addChild:currItem];
-    item.scale*=0.2;
+    item.scale*=0.3;
+    [item setColor:[CCColor colorWithWhite:0.5 alpha:1.0]];
     item.position = [ItemManager itemDisplay];
+    item.physicsBody.collisionMask = @[];
     return item;
     
 }
@@ -57,8 +59,14 @@
     }
 }
 
++ (void) itemEntersInventory: (CCNode*) item {
+    item.anchorPoint = CGPointZero;
+    item.scale = 0.3;
+    item.position = CGPointZero;
+    item.opacity = 1.0;
+}
 
-+ (int) useItem : (__strong CCNode*[]) itemBoxes : (int) index : (int) itemsHeld {
++ (int) useItem: (__strong CCNode*[]) itemBoxes : (int) index : (int) itemsHeld {
     //[itemBoxes[index] removeAllChildren];
 
 
@@ -71,8 +79,17 @@
         }
     }
 
-     return itemsHeld-1;
+    
+    return itemsHeld-1;
 }
 
++ (void) activateItemAbilities: (CCNode*) item {
+    if([item.name  isEqual: @"Barrel"]) {
+        item.physicsBody.collisionMask = NULL;
+    }
+    else if([item.name  isEqual: @"Vomit"]) {
+        
+    }
+}
 
 @end

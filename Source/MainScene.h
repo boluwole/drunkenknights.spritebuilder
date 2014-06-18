@@ -64,6 +64,9 @@
     CCNode* activatedItem;
     int activatedItemIndex;
     int itemsHeld;
+    
+    //item effects
+    CCNode* activeVomits;
 }
 
 +(void) updateOpponent :(CGPoint) msg;

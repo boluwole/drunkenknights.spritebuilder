@@ -88,16 +88,16 @@
     
     //item node
     currItem = [[CCNode alloc] init];
-    inventory = [[CCNode alloc] init];
-    [self addChild:inventory];
-    inventory.position = ccp(INVENTORY_POSITION,INVENTORY_POSITION);
+    //inventory = [[CCNode alloc] init];
+    //[self addChild:inventory];
+    //inventory.position = ccp(INVENTORY_POSITION,INVENTORY_POSITION);
     //inventory.zOrder = _stage.zOrder + INVENTORY_Z;
   
     for(int i = 0; i < 3; i++) {
         itemBox[i]=[CCBReader load: @"Box"];
         itemBox[i].scale *= 0.3;
         //[inventory addChild: itemBox[i]];
-        [self addChild:itemBox[i]];
+        [_physicsNode addChild:itemBox[i]];
         itemBox[i].position = ccp(INVENTORY_POSITION + INVENTORY_DISTANCE*i,INVENTORY_POSITION);
         //itemBox[i].position = ccp(INVENTORY_DISTANCE*i,0);
         itemBox[i].opacity *= 0.6;
@@ -105,6 +105,10 @@
     }
     
     itemsHeld = 0;
+    
+    //item effects
+    activeVomits = [[CCNode alloc] init];
+    [_physicsNode addChild:activeVomits];
     
     //z orders
     currItem.zOrder = _stage.zOrder + ITEM_Z;
@@ -156,10 +160,9 @@
                 //CCLOG(@"pickup\n");
                 if(itemsHeld < 3) {
                     currItem.rotation = 0;
-                    currItem.anchorPoint = ccp(-0.15,-0.10);
-                    currItem.scale = 0.7;
-                    currItem.position = CGPointZero;
+                    [ItemManager itemEntersInventory:currItem];
                     currItem.zOrder = itemBox[itemsHeld].zOrder - 1;
+                    [currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
                     
                     [_physicsNode removeChild:currItem];
                     //[inventory addChild:currItem];
@@ -363,7 +366,7 @@
         //touchLocation = [touch locationInNode:self];
         [activatedItem.parent removeChild:activatedItem];
         [_physicsNode addChild:activatedItem];
-        activatedItem.scale = 0.3;
+        activatedItem.scale = 0.5;
         activatedItem.anchorPoint = ccp(0.5,0.5);
         activatedItem.opacity = 0.5;
         activatedItem.position = touchLocation;
@@ -395,44 +398,34 @@
     
     CGPoint touchLocation = [touch locationInNode:self];
     if(validItemMove && (![PhysicsManager detectFallOff:touchLocation :uiimage])) {
+       //valid use of item
+        
         itemsHeld = [ItemManager useItem:(itemBox) :activatedItemIndex :itemsHeld];
         activatedItem.opacity = 1.0;
-         //activatedItem.p
-        activatedItem.scale = 0.2;
-        validItemMove = NO;
+        activatedItem.scale = 0.4;
+        activatedItem.zOrder = _dave.zOrder - 1;
+        [ItemManager activateItemAbilities:activatedItem];
     }
     else if(validItemMove) {
-        activatedItem.anchorPoint = ccp(-0.15,-0.10);
-        activatedItem.scale = 0.7;
-        activatedItem.position = CGPointZero;
+        [ItemManager itemEntersInventory:activatedItem];
         activatedItem.zOrder = itemBox[activatedItemIndex].zOrder - 1;
-        
-        [_physicsNode removeChild:currItem];
-        //[inventory addChild:currItem];
-        [itemBox[activatedItemIndex] addChild:currItem];
-
-        validItemMove = NO;
+        [_physicsNode removeChild:activatedItem];
+        [itemBox[activatedItemIndex] addChild:activatedItem];
     }
+    validItemMove = NO;
 }
 
 -(void) touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
 {
     // when touches are cancelled, meaning the user drags their finger off the screen or onto something else, release the catapult
     [self releaseTouch];
-//    CGPoint touchLocation = [touch locationInNode:self];
-//    if(validItemMove && [PhysicsManager detectFallOff:touchLocation :uiimage]) {
-//        itemsHeld = [ItemManager useItem:(itemBox) :activateItemIndex :itemsHeld];
-//        [_physicsNode addChild:activatedItem];
-//        activatedItem.anchorPoint = CGPointZero;
-//        activatedItem.scale = 0.3;
-//        activatedItem.position = touchLocation;
-//        
-//        validItemMove = NO;
-//    }
-//    else {
-//        activatedItem.position = itemBox[activateItemIndex].position;
-//        validItemMove = NO;
-//    }
+    if(validItemMove) {
+        [ItemManager itemEntersInventory:activatedItem];
+        activatedItem.zOrder = itemBox[activatedItemIndex].zOrder - 1;
+        [_physicsNode removeChild:activatedItem];
+        [itemBox[activatedItemIndex] addChild:activatedItem];
+    }
+    validItemMove = NO;
 
 }
 
