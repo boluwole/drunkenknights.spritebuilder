@@ -39,6 +39,15 @@ static CCSprite *_princess;
 #define PRINCESS_Z 3
 #define INVENTORY_Z 5
 
+//Gong
+#define GONG_POSITION ccp(295,295)
+#define GONG_DURATION 5
+#define GONG_COOLDOWN 10
+
+
+//Portal
+#define PORTAL_POSITION_MAIN ccp(300,30);
+
 //networking
 #define NETWORKED NO
 

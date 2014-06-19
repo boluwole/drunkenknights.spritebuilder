@@ -52,6 +52,7 @@
     
     //game timer
     NSDate *startTime;
+    NSDate *portalTime;
     NSTimeInterval timeElapsed;
     
     //for items
@@ -72,6 +73,16 @@
     CCNode* daveRess;
     CCNode* hueyRess;
     BOOL checkEnd;
+    
+    
+    //for Gong
+    CCNode* gong;
+    BOOL gongAccess;
+    BOOL gongColorChange;
+    NSTimeInterval gongTime;
+    int gongCounter;
+    
+    
 
 }
 

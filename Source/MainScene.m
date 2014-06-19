@@ -18,7 +18,10 @@
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
-
+    
+    gongColorChange=YES;
+    gongAccess=YES;
+    gongCounter = 0;
     
     checkEnd=YES;
     //load players & statue
@@ -48,6 +51,12 @@
     hueyRess.position= HUEY_RESS;
     daveRess.scale *= 0.4;
     hueyRess.scale *= 0.4;
+    
+    gong=(CCSprite*)[CCBReader load: @"Gongs"];
+    [_physicsNode addChild: gong];
+    gong.position= GONG_POSITION;
+    gong.scale *= 0.3;
+    
     
     // tell this scene to accept touches
     self.userInteractionEnabled = TRUE;
@@ -137,14 +146,12 @@
     
     //start game timer
     startTime = [NSDate date];
-    
 }
 -(void)checkGameEnd{
 
 
    if(checkEnd && (CGRectContainsPoint([daveRess boundingBox], _princess.position) || CGRectContainsPoint([hueyRess boundingBox], _princess.position))) {
     
-        CCLOG(@"\n BITCH IS HOME... FUCK U ASSHOLE");
         checkEnd=NO;
         [[CCDirector sharedDirector] pushScene:[CCBReader loadAsScene:@"SplashScreen"]];
     }
@@ -166,7 +173,7 @@
     
     //items
     timeElapsed = [startTime timeIntervalSinceNow];
-    
+    gongTime = [portalTime timeIntervalSinceNow];
     //drop item
     if((int)timeElapsed == ITEM_DROP_PERIOD) {
         
@@ -178,6 +185,16 @@
             [_physicsNode addChild:currItem];
         }
     }
+    
+//    if(reviveTime >= 100){
+//        
+//        CCLOG(@"\n It is Time");
+//        reviveTime=0;
+//        gongAccess=YES;
+//        
+//    }
+    
+    [self checkGong];
     [self checkGameEnd];
     //kill item
     if(itemHasDroppedForThisPeriod == YES) {
@@ -460,5 +477,46 @@
     validItemMove = NO;
 
 }
+
+-(void) checkGong{
+    
+    
+    if(CGRectContainsPoint([gong boundingBox] , _dave.position) && gongAccess){
+        
+        if(gongColorChange){
+        [gong setColor:[CCColor colorWithRed:0.5 green:0.8 blue:0.9 alpha:1.0]];
+            gongColorChange=NO;
+        }
+            CGPoint daveRes = daveRess.position;
+            daveRess.position = hueyRess.position;
+            hueyRess.position = daveRes;
+            gongAccess = NO ;
+            gongCounter = 0 ;
+        
+            [self schedule:@selector(reactivateGong:) interval:1.0f];
+        
+    }
+}
+
+-(void) reactivateGong: (CCTime)delta {
+    
+    gongCounter++;
+    
+    if(gongCounter == GONG_DURATION) {
+        CGPoint daveRes = daveRess.position;
+        daveRess.position = hueyRess.position;
+        hueyRess.position = daveRes;
+    }
+    
+    if(gongCounter == GONG_COOLDOWN) {
+        gongColorChange=YES;
+        gongAccess = YES;
+        [gong setColor:[CCColor colorWithRed:0.5 green:(1/(0.80f)) blue:(1/(0.90f)) alpha:1.0]];
+        [self unschedule:@selector(reactivateGong:)];
+    }
+}
+
+
+
 
 @end
