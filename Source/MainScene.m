@@ -120,6 +120,7 @@
     //item effects
     activeVomits = [[CCNode alloc] init];
     [_physicsNode addChild:activeVomits];
+    activeVomitLifetimes = [[NSMutableArray alloc] init];
     
     //z orders
     currItem.zOrder = _stage.zOrder + ITEM_Z;
@@ -166,22 +167,26 @@
     
     //items
     timeElapsed = [startTime timeIntervalSinceNow];
-    
+    [self checkGameEnd];
+
+    //CCLOG(@"%d",(int)timeElapsed);
     //drop item
-    if((int)timeElapsed == ITEM_DROP_PERIOD) {
-        
-        startTime = [NSDate date];
+    if(timeElapsed < -5) {
+    if(((int)timeElapsed % ITEM_DROP_PERIOD) == 0) {
+        //CCLOG(@"drop\n");
+        //startTime = [NSDate date];
         if(itemHasDroppedForThisPeriod == NO) {
           //  CCLOG(@"DROP IT!\n");
             itemHasDroppedForThisPeriod = YES;
             currItem = [ItemManager dropItem];
             [_physicsNode addChild:currItem];
+            currItemDropTime = timeElapsed;
         }
     }
-    [self checkGameEnd];
-    //kill item
+        //kill item
     if(itemHasDroppedForThisPeriod == YES) {
-        if((int)timeElapsed == ITEM_ALIVE_PERIOD) {
+        if((timeElapsed - currItemDropTime) <= ITEM_ALIVE_PERIOD) {
+             //CCLOG(@"kill\n");
             [_physicsNode removeChild:currItem];
             itemHasDroppedForThisPeriod = NO;
         }
@@ -207,6 +212,7 @@
             }
         }
     }
+    }
     
     //detect falloff
     if([PhysicsManager detectFallOff:_dave.position :uiimage]) {
@@ -231,6 +237,10 @@
 
         }
     }
+
+    
+    //vomit check
+    [ItemManager vomitCheck:activeVomits :activeVomitLifetimes :timeElapsed :_dave :_huey :_princess];
 
 }
 
@@ -436,7 +446,7 @@
         activatedItem.opacity = 1.0;
         activatedItem.scale = 0.4;
         activatedItem.zOrder = _dave.zOrder - 1;
-        [ItemManager activateItemAbilities:activatedItem];
+        [self activateItemAbilities:activatedItem];
     }
     else if(validItemMove) {
         [ItemManager itemEntersInventory:activatedItem];
@@ -460,5 +470,19 @@
     validItemMove = NO;
 
 }
+
+- (void) activateItemAbilities: (CCNode*) item {
+    if([item.name  isEqual: @"Barrel"]) {
+        item.physicsBody.collisionMask = NULL;
+    }
+    else if([item.name  isEqual: @"Vomit"]) {
+        [item removeFromParent];
+        [activeVomits addChild:item];
+        //NSTimeInterval currTime = timeElapsed;
+        [activeVomitLifetimes addObject:[NSNumber numberWithFloat:timeElapsed]];
+    }
+}
+
+
 
 @end

@@ -23,12 +23,15 @@ static CCSprite *_princess;
 #define STATUE_REVIVE_TIME (2.0f)
 
 //items
-#define ITEM_DROP_PERIOD (-5)
+#define ITEM_DROP_PERIOD (5)
 #define ITEM_ALIVE_PERIOD (-4)
 #define INVENTORY_DISTANCE (40)
 #define INVENTORY_POSITION (30)
 #define DAVE_RESS ccp(35,165)
 #define HUEY_RESS ccp(510,165)
+
+#define VOMIT_LIFE (-7)
+#define VOMIT_MULTIPLIER (1.2)
 
 #define ARROW_DOTS 10
 
