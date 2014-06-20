@@ -130,6 +130,7 @@
                     _item1.scale *= 0.5;
                 
                 _item1Index = _currentItem;
+                [GameVariables setItemIndex1:_currentItem];
             }
             
         }
@@ -147,6 +148,7 @@
                     _item2.scale *= 0.5;
                 
                 _item2Index = _currentItem;
+                [GameVariables setItemIndex2:_currentItem];
             }
         }
     }
@@ -175,6 +177,7 @@
 
 
 - (void)startGame {
+    
     CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
     [[CCDirector sharedDirector] replaceScene:mainScene];
 }

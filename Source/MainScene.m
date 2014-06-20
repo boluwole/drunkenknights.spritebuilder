@@ -241,7 +241,7 @@
     
     //vomit check
     [ItemManager vomitCheck:activeVomits :activeVomitLifetimes :timeElapsed :_dave :_huey :_princess];
-
+    CCLOG(@"%d, %d",[GameVariables getItemIndex1],[GameVariables getItemIndex2]);
 }
 
 //damping
