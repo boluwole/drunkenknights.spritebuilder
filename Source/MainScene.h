@@ -8,6 +8,8 @@
 
 #import "CCNode.h"
 #import "ManagerIncludes.h"
+#import "GameItem.h"
+#import "GameItemData.h"
 
 #import "AppWarpHelper.h"
 #import <AppWarp_iOS_SDK/AppWarp_iOS_SDK.h>
