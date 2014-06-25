@@ -178,6 +178,7 @@
 
 - (void)startGame {
     
+<<<<<<< HEAD
     
     //steps
     //check that there are two people in room
@@ -252,6 +253,10 @@
         CCScene *gameRoomScene = [CCBReader loadAsScene:@"GameRoom"];
         [[CCDirector sharedDirector] replaceScene:gameRoomScene];
     }
+=======
+    CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
+    [[CCDirector sharedDirector] replaceScene:mainScene];
+>>>>>>> 6f8224727a407b2e8ba232bb9d8980c5ae6f16d9
 }
 
 

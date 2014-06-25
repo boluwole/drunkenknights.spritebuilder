@@ -64,6 +64,7 @@
 }
 
 + (void) itemEntersInventory: (CCNode*) item {
+    item.physicsBody.collisionMask = @[];
     item.anchorPoint = CGPointZero;
     item.scale = 0.3;
     if([item.name isEqual:@"Ghost"]) {

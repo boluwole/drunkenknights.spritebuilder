@@ -12,6 +12,7 @@
 
 +(int) getItemIndex1;
 +(int) getItemIndex2;
+<<<<<<< HEAD
 +(NSString*) getJoinRoomSuccess;
 +(NSString*) getInitConnectionStatus;
 +(NSString*) getCurrentRoom;
@@ -23,4 +24,10 @@
 + (void) setJoinRoomSuccess:(NSString*) value;
 + (void) setCurrentRoom:(NSString*) value;
 
+=======
++(NSString*) getInitConnectionStatus;
++ (void) setItemIndex1 :(int) value ;
++ (void) setItemIndex2 :(int) value ;
++ (void) setInitConnectionStatus :(NSString*) value ;
+>>>>>>> 6f8224727a407b2e8ba232bb9d8980c5ae6f16d9
 @end

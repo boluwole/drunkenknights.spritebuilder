@@ -14,9 +14,12 @@
 static int itemIndex1 = 0;
 static int itemIndex2 = 0;
 static NSString* initConnectionStatus ;
+<<<<<<< HEAD
 static NSString* roomJoinSuccess;
 static NSString* currentRoom;
 
+=======
+>>>>>>> 6f8224727a407b2e8ba232bb9d8980c5ae6f16d9
 
 +(int) getItemIndex1
 {
@@ -48,6 +51,7 @@ static NSString* currentRoom;
     initConnectionStatus = value;
 }
 
+<<<<<<< HEAD
 
 +(NSString*) getJoinRoomSuccess
 {
@@ -92,4 +96,6 @@ static NSString* currentRoom;
 }
 
 
+=======
+>>>>>>> 6f8224727a407b2e8ba232bb9d8980c5ae6f16d9
 @end
