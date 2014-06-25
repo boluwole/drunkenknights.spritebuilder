@@ -18,15 +18,12 @@
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
-<<<<<<< HEAD
 
-=======
     
     gongColorChange=YES;
     gongAccess=YES;
     gongCounter = 0;
     
->>>>>>> 6f8224727a407b2e8ba232bb9d8980c5ae6f16d9
     checkEnd=YES;
     //load players & statue
     _dave = (CCSprite*)[CCBReader load:@"Dave"];
@@ -278,12 +275,9 @@
     //vomit check
     [ItemManager vomitCheck:activeVomits :activeVomitLifetimes :timeElapsed :_dave :_huey :_princess];
     //CCLOG(@"%d, %d",[GameVariables getItemIndex1],[GameVariables getItemIndex2]);
-<<<<<<< HEAD
     
     [ItemManager ghostUse:_princess :activeGhost];
     
-=======
->>>>>>> 6f8224727a407b2e8ba232bb9d8980c5ae6f16d9
 }
 
 //damping

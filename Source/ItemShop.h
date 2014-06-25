@@ -8,11 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
-<<<<<<< HEAD
 #import "ManagerIncludes.h"
-=======
-#import "GameVariables.h"
->>>>>>> 6f8224727a407b2e8ba232bb9d8980c5ae6f16d9
 
 @interface ItemShop : CCNode  <UIAlertViewDelegate> {
     
