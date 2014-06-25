@@ -126,6 +126,24 @@
     
     itemsHeld = 0;
     
+    //initialize original two items
+    NSArray* gameItems = [GameItem getGameItems];
+    GameItemData *data = [gameItems objectAtIndex:[GameVariables getItemIndex1]];
+    currItem = [CCBReader load:data.itemName];
+    [ItemManager itemEntersInventory:currItem];
+    currItem.zOrder = itemBox[itemsHeld].zOrder - 1;
+    [currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
+    [itemBox[itemsHeld] addChild:currItem];
+    itemsHeld++;
+    
+    data = [gameItems objectAtIndex:[GameVariables getItemIndex2]];
+    currItem = [CCBReader load:data.itemName];
+    [ItemManager itemEntersInventory:currItem];
+    currItem.zOrder = itemBox[itemsHeld].zOrder - 1;
+    [currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
+    [itemBox[itemsHeld] addChild:currItem];
+    itemsHeld++;
+    
     //item effects
     activeVomits = [[CCNode alloc] init];
     [_physicsNode addChild:activeVomits];
@@ -252,7 +270,7 @@
     
     //vomit check
     [ItemManager vomitCheck:activeVomits :activeVomitLifetimes :timeElapsed :_dave :_huey :_princess];
-
+    //CCLOG(@"%d, %d",[GameVariables getItemIndex1],[GameVariables getItemIndex2]);
 }
 
 //damping
@@ -462,7 +480,7 @@
     else if(validItemMove) {
         [ItemManager itemEntersInventory:activatedItem];
         activatedItem.zOrder = itemBox[activatedItemIndex].zOrder - 1;
-        [_physicsNode removeChild:activatedItem];
+        [activatedItem.parent removeChild:activatedItem];
         [itemBox[activatedItemIndex] addChild:activatedItem];
     }
     validItemMove = NO;

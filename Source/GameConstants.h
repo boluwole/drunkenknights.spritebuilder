@@ -52,7 +52,7 @@ static CCSprite *_princess;
 #define PORTAL_POSITION_MAIN ccp(300,30);
 
 //networking
-#define NETWORKED NO
+#define NETWORKED YES
 
 #define APPWARP_APP_KEY     @"85faf7f29c1ca6c43991cdcbabf81738b0fc3e4db4730fe138e5fc0c776734c1"
 #define APPWARP_SECRET_KEY  @"3a37f88e7db04ead6a809e74fef33213cac24f362786c4b875e888c3ebc69580"
