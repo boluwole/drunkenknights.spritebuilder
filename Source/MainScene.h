@@ -54,6 +54,7 @@
     NSDate *startTime;
     NSDate *portalTime;
     NSTimeInterval timeElapsed;
+   // NSTimeInterval globalTimeElapsed;
     
     //for items
     BOOL itemHasDroppedForThisPeriod;
@@ -63,11 +64,12 @@
     CCNode* activatedItem;
     int activatedItemIndex;
     int itemsHeld;
+    NSTimeInterval currItemDropTime;
     
 
     //item effects
     CCNode* activeVomits;
-
+    NSMutableArray* activeVomitLifetimes;
 
     //for RessStones
     CCNode* daveRess;

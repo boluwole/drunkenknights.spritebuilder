@@ -92,4 +92,38 @@
     }
 }
 
++ (void) vomitCheck: (CCNode*) activeVomits : (NSMutableArray*) activeVomitLifetimes : (NSTimeInterval) currTime :
+    (CCSprite*) dave : (CCSprite*) huey : (CCSprite*) princess {
+    
+    NSArray* allVomits = activeVomits.children;
+    for(int i = 0; i < allVomits.count; i++) {
+        
+        //check if vomit duration is up
+        double bt = [[activeVomitLifetimes objectAtIndex:i] doubleValue];
+        
+        if((currTime - bt) < VOMIT_LIFE) {
+            [activeVomits removeChild:allVomits[i]];
+            [activeVomitLifetimes removeObject:[activeVomitLifetimes objectAtIndex:i]];
+            break;
+        }
+        
+        //check against players and princess and apply acceleration effect
+        //CCLOG(@"\n\n%f, %f",[allVomits[i] boundingBox].origin.x,[allVomits[i] boundingBox].origin.y);
+        //CCLOG(@"\n\n%f, %f",davePos.x,davePos.y);
+        if(CGRectContainsPoint([allVomits[i] boundingBox], dave.position)) {
+            CCLOG(@"\n\nvomit all up");
+            dave.physicsBody.velocity = ccpMult(dave.physicsBody.velocity, VOMIT_MULTIPLIER);
+        }
+        if(CGRectContainsPoint([allVomits[i] boundingBox], huey.position)) {
+            CCLOG(@"\n\nvomit all up");
+            huey.physicsBody.velocity = ccpMult(huey.physicsBody.velocity, VOMIT_MULTIPLIER);
+        }
+        if(CGRectContainsPoint([allVomits[i] boundingBox], princess.position)) {
+            CCLOG(@"\n\nvomit all up");
+            princess.physicsBody.velocity = ccpMult(princess.physicsBody.velocity, VOMIT_MULTIPLIER);
+        }
+    }
+}
+
+
 @end
