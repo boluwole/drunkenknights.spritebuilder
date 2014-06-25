@@ -60,6 +60,7 @@
 		F59F9FE0194854EC00AD2AEC /* GameItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F59F9FDF194854EC00AD2AEC /* GameItem.m */; };
 		F59F9FEC1949579200AD2AEC /* ArrowHead.m in Sources */ = {isa = PBXBuildFile; fileRef = F59F9FEB1949579200AD2AEC /* ArrowHead.m */; };
 		F59F9FF0194957B100AD2AEC /* ArrowBody.m in Sources */ = {isa = PBXBuildFile; fileRef = F59F9FEF194957B100AD2AEC /* ArrowBody.m */; };
+		F5E0562C1953B6F7000F86B9 /* GameVariables.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E0562B1953B6F7000F86B9 /* GameVariables.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +162,8 @@
 		F59F9FEB1949579200AD2AEC /* ArrowHead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArrowHead.m; path = Source/ArrowHead.m; sourceTree = "<group>"; };
 		F59F9FEE194957B100AD2AEC /* ArrowBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArrowBody.h; path = Source/ArrowBody.h; sourceTree = "<group>"; };
 		F59F9FEF194957B100AD2AEC /* ArrowBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArrowBody.m; path = Source/ArrowBody.m; sourceTree = "<group>"; };
+		F5E0562A1953B6F7000F86B9 /* GameVariables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameVariables.h; path = Source/GameVariables.h; sourceTree = "<group>"; };
+		F5E0562B1953B6F7000F86B9 /* GameVariables.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameVariables.m; path = Source/GameVariables.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +214,12 @@
 				8517F460194D4CF000AD4D85 /* ItemShop.m */,
 				B7378992180767190076A88C /* MainScene.h */,
 				B7378993180767190076A88C /* MainScene.m */,
+<<<<<<< HEAD
+=======
+				F594CD0F194B8A7700FE0029 /* GameConstants.h */,
+				F5E0562A1953B6F7000F86B9 /* GameVariables.h */,
+				F5E0562B1953B6F7000F86B9 /* GameVariables.m */,
+>>>>>>> 6f8224727a407b2e8ba232bb9d8980c5ae6f16d9
 				F594CD42194BCD2000FE0029 /* ManagerIncludes.h */,
 				8517F45B194D4CD900AD4D85 /* SplashScreen.h */,
 				8517F45C194D4CD900AD4D85 /* SplashScreen.m */,
@@ -485,7 +494,11 @@
 				F594CD41194BC68200FE0029 /* NetworkManager.m in Sources */,
 				8517F461194D4CF000AD4D85 /* ItemShop.m in Sources */,
 				853E68161944CDD200C3DA9B /* Huey.m in Sources */,
+<<<<<<< HEAD
 				85B6EA5C1953DDF2003D6771 /* GameVariables.m in Sources */,
+=======
+				F5E0562C1953B6F7000F86B9 /* GameVariables.m in Sources */,
+>>>>>>> 6f8224727a407b2e8ba232bb9d8980c5ae6f16d9
 				F59F9FE0194854EC00AD2AEC /* GameItem.m in Sources */,
 				F594CD17194BAC9400FE0029 /* ItemManager.m in Sources */,
 				858F9C491957E94700F9E973 /* RemoteRoomData.m in Sources */,
