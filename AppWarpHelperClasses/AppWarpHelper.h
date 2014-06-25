@@ -39,7 +39,7 @@
 -(NSMutableArray*)getScores;
 
 -(void)disconnectWarp;
--(void)connectToWarp;
+-(void)connectToWarp: (NSString*) _playerName ;
 -(void)recoverConnection;
 -(void)scheduleRecover;
 -(void)unScheduleRecover;

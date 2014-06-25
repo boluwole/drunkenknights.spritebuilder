@@ -160,7 +160,7 @@ static NFStoryBoardManager *nFStoryBoardManager;
 -(void)showGameLoadingIndicator
 {
 //    [userNameController showAcitvityIndicator];
-    [[AppWarpHelper sharedAppWarpHelper] connectToWarp];
+//    [[AppWarpHelper sharedAppWarpHelper] connectToWarp];
 }
 
 -(void)removeGameLoadingIndicator

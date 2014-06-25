@@ -62,7 +62,7 @@
 - (CCScene*) startScene
 {
     if(NETWORKED) return [CCBReader loadAsScene:@"SplashScreen"];
-    else return [CCBReader loadAsScene:@"MainScene"];
+    else return [CCBReader loadAsScene:@"ItemShop"];
 }
 
 @end

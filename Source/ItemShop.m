@@ -130,6 +130,7 @@
                     _item1.scale *= 0.5;
                 
                 _item1Index = _currentItem;
+                [GameVariables setItemIndex1:_currentItem];
             }
             
         }
@@ -147,6 +148,7 @@
                     _item2.scale *= 0.5;
                 
                 _item2Index = _currentItem;
+                [GameVariables setItemIndex2:_currentItem];
             }
         }
     }
@@ -175,9 +177,83 @@
 
 
 - (void)startGame {
-    CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
-    [[CCDirector sharedDirector] replaceScene:mainScene];
+    
+    
+    //steps
+    //check that there are two people in room
+    //first remove all rooms
+    NSMutableArray* allrooms = [GameVariables RoomInfoList];
+    [allrooms  removeAllObjects];
+    
+    
+    NSString* roomSelected= [GameVariables getCurrentRoom];
+    [[WarpClient getInstance] getLiveRoomInfo:roomSelected];
+    
+    //check if player in room
+    [self schedule:@selector(checkRoomUpdate:) interval:1] ;
 }
+
+
+-(void) checkRoomUpdate:(CCTime)delta
+{
+    NSMutableArray *allRooms = [GameVariables RoomInfoList];
+    
+    if ([allRooms count] == 1)
+    {
+        RemoteRoomData *room = [allRooms objectAtIndex:0];
+        int noOfPlayers =  room.roomOccupants.count;
+        
+        if (noOfPlayers == 2)
+        {
+            //startgame
+            CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
+            [[CCDirector sharedDirector] replaceScene:mainScene];
+        }
+        else{
+            //ask to wait or leave to game room
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Hold your horses!"
+                                                           message: @"Still waiting for an opponent.\n"
+                                                          delegate: self
+                                                 cancelButtonTitle:@"Wait"
+                                                 otherButtonTitles:@"Game room",nil];
+            [alert show];
+        }
+        
+        
+        [self unschedule:@selector(checkRoomUpdate:)];
+    }
+}
+
+
+//delegate for alert on click start button
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    //u need to change 0 to other value(,1,2,3) if u have more buttons.then u can check which button was pressed.
+    
+    if (buttonIndex == 1){
+        
+        [[WarpClient getInstance] leaveRoom: [GameVariables getCurrentRoom]];
+        
+        
+        NSMutableArray* allrooms = [GameVariables RoomInfoList];
+        [allrooms  removeAllObjects];
+        
+        NSMutableArray* allroomsids = [GameVariables RoomList];
+        [allroomsids  removeAllObjects];
+        
+        //just in case we decide to go back, we need a fresh copy of room info
+        [[WarpClient getInstance] getAllRooms];
+        
+        //reset selected items
+        [GameVariables setItemIndex1:-1];
+        [GameVariables setItemIndex2:-1];
+        
+        //gameroom
+        CCScene *gameRoomScene = [CCBReader loadAsScene:@"GameRoom"];
+        [[CCDirector sharedDirector] replaceScene:gameRoomScene];
+    }
+}
+
 
 - (void)skipLeft {
     if (_currentItem >0)

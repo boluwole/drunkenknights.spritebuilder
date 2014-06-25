@@ -23,6 +23,7 @@
     if (event.result==SUCCESS)
     {
         NSLog(@"connection success");
+        [GameVariables setInitConnectionStatus: @"connected" ];
         //[[WarpClient getInstance] joinRoom:[[AppWarpHelper sharedAppWarpHelper] roomId]];
         //[[WarpClient getInstance] joinRoomInRangeBetweenMinUsers:0 andMaxUsers:1 maxPrefered:YES];
         [[WarpClient getInstance] getAllRooms];
@@ -34,22 +35,26 @@
     else if (event.result==SUCCESS_RECOVERED)
     {
         NSLog(@"connection recovered");
+        [GameVariables setInitConnectionStatus: @"connected" ];
         [[AppWarpHelper sharedAppWarpHelper] unScheduleRecover];
     }
     else if (event.result==CONNECTION_ERROR_RECOVERABLE)
     {
         NSLog(@"recoverable connection error");
+        
+        [GameVariables setInitConnectionStatus: @"error" ];
         [[AppWarpHelper sharedAppWarpHelper] scheduleRecover];
         
     }
     else if (event.result==BAD_REQUEST)
     {
-        
+        [GameVariables setInitConnectionStatus: @"error" ];
         NSLog(@"Bad request");
     }
     else
     {
         NSLog(@"Disconnected");
+        [GameVariables setInitConnectionStatus: @"duplicate" ];
         NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"Connection Error:",@"title",@"Please check ur internet connection!",@"message", nil];
         [[AppWarpHelper sharedAppWarpHelper] onConnectionFailure:dict];
     }
@@ -113,8 +118,9 @@
 -(void)onGetAllRoomsDone:(AllRoomsEvent*)event{
     if (event.result == SUCCESS) {
         //[[WarpClient getInstance]getOnlineUsers];
-        for (NSMutableArray *room in event.roomIds) {
+        for (NSString *room in event.roomIds) {
             NSLog(@"%@", room);
+            [[GameVariables RoomList] addObject:room];
         }
     }
     else {
@@ -137,6 +143,7 @@
     }
     
 }
+
 -(void)onGetLiveUserInfoDone:(LiveUserInfoEvent*)event{
     NSLog(@"onGetLiveUserInfo called");
     if (event.result == SUCCESS)
@@ -147,6 +154,8 @@
     }
     
 }
+
+
 -(void)onSetCustomUserDataDone:(LiveUserInfoEvent*)event{
     if (event.result == SUCCESS) {
     }

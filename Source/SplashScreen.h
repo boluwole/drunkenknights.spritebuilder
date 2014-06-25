@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
+#import "ManagerIncludes.h"
+#import "AppWarpHelper.h"
 
-@interface SplashScreen : CCNode {
+@interface SplashScreen : CCNode <UIAlertViewDelegate> {
     
 }
 

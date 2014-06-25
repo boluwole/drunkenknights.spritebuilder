@@ -65,11 +65,13 @@
         [[WarpClient getInstance]subscribeRoom:roomData.roomId];
         [[AppWarpHelper sharedAppWarpHelper] getAllUsers];
         NSLog(@".onJoinRoomDone..on Join room listener called Success");
+        [GameVariables setJoinRoomSuccess:@"joined"];
     }
     else
     {
         NSLog(@".onJoinRoomDone..on Join room listener called failed");
         [[WarpClient getInstance] createRoomWithRoomName:@"MyGameRoom" roomOwner:[[AppWarpHelper sharedAppWarpHelper] userName] properties:nil maxUsers:2];
+        [GameVariables setJoinRoomSuccess:@"error"];
     }
     
 }
@@ -80,16 +82,32 @@
     else {
     }
 }
+//-(void)onGetLiveRoomInfoDone:(LiveRoomInfoEvent*)event{
+//    NSString *joinedUsers = @"";
+//    NSLog(@"joined users array = %@",event.joinedUsers);
+//    
+//    for (int i=0; i<[event.joinedUsers count]; i++)
+//    {
+//        joinedUsers = [joinedUsers stringByAppendingString:[event.joinedUsers objectAtIndex:i]];
+//    }
+//    
+//    
+//    
+//}
 -(void)onGetLiveRoomInfoDone:(LiveRoomInfoEvent*)event{
-    NSString *joinedUsers = @"";
-    NSLog(@"joined users array = %@",event.joinedUsers);
-    
-    for (int i=0; i<[event.joinedUsers count]; i++)
+    NSLog(@"onGetRoomUserInfo called");
+    if (event.result == SUCCESS)
     {
-        joinedUsers = [joinedUsers stringByAppendingString:[event.joinedUsers objectAtIndex:i]];
+        RemoteRoomData *room = [[RemoteRoomData alloc] init];
+        room.roomId = event.roomData.roomId;
+        room.roomName = event.roomData.name;
+        room.roomOccupants = event.joinedUsers;
+        
+        //load room into static room colleciton
+        [[GameVariables RoomInfoList] addObject:room];
     }
-    
-    
+    else {
+    }
     
 }
 -(void)onSetCustomRoomDataDone:(LiveRoomInfoEvent*)event{

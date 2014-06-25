@@ -43,6 +43,19 @@
 			<key>sourceSize</key>
 			<string>{128, 128}</string>
 		</dict>
+		<key>Assets/GameRoom.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1, 323}, {568, 320}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {568, 320}}</string>
+			<key>sourceSize</key>
+			<string>{568, 320}</string>
+		</dict>
 		<key>Assets/Huey.png</key>
 		<dict>
 			<key>frame</key>
@@ -85,7 +98,7 @@
 		<key>Assets/SplashScreen.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1, 323}, {568, 320}}</string>
+			<string>{{1, 649}, {568, 320}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -98,7 +111,7 @@
 		<key>Assets/arrowBody.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1, 995}, {25, 25}}</string>
+			<string>{{22, 971}, {25, 25}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -111,7 +124,7 @@
 		<key>Assets/arrowHead.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{28, 995}, {25, 25}}</string>
+			<string>{{32, 998}, {25, 25}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -124,11 +137,11 @@
 		<key>Assets/arrowLeft.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{22, 964}, {19, 29}}</string>
+			<string>{{1, 1002}, {19, 29}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
-			<false/>
+			<true/>
 			<key>sourceColorRect</key>
 			<string>{{1, 1}, {19, 29}}</string>
 			<key>sourceSize</key>
@@ -137,7 +150,7 @@
 		<key>Assets/arrowRight.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1, 964}, {19, 29}}</string>
+			<string>{{1, 971}, {19, 29}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -238,19 +251,6 @@
 			<key>sourceSize</key>
 			<string>{128, 128}</string>
 		</dict>
-		<key>Assets/stage.png</key>
-		<dict>
-			<key>frame</key>
-			<string>{{1, 649}, {568, 313}}</string>
-			<key>offset</key>
-			<string>{0, -3}</string>
-			<key>rotated</key>
-			<false/>
-			<key>sourceColorRect</key>
-			<string>{{0, 7}, {568, 313}}</string>
-			<key>sourceSize</key>
-			<string>{568, 320}</string>
-		</dict>
 		<key>Assets/statue.png</key>
 		<dict>
 			<key>frame</key>
@@ -309,7 +309,7 @@
 		<key>format</key>
 		<integer>2</integer>
 		<key>size</key>
-		<string>{1024, 1024}</string>
+		<string>{2048, 2048}</string>
 		<key>textureFileName</key>
 		<string>Assets.png</string>
 	</dict>

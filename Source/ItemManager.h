@@ -18,7 +18,7 @@
 enum ItemType {
     BARREL = 0,
     VOMIT = 1,
-    BAIT = 2,
+    GHOST = 2,
     POWERUP = 3,
 };
 
@@ -29,5 +29,5 @@ enum ItemType {
 + (void) activateItemAbilities: (CCNode*) item;
 + (void) vomitCheck: (CCNode*) activeVomits : (NSMutableArray*) activeVomitLifetimes : (NSTimeInterval) currTime :
         (CCSprite*) dave : (CCSprite*) huey : (CCSprite*) princess;
-
++ (void) ghostUse: (CCNode*) statue : (CCNode*) activeNode;
 @end

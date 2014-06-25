@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
+#import "ManagerIncludes.h"
 
-@interface ItemShop : CCNode {
+@interface ItemShop : CCNode  <UIAlertViewDelegate> {
     
 }
 

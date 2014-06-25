@@ -12,7 +12,10 @@
 		8517F464194FE2B500AD4D85 /* GameItemData.m in Sources */ = {isa = PBXBuildFile; fileRef = 8517F463194FE2B500AD4D85 /* GameItemData.m */; };
 		853E68101944C53200C3DA9B /* Dave.m in Sources */ = {isa = PBXBuildFile; fileRef = 853E680F1944C53200C3DA9B /* Dave.m */; };
 		853E68161944CDD200C3DA9B /* Huey.m in Sources */ = {isa = PBXBuildFile; fileRef = 853E68151944CDD200C3DA9B /* Huey.m */; };
+		858F9C421957C16A00F9E973 /* GameRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 858F9C411957C16A00F9E973 /* GameRoom.m */; };
+		858F9C491957E94700F9E973 /* RemoteRoomData.m in Sources */ = {isa = PBXBuildFile; fileRef = 858F9C481957E94700F9E973 /* RemoteRoomData.m */; };
 		859AC0BA1943EE8400F68F35 /* Princess.m in Sources */ = {isa = PBXBuildFile; fileRef = 859AC0B91943EE8400F68F35 /* Princess.m */; };
+		85B6EA5C1953DDF2003D6771 /* GameVariables.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B6EA5B1953DDF2003D6771 /* GameVariables.m */; };
 		B71F5911188484E7003F4D28 /* iPad-old.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5907188484E7003F4D28 /* iPad-old.png */; };
 		B71F5912188484E7003F4D28 /* iPad-old@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5908188484E7003F4D28 /* iPad-old@2x.png */; };
 		B71F5913188484E7003F4D28 /* iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5909188484E7003F4D28 /* iPad.png */; };
@@ -87,8 +90,14 @@
 		853E680F1944C53200C3DA9B /* Dave.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Dave.m; path = Source/Dave.m; sourceTree = "<group>"; };
 		853E68141944CDD200C3DA9B /* Huey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Huey.h; path = Source/Huey.h; sourceTree = "<group>"; };
 		853E68151944CDD200C3DA9B /* Huey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Huey.m; path = Source/Huey.m; sourceTree = "<group>"; };
+		858F9C401957C16A00F9E973 /* GameRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameRoom.h; path = Source/GameRoom.h; sourceTree = "<group>"; };
+		858F9C411957C16A00F9E973 /* GameRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameRoom.m; path = Source/GameRoom.m; sourceTree = "<group>"; };
+		858F9C471957E94700F9E973 /* RemoteRoomData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemoteRoomData.h; path = Source/RemoteRoomData.h; sourceTree = "<group>"; };
+		858F9C481957E94700F9E973 /* RemoteRoomData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RemoteRoomData.m; path = Source/RemoteRoomData.m; sourceTree = "<group>"; };
 		859AC0B81943EE8400F68F35 /* Princess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Princess.h; path = Source/Princess.h; sourceTree = "<group>"; };
 		859AC0B91943EE8400F68F35 /* Princess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Princess.m; path = Source/Princess.m; sourceTree = "<group>"; };
+		85B6EA5A1953DDF2003D6771 /* GameVariables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameVariables.h; path = Source/GameVariables.h; sourceTree = "<group>"; };
+		85B6EA5B1953DDF2003D6771 /* GameVariables.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameVariables.m; path = Source/GameVariables.m; sourceTree = "<group>"; };
 		B71F5907188484E7003F4D28 /* iPad-old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old.png"; path = "Icons/iPad-old.png"; sourceTree = "<group>"; };
 		B71F5908188484E7003F4D28 /* iPad-old@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old@2x.png"; path = "Icons/iPad-old@2x.png"; sourceTree = "<group>"; };
 		B71F5909188484E7003F4D28 /* iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iPad.png; path = Icons/iPad.png; sourceTree = "<group>"; };
@@ -188,16 +197,20 @@
 		B737893C1807616C0076A88C /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				858F9C401957C16A00F9E973 /* GameRoom.h */,
+				858F9C411957C16A00F9E973 /* GameRoom.m */,
+				85B6EA5A1953DDF2003D6771 /* GameVariables.h */,
+				85B6EA5B1953DDF2003D6771 /* GameVariables.m */,
 				F594CD28194BB62E00FE0029 /* AppWarpHelperClasses */,
-				F594CD11194B8AD200FE0029 /* GameObjects */,
 				F594CD10194B8AC200FE0029 /* Managers */,
+				F594CD11194B8AD200FE0029 /* GameObjects */,
 				B737893D1807617C0076A88C /* AppDelegate.h */,
 				B737893E1807617C0076A88C /* AppDelegate.m */,
+				F594CD0F194B8A7700FE0029 /* GameConstants.h */,
 				8517F45F194D4CF000AD4D85 /* ItemShop.h */,
 				8517F460194D4CF000AD4D85 /* ItemShop.m */,
 				B7378992180767190076A88C /* MainScene.h */,
 				B7378993180767190076A88C /* MainScene.m */,
-				F594CD0F194B8A7700FE0029 /* GameConstants.h */,
 				F594CD42194BCD2000FE0029 /* ManagerIncludes.h */,
 				8517F45B194D4CD900AD4D85 /* SplashScreen.h */,
 				8517F45C194D4CD900AD4D85 /* SplashScreen.m */,
@@ -326,6 +339,8 @@
 				F59F9FEF194957B100AD2AEC /* ArrowBody.m */,
 				F5385AC6194A9C1000690095 /* Box.h */,
 				F5385AC7194A9C1000690095 /* Box.m */,
+				858F9C471957E94700F9E973 /* RemoteRoomData.h */,
+				858F9C481957E94700F9E973 /* RemoteRoomData.m */,
 			);
 			name = GameObjects;
 			sourceTree = "<group>";
@@ -455,6 +470,7 @@
 				859AC0BA1943EE8400F68F35 /* Princess.m in Sources */,
 				F594CD0D194B7E6F00FE0029 /* MoveManager.m in Sources */,
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
+				858F9C421957C16A00F9E973 /* GameRoom.m in Sources */,
 				8517F45D194D4CD900AD4D85 /* SplashScreen.m in Sources */,
 				F594CD34194BB62E00FE0029 /* ConnectionListener.m in Sources */,
 				F59F9FEC1949579200AD2AEC /* ArrowHead.m in Sources */,
@@ -469,8 +485,10 @@
 				F594CD41194BC68200FE0029 /* NetworkManager.m in Sources */,
 				8517F461194D4CF000AD4D85 /* ItemShop.m in Sources */,
 				853E68161944CDD200C3DA9B /* Huey.m in Sources */,
+				85B6EA5C1953DDF2003D6771 /* GameVariables.m in Sources */,
 				F59F9FE0194854EC00AD2AEC /* GameItem.m in Sources */,
 				F594CD17194BAC9400FE0029 /* ItemManager.m in Sources */,
+				858F9C491957E94700F9E973 /* RemoteRoomData.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
 				F59F9FF0194957B100AD2AEC /* ArrowBody.m in Sources */,
 			);

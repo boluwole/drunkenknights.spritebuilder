@@ -15,7 +15,7 @@
     
     //randomly choose a type of item to drop
     CCNode* item;
-    int randomNum = rand() % 2;
+    int randomNum = rand() % 3;
     switch(randomNum) {
         case BARREL:
             item = [CCBReader load:@"Barrel"];
@@ -24,6 +24,10 @@
             
         case VOMIT:
             item = [CCBReader load:@"Vomit"];
+            break;
+            
+        case GHOST:
+            item = [CCBReader load: @"Ghost"];
             break;
     }
     
@@ -62,6 +66,9 @@
 + (void) itemEntersInventory: (CCNode*) item {
     item.anchorPoint = CGPointZero;
     item.scale = 0.3;
+    if([item.name isEqual:@"Ghost"]) {
+        item.scale = 1.0;
+    }
     item.position = CGPointZero;
     item.opacity = 1.0;
 }
@@ -90,7 +97,13 @@
     else if([item.name  isEqual: @"Vomit"]) {
         
     }
+    else if([item.name  isEqual: @"Ghost"]){
+        
+
+        
+    }
 }
+
 
 + (void) vomitCheck: (CCNode*) activeVomits : (NSMutableArray*) activeVomitLifetimes : (NSTimeInterval) currTime :
     (CCSprite*) dave : (CCSprite*) huey : (CCSprite*) princess {
@@ -123,6 +136,13 @@
             princess.physicsBody.velocity = ccpMult(princess.physicsBody.velocity, VOMIT_MULTIPLIER);
         }
     }
+}
+
++ (void) ghostUse:(CCNode *)statue :(CCNode*)activeNode {
+    
+    
+    
+    
 }
 
 

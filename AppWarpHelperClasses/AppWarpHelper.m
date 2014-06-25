@@ -11,7 +11,7 @@
 #import "ConnectionListener.h"
 #import "RoomListener.h"
 #import "NotificationListener.h"
-#import "GameConstants.h"
+#import "GameVariables.h"
 #import "cocos2d.h"
 #import "MainScene.h"
 #import "NFStoryBoardManager.h"
@@ -120,11 +120,16 @@ static AppWarpHelper *appWarpHelper;
     [[WarpClient getInstance] disconnect];
 }
 
--(void)connectToWarp
+-(void)connectToWarp: (NSString*) _playerName
 {
     NSLog(@"\n==connectToWarp==\n");
-
-    [[WarpClient getInstance] connectWithUserName:@"ETHAN"];
+    
+    [[WarpClient getInstance] connectWithUserName:_playerName];
+    
+    //global variable to monitor connection status
+    //declared in gameconstants, setup in connection listener
+    
+    [GameVariables setInitConnectionStatus: @"connecting" ];
 }
 
 -(void)scheduleRecover

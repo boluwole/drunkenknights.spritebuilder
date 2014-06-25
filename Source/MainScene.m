@@ -19,7 +19,6 @@
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
 
-    
     checkEnd=YES;
     //load players & statue
     _dave = (CCSprite*)[CCBReader load:@"Dave"];
@@ -117,10 +116,31 @@
     
     itemsHeld = 0;
     
+    //initialize original two items
+    NSArray* gameItems = [GameItem getGameItems];
+    GameItemData *data = [gameItems objectAtIndex:[GameVariables getItemIndex1]];
+    currItem = [CCBReader load:data.itemName];
+    [ItemManager itemEntersInventory:currItem];
+    currItem.zOrder = itemBox[itemsHeld].zOrder - 1;
+    [currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
+    [itemBox[itemsHeld] addChild:currItem];
+    itemsHeld++;
+    
+    data = [gameItems objectAtIndex:[GameVariables getItemIndex2]];
+    currItem = [CCBReader load:data.itemName];
+    [ItemManager itemEntersInventory:currItem];
+    currItem.zOrder = itemBox[itemsHeld].zOrder - 1;
+    [currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
+    [itemBox[itemsHeld] addChild:currItem];
+    itemsHeld++;
+    
     //item effects
     activeVomits = [[CCNode alloc] init];
     [_physicsNode addChild:activeVomits];
     activeVomitLifetimes = [[NSMutableArray alloc] init];
+    
+    activeGhost=[[CCNode alloc] init];
+    [_physicsNode addChild: activeGhost];
     
     //z orders
     currItem.zOrder = _stage.zOrder + ITEM_Z;
@@ -131,10 +151,10 @@
     //networking
     //_networkManager = [[NetworkManager alloc] init];
     //[_networkManager setOpponentAndPrincess:_huey :_princess];
-    if(NETWORKED) {
-        [[AppWarpHelper sharedAppWarpHelper] initializeAppWarp];
-        [[AppWarpHelper sharedAppWarpHelper] connectToWarp];
-    }
+//    if(NETWORKED) {
+//        [[AppWarpHelper sharedAppWarpHelper] initializeAppWarp];
+//        [[AppWarpHelper sharedAppWarpHelper] connectToWarp];
+//    }
     
     //start game timer
     startTime = [NSDate date];
@@ -241,7 +261,10 @@
     
     //vomit check
     [ItemManager vomitCheck:activeVomits :activeVomitLifetimes :timeElapsed :_dave :_huey :_princess];
-
+    //CCLOG(@"%d, %d",[GameVariables getItemIndex1],[GameVariables getItemIndex2]);
+    
+    [ItemManager ghostUse:_princess :activeGhost];
+    
 }
 
 //damping
@@ -364,11 +387,46 @@
             activatedItem = (CCNode*)child[0];
             activatedItemIndex = i;
             validItemMove = YES;
-            break;
+            [self princessGoThru];
+                       break;
         }
     }
     
 }
+
+
+-(void) princessGoThru{
+    
+    
+    if([activatedItem.name isEqual:@"Ghost"]){
+        itemsHeld = [ItemManager useItem:(itemBox) :activatedItemIndex :itemsHeld];
+        validItemMove = NO;
+        [activatedItem.parent removeChild:activatedItem];
+        _princess.opacity=0.3;
+        _princess.physicsBody.collisionMask=@[];
+        [self schedule:@selector(princessMist:) interval:1.0f];
+
+    }
+
+    
+}
+
+-(void) princessMist:(CCTime) delta{
+    
+    ghostCount++;
+    
+    if(ghostCount>=PRINCESS_GHOST_PERIOD){
+        
+        ghostCount=0;
+        _princess.opacity=1;
+        _princess.physicsBody.collisionMask=NULL;
+        [self unschedule:@selector(princessMist:)];
+        
+        
+    }
+    
+}
+
 
 - (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
@@ -451,7 +509,7 @@
     else if(validItemMove) {
         [ItemManager itemEntersInventory:activatedItem];
         activatedItem.zOrder = itemBox[activatedItemIndex].zOrder - 1;
-        [_physicsNode removeChild:activatedItem];
+        [activatedItem.parent removeChild:activatedItem];
         [itemBox[activatedItemIndex] addChild:activatedItem];
     }
     validItemMove = NO;
@@ -480,6 +538,13 @@
         [activeVomits addChild:item];
         //NSTimeInterval currTime = timeElapsed;
         [activeVomitLifetimes addObject:[NSNumber numberWithFloat:timeElapsed]];
+    }
+    
+    else if([item.name isEqual:@"Ghost"]){
+        
+        [item removeFromParent];
+        [activeGhost addChild:item];
+        
     }
 }
 

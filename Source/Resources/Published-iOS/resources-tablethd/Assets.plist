@@ -43,6 +43,19 @@
 			<key>sourceSize</key>
 			<string>{512, 512}</string>
 		</dict>
+		<key>Assets/GameRoom.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1, 1283}, {2272, 1280}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {2272, 1280}}</string>
+			<key>sourceSize</key>
+			<string>{2272, 1280}</string>
+		</dict>
 		<key>Assets/Huey.png</key>
 		<dict>
 			<key>frame</key>
@@ -85,7 +98,7 @@
 		<key>Assets/SplashScreen.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1, 1283}, {2272, 1280}}</string>
+			<string>{{1, 2569}, {2272, 1280}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -98,7 +111,7 @@
 		<key>Assets/arrowBody.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{80, 3824}, {100, 100}}</string>
+			<string>{{80, 3851}, {100, 100}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -111,7 +124,7 @@
 		<key>Assets/arrowHead.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{80, 3926}, {100, 100}}</string>
+			<string>{{80, 3953}, {100, 100}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -124,7 +137,7 @@
 		<key>Assets/arrowLeft.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1, 3945}, {77, 119}}</string>
+			<string>{{1, 3972}, {77, 119}}</string>
 			<key>offset</key>
 			<string>{1, 0}</string>
 			<key>rotated</key>
@@ -137,7 +150,7 @@
 		<key>Assets/arrowRight.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1, 3824}, {77, 119}}</string>
+			<string>{{1, 3851}, {77, 119}}</string>
 			<key>offset</key>
 			<string>{-1, 0}</string>
 			<key>rotated</key>
@@ -238,19 +251,6 @@
 			<key>sourceSize</key>
 			<string>{512, 512}</string>
 		</dict>
-		<key>Assets/stage.png</key>
-		<dict>
-			<key>frame</key>
-			<string>{{1, 2569}, {2272, 1253}}</string>
-			<key>offset</key>
-			<string>{0, -13}</string>
-			<key>rotated</key>
-			<false/>
-			<key>sourceColorRect</key>
-			<string>{{0, 27}, {2272, 1253}}</string>
-			<key>sourceSize</key>
-			<string>{2272, 1280}</string>
-		</dict>
 		<key>Assets/statue.png</key>
 		<dict>
 			<key>frame</key>
@@ -309,7 +309,7 @@
 		<key>format</key>
 		<integer>2</integer>
 		<key>size</key>
-		<string>{4096, 4096}</string>
+		<string>{8192, 8192}</string>
 		<key>textureFileName</key>
 		<string>Assets.png</string>
 	</dict>

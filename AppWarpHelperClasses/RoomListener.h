@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "AppWarpHelper.h"
 #import <AppWarp_iOS_SDK/AppWarp_iOS_SDK.h>
+#import "RemoteRoomData.h"
+#import "GameVariables.h"
 
 @interface RoomListener : NSObject <RoomRequestListener>
 
