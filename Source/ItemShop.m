@@ -202,7 +202,7 @@
         RemoteRoomData *room = [allRooms objectAtIndex:0];
         int noOfPlayers =  room.roomOccupants.count;
         
-        if (noOfPlayers == 1)
+        if (noOfPlayers == 2)
         {
             //startgame
             CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
@@ -210,6 +210,7 @@
         }
         else{
             //ask to wait or leave to game room
+            
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Hold your horses!"
                                                            message: @"Still waiting for an opponent.\n"
                                                           delegate: self
@@ -221,6 +222,7 @@
         
         [self unschedule:@selector(checkRoomUpdate:)];
     }
+    
 }
 
 

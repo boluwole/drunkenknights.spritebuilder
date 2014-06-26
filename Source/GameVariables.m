@@ -91,4 +91,23 @@ static NSString* currentRoom;
     return theArray;
 }
 
++(int) getNoOfRoomOccupants:(NSString *)roomId
+{
+    NSMutableArray *allRooms = [GameVariables RoomInfoList];
+    
+    if ([allRooms count ] > 0)
+    {
+        for (RemoteRoomData *room in allRooms)
+        {
+            if ([room.roomId isEqualToString: roomId] )
+            {
+                return room.roomOccupants.count;
+                break;
+            }
+        }
+    }
+    
+    return  -1;
+}
+
 @end

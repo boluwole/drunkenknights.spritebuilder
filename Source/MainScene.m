@@ -14,7 +14,7 @@
     
 }
 
-
+static int myRandom;
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
@@ -159,17 +159,37 @@
     _huey.zOrder = _stage.zOrder + HUEY_Z;
     _princess.zOrder = _stage.zOrder + PRINCESS_Z;
     
-    //networking
+    // Networking - Generate Dave & Huey
+    myRandom = arc4random();
+    [NetworkManager sendRandomNum:[NSString stringWithFormat:@"%i", myRandom]];
     //_networkManager = [[NetworkManager alloc] init];
     //[_networkManager setOpponentAndPrincess:_huey :_princess];
-//    if(NETWORKED) {
-//        [[AppWarpHelper sharedAppWarpHelper] initializeAppWarp];
-//        [[AppWarpHelper sharedAppWarpHelper] connectToWarp];
-//    }
+    //    if(NETWORKED) {
+    //        [[AppWarpHelper sharedAppWarpHelper] initializeAppWarp];
+    //        [[AppWarpHelper sharedAppWarpHelper] connectToWarp];
+    //    }
     
     //start game timer
     startTime = [NSDate date];
 }
+
++(void) playerPositionSet:(NSString*) num
+{
+    //[MoveManager movePlayer:_huey :msg];
+    int oppRandom = num.intValue;
+    if (myRandom > oppRandom) {
+        _player = _dave;
+    }
+    else if(myRandom < oppRandom){
+        _player = _huey;
+    }
+    else{
+        //ignore this shit
+        CCLOG(@"its fucking impossible! CRASH!!");
+    }
+}
+
+
 -(void)checkGameEnd{
 
 
@@ -271,12 +291,19 @@
         }
     }
 
+
     
     //vomit check
     [ItemManager vomitCheck:activeVomits :activeVomitLifetimes :timeElapsed :_dave :_huey :_princess];
     //CCLOG(@"%d, %d",[GameVariables getItemIndex1],[GameVariables getItemIndex2]);
     
     [ItemManager ghostUse:_princess :activeGhost];
+    
+    //NetWorking
+    if (_player == _dave) {//Server
+        [NetworkManager sendEveryPositionToServer:_huey.position poitionDave:_dave.position poitionPrincess:_princess.position];
+    }
+    
     
 }
 
@@ -379,7 +406,7 @@
     //CCLOG(@"touch began");
     
     // start catapult dragging when a touch inside of the catapult arm occurs
-    if (CGRectContainsPoint([_dave boundingBox], touchLocation))
+    if (CGRectContainsPoint([_player boundingBox], touchLocation))
         //&& abs(ccpLengthSQ(_dave.physicsBody.velocity)) < 64)//abs(_dave.physicsBody.velocity.x) < 0.5 && abs(_dave.physicsBody.velocity.y) < 0.5)
     {
         validMove = YES;
@@ -451,12 +478,19 @@
         
         end = touchLocation;
         
-        start = _dave.position;
+        start = _player.position;
         arrowNode.position = start;
         
         //update facing direction
-        if((start.x - end.x) < 0) { if(_dave.flipX == NO) _dave.flipX = YES; }
-        else { if(_dave.flipX == YES) _dave.flipX = NO; }
+        if (_player == _dave) {
+            if((start.x - end.x) < 0) { if(_player.flipX == NO) _player.flipX = YES; }
+            else { if(_player.flipX == YES) _player.flipX = NO; }
+        }
+        else {
+            if((end.x - start.x) < 0) { if(_player.flipX == NO) _player.flipX = YES; }
+            else { if(_player.flipX == YES) _player.flipX = NO; }
+        }
+        
         
         //place arrow
         launchDirection = [MoveManager calculateMoveVector:start :end];
@@ -490,8 +524,14 @@
     
     if(validMove) {
         
-        [NetworkManager sendCGPointToServer:launchDirection];
-        [MoveManager movePlayer:_dave :launchDirection];
+        
+        if (_player == _dave) {//Server
+            [MoveManager movePlayer:_dave :launchDirection];
+        }
+        else {
+            [NetworkManager sendCGPointToServer:launchDirection];
+        }
+        
     }
     
     validMove = NO;
@@ -499,9 +539,30 @@
     
 }
 
-+ (void)updateOpponent:(CGPoint) msg {
++ (void)updateOpponent:(CGPoint) msg
+{
     //CCLOG(@"\n\nupdating: %f, %f\n\n",msg.x,msg.y);
-    [MoveManager movePlayer:_huey :msg];
+    if (_player == _dave) {//Server
+        [MoveManager movePlayer:_huey :msg];
+    }
+}
+
++ (void)updateEveryPosition:(CGPoint)msgH positionDave:(CGPoint)msgD positionPrincess:(CGPoint)msgP
+{
+    if (_player == _huey) {
+        if (msgH.x != 0 && msgH.y != 0) {
+            _huey.position = msgH;
+        }
+        
+        if (msgD.x != 0 && msgD.y != 0) {
+            _dave.position = msgD;
+        }
+        
+        if (msgP.x != 0 && msgP.y != 0) {
+            _princess.position = msgP;
+        }
+
+    }
 }
 
 -(void) touchEnded:(UITouch *)touch withEvent:(UIEvent *)event

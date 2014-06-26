@@ -17,10 +17,24 @@
     
 }
 
++ (void) sendRandomNum:(NSString *)num;
++ (void) receieRandomNum:(NSString *)num;
 
 
 + (void) sendCGPointToServer:(CGPoint) msg;
 + (void) receiveCGPointFromServer:(CGPoint) msg;
+
++ (void) sendEveryPositionToServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP;
++ (void) receiveEveryPositionFromServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP;
+
++ (void) sendItemToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition;
++ (void) sendItemInfoMsgToServer:(NSString *)info;
++ (void) sendActivatedToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition;
++ (void) updateItemInfoFromServer: (NSString*)msg;
++ (void) activateItemsFromServer:(NSString *)itemName iPosition:(CGPoint)itemPosition;
+
++ (void) sendItemVomitKillMsgToServer:(NSString *)index;
+
 
 
 @end

@@ -3,6 +3,7 @@ static UIImage* uiimage;
 static CCSprite *_dave;
 static CCSprite *_huey;
 static CCSprite *_princess;
+static CCSprite *_player;
 
 #define PI (3.14159265359)
 

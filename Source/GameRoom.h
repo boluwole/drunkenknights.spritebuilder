@@ -16,6 +16,9 @@
     
 }
 
+@property int roomPosition;
+
+
 -(void) loadRooms;
 
 @end

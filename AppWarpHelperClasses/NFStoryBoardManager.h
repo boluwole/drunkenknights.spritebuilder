@@ -22,7 +22,15 @@
 
 }
 
+@property NSString* Random_num;
+@property CGPoint huey_position;
+@property CGPoint dave_position;
+@property CGPoint princess_position;
+
 @property CGPoint New_impulse;
+
+
+
 @property (nonatomic,assign) FNGameLogicLayer          *gameLogicLayer;
 
 +(NFStoryBoardManager *)sharedNFStoryBoardManager;

@@ -14,7 +14,7 @@
     NSMutableArray *rooms;
     int networkTimeLimit;
     CCLabelTTF *_lblUpdate;
-    NSString* chosenRoomName;
+    NSString* chosenRoomId;
 }
 
 // is called when CCB file has completed loading
@@ -117,9 +117,16 @@
     
     CCButton *_sender = (CCButton*) sender;
     
-    chosenRoomName = _sender.name;
+    chosenRoomId = _sender.name;
     
-    [[WarpClient getInstance]joinRoom: chosenRoomName];
+    //int roomJoinPosition  = [GameVariables getNoOfRoomOccupants:chosenRoomId] + 1;
+    //[GameVariables : roomJoinPosition ];
+    
+    //self.roomPosition = arc4random();
+    
+    CCLOG(@"roomPosition = %i", self.roomPosition);
+    
+    [[WarpClient getInstance]joinRoom: chosenRoomId];
     
     [GameVariables setJoinRoomSuccess:@"joining"];
     
@@ -137,15 +144,17 @@
         
         [self unschedule:@selector(roomJoinMonitor:)];
         
+        
         CCScene *itemShopScene = [CCBReader loadAsScene:@"ItemShop"];
         [[CCDirector sharedDirector] replaceScene:itemShopScene];
         
-        [GameVariables setCurrentRoom: chosenRoomName];
+        [GameVariables setCurrentRoom: chosenRoomId];
         
     }
     else if ([status isEqualToString: @"error"]) {
         
-        
+//        [GameVariables setRoomPosition:-1];
+        self.roomPosition = -1;
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"We're really sorry."
                                                        message: @"There was a problem joining the room.\n"
                                                       delegate: self
@@ -153,6 +162,7 @@
                                              otherButtonTitles:nil,nil];
         
         [alert show];
+        
         
         [self unschedule:@selector(roomJoinMonitor:)];
 
