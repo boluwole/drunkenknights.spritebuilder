@@ -93,7 +93,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Assets/SplashScreen.png</string>
+							<string>Assets-large/SplashScreen.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -315,8 +315,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>

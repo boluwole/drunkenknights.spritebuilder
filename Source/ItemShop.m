@@ -202,7 +202,7 @@
         RemoteRoomData *room = [allRooms objectAtIndex:0];
         int noOfPlayers =  room.roomOccupants.count;
         
-        if (noOfPlayers == 2)
+        if (noOfPlayers == 1)
         {
             //startgame
             CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];

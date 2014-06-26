@@ -93,7 +93,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Assets/ItemShop.png</string>
+							<string>Assets-large/ItemShop.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -1737,8 +1737,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
