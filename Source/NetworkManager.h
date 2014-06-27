@@ -26,13 +26,22 @@
 //Movement
 + (void) sendEveryPositionToServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP;
 + (void) receiveEveryPositionFromServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP;
+
+
 //Item Pickup Kill
 + (void) sendItemToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition;
-+ (void) receiveItemFromServer:(NSString *)itemName iPosition:(CGPoint)itemPosition;
-+ (void) updateItemsFromServer:(CGPoint) msg name: (NSString*) name;
+//+ (void) receiveItemFromServer:(NSString *)itemName iPosition:(CGPoint)itemPosition;
 
+
++ (void) updateItemsFromServer:(CGPoint) msg name: (NSString*) name;
+//---Item Info---
 + (void) sendItemInfoMsgToServer:(NSString *)info;
 + (void) updateItemInfoFromServer: (NSString*)msg;
+
+
+
+
+
 
 + (void) sendDaveActivatedToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition;
 + (void) sendHueyActivatedToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition;

@@ -253,10 +253,9 @@ static CCNode* opponentActivatedItem;
             }
         }
         
-        if (_player == _dave) {
-            //kill item
-            if(itemHasDroppedForThisPeriod == YES) {
-                
+        //kill item
+        if(itemHasDroppedForThisPeriod == YES) {
+            if (_player == _dave) {
                 if((timeElapsed - currItemDropTime) <= ITEM_ALIVE_PERIOD) {
                     //CCLOG(@"kill\n");
                     //[_physicsNode removeChild:currItem];
@@ -267,8 +266,7 @@ static CCNode* opponentActivatedItem;
                 }
             }
         }
-        
-        if (currItem != nil) {
+        else {
             //item pickup
             currItem.rotation+=10;
             if(CGRectContainsPoint([_player boundingBox], currItem.position)) {
@@ -298,7 +296,6 @@ static CCNode* opponentActivatedItem;
                     //send event over to kill this item and update _dave's inventory on huey's side too
                 }
             }
-
         }
     }
     
@@ -348,6 +345,45 @@ static CCNode* opponentActivatedItem;
     
     
 }
+
++ (void)itemInfo:(NSString *) msg
+{
+    if ( [msg isEqualToString:@"KILL"] ) {
+        [globalPhysicsNode removeChild:currItem];
+        currItem = nil;
+    }
+    
+    if ( [msg isEqualToString:@"KILL_HUEY_ITEM"] ) {
+        if(_player == _huey) {
+            [globalPhysicsNode removeChild:currItem];
+            currItem = nil;
+        }
+    }
+    
+    if ( [msg isEqualToString:@"KILL_DAVE_ITEM"] ) {
+        if(_player == _dave) {
+            [globalPhysicsNode removeChild:currItem];
+            currItem = nil;
+        }
+    }
+}
+
++ (void)updateItems:(CGPoint) msg name: (NSString*) name
+{
+    if(_player == _huey) {
+        CCNode* item = [CCBReader load:name];
+        item.scale*=0.3;
+        [item setColor:[CCColor colorWithWhite:0.5 alpha:1.0]];
+        item.position = msg;
+        item.physicsBody.collisionMask = @[];
+        
+        currItem = item;
+        [globalPhysicsNode addChild:currItem];
+    }
+}
+
+
+
 
 //damping
 - (void)damping:(CCTime)delta {
@@ -637,41 +673,6 @@ static CCNode* opponentActivatedItem;
     validItemMove = NO;
 }
 
-+ (void)itemInfo:(NSString *) msg
-{
-    if ( [msg isEqualToString:@"KILL"] ) {
-        [globalPhysicsNode removeChild:currItem];
-        currItem = nil;
-    }
-    
-    if ( [msg isEqualToString:@"KILL_HUEY_ITEM"] ) {
-        if(_player == _huey) {
-            [globalPhysicsNode removeChild:currItem];
-            currItem = nil;
-        }
-    }
-    
-    if ( [msg isEqualToString:@"KILL_DAVE_ITEM"] ) {
-        if(_player == _dave) {
-            [globalPhysicsNode removeChild:currItem];
-            currItem = nil;
-        }
-    }
-}
-
-+ (void)updateItems:(CGPoint) msg name: (NSString*) name
-{    
-    if(_player == _huey) {
-        CCNode* item = [CCBReader load:name];
-        item.scale*=0.3;
-        [item setColor:[CCColor colorWithWhite:0.5 alpha:1.0]];
-        item.position = msg;
-        item.physicsBody.collisionMask = @[];
-        
-        currItem = item;
-        [globalPhysicsNode addChild:currItem];
-    }
-}
 
 
 

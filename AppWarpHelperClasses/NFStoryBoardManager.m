@@ -63,21 +63,20 @@ static NFStoryBoardManager *nFStoryBoardManager;
     CCLOG(@"==updateInformation==");
     //_Random_num = [dataDict objectForKey:@"random_num"];
     //[NetworkManager receieRandomNum:_Random_num];
-    //
+    //---Movement---
     _huey_position = CGPointFromString([dataDict objectForKey:@"position_huey"]);
     _dave_position = CGPointFromString([dataDict objectForKey:@"position_dave"]);
     _princess_position = CGPointFromString([dataDict objectForKey:@"position_princess"]);
     [NetworkManager receiveEveryPositionFromServer:_huey_position poitionDave:_dave_position poitionPrincess:_princess_position];
-    //
+    //---Item
     _Item_info = [dataDict objectForKey:@"item_info"];
     [NetworkManager updateItemInfoFromServer:_Item_info];
-    //
+    //---Item Name & Position---
     _item_position = CGPointFromString([dataDict objectForKey:@"item_position"]);
     _item_name = [dataDict objectForKey:@"item_name"];
-    
     [NetworkManager updateItemsFromServer:_item_position name:_item_name];
     //[NetworkManager activateItemsFromServer:_acitme_position name:_acitem_name];
-        //
+    
     
     _ActivatedItem_name = [dataDict objectForKey:@"activateditem_name_huey"];
     _ActivatedItem_position = CGPointFromString([dataDict objectForKey:@"activateditem_position_huey"]);
