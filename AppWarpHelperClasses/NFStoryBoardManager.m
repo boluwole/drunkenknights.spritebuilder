@@ -61,15 +61,14 @@ static NFStoryBoardManager *nFStoryBoardManager;
 
 -(void)updateInformation:(NSDictionary*)dataDict{
     CCLOG(@"==updateInformation==");
-    _Random_num = [dataDict objectForKey:@"random_num"];
-    [NetworkManager receieRandomNum:_Random_num];
+    //_Random_num = [dataDict objectForKey:@"random_num"];
+    //[NetworkManager receieRandomNum:_Random_num];
     //
     _huey_position = CGPointFromString([dataDict objectForKey:@"position_huey"]);
     _dave_position = CGPointFromString([dataDict objectForKey:@"position_dave"]);
     _princess_position = CGPointFromString([dataDict objectForKey:@"position_princess"]);
     [NetworkManager receiveEveryPositionFromServer:_huey_position poitionDave:_dave_position poitionPrincess:_princess_position];
-    
-    
+    //
     _Item_info = [dataDict objectForKey:@"item_info"];
     [NetworkManager updateItemInfoFromServer:_Item_info];
     

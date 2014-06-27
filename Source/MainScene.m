@@ -22,6 +22,7 @@ static CCNode* opponentActivatedItem;
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
 
+    globalPhysicsNode = _physicsNode;
     
     gongColorChange=YES;
     gongAccess=YES;
@@ -626,7 +627,7 @@ static CCNode* opponentActivatedItem;
         activatedItem.scale = 0.4;
         activatedItem.zOrder = _dave.zOrder - 1;
         [self activateItemAbilities:activatedItem];
-        [NetworkManager sendActivatedToServer:activatedItem.name iPosition:activatedItem.position];
+        [NetworkManager sendDaveActivatedToServer:activatedItem.name iPosition:activatedItem.position];
     }
     else if(validItemMove) {
         [ItemManager itemEntersInventory:activatedItem];
@@ -640,7 +641,13 @@ static CCNode* opponentActivatedItem;
 + (void)itemInfo:(NSString *) msg
 {
     if ( [msg isEqualToString:@"PICK"] ) {
-        //[NetworkManager sendItemInfoMsgToServer:@"KILL"];
+        [globalPhysicsNode removeChild:currItem];
+        currItem = nil;
+    }
+}
+
++ (void) killItem: (NSString*) msg{
+    if ([msg isEqual: @"KILL"]) {
         [globalPhysicsNode removeChild:currItem];
         currItem = nil;
     }

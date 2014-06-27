@@ -57,11 +57,19 @@
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
 }
 
-+ (void) sendActivatedToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition
++ (void) sendDaveActivatedToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition
 {
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:itemName, @"activateditem_name_dave",
                           NSStringFromCGPoint(itemPosition), @"activateditem_position_dave", nil];
     //CCLOG(@"ActivatedItem name %@ and position %@", itemName, NSStringFromCGPoint(itemPosition));
+    [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
+}
+
++ (void) sendHueyActivatedToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition
+{
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:itemName, @"activateditem_name_huey",
+                          NSStringFromCGPoint(itemPosition), @"activateditem_position_huey", nil];
+    CCLOG(@"ActivatedItem name %@ and position %@", itemName, NSStringFromCGPoint(itemPosition));
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
 }
 
@@ -71,12 +79,23 @@
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
 }
 
+
 + (void) sendItemVomitKillMsgToServer:(NSString *)index
 {
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:index,@"vomit_index_kill", nil];
     CCLOG(@"index = %@", index);
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
 }
+
++ (void) killActivateVomit:(NSString *)vomitIndex
+{
+    if(vomitIndex != nil)
+    {
+        //[MainScene killVomit:vomitIndex];
+    }
+    
+}
+
 
 + (void) updateItemInfoFromServer: (NSString*)msg
 {
@@ -90,6 +109,31 @@
         //CCLOG(@"msg = %@ , name = %@", NSStringFromCGPoint(msg),name);
     }
 }
+
+
++ (void) updateItemsFromServer:(CGPoint) msg name: (NSString*) name{
+    //CCLOG(@"\n\nI got %f, %f\n\n",msg.x, msg.y);
+    //_dave.position = ccp(abs(msg.x),abs(msg.y));
+    if(name != nil) {
+        //[MainScene updateItems:msg name: name];
+    }
+    
+}
+/*
++ (void) activateItemsFromServer:(CGPoint) msg name: (NSString*) name{
+    if(name != nil) {
+        [MainScene activateItems:msg name: name];
+        //CCLOG(@"msg = %@ , name = %@", NSStringFromCGPoint(msg),name);
+    }
+}
+*/
+    
+//+ (void) updateItemInfoFromServer: (NSString*) msg{
+//    [MainScene killItem:msg];
+//}
+
+
+
 
 
 
