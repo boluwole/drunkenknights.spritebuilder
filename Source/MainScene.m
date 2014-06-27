@@ -133,20 +133,21 @@ static CCNode* opponentActivatedItem;
     
     //initialize original two items
     NSArray* gameItems = [GameItem getGameItems];
+    CCNode* tempItem;
     GameItemData *data = [gameItems objectAtIndex:[GameVariables getItemIndex1]];
-    currItem = [CCBReader load:data.itemName];
-    [ItemManager itemEntersInventory:currItem];
-    currItem.zOrder = itemBox[itemsHeld].zOrder - 1;
-    [currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
-    [itemBox[itemsHeld] addChild:currItem];
+    tempItem = [CCBReader load:data.itemName];
+    [ItemManager itemEntersInventory:tempItem];
+    tempItem.zOrder = itemBox[itemsHeld].zOrder - 1;
+    [tempItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
+    [itemBox[itemsHeld] addChild:tempItem];
     itemsHeld++;
     
     data = [gameItems objectAtIndex:[GameVariables getItemIndex2]];
-    currItem = [CCBReader load:data.itemName];
-    [ItemManager itemEntersInventory:currItem];
-    currItem.zOrder = itemBox[itemsHeld].zOrder - 1;
-    [currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
-    [itemBox[itemsHeld] addChild:currItem];
+    tempItem = [CCBReader load:data.itemName];
+    [ItemManager itemEntersInventory:tempItem];
+    tempItem.zOrder = itemBox[itemsHeld].zOrder - 1;
+    [tempItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
+    [itemBox[itemsHeld] addChild:tempItem];
     itemsHeld++;
     
     //item effects
@@ -258,7 +259,7 @@ static CCNode* opponentActivatedItem;
                 
                 if((timeElapsed - currItemDropTime) <= ITEM_ALIVE_PERIOD) {
                     //CCLOG(@"kill\n");
-                    [_physicsNode removeChild:currItem];
+                    //[_physicsNode removeChild:currItem];
                     if (currItem != nil) {
                         [NetworkManager sendItemInfoMsgToServer:@"KILL"];
                     }
@@ -270,7 +271,7 @@ static CCNode* opponentActivatedItem;
         if (currItem != nil) {
             //item pickup
             currItem.rotation+=10;
-            if(CGRectContainsPoint([_dave boundingBox], currItem.position)) {
+            if(CGRectContainsPoint([_player boundingBox], currItem.position)) {
                 //CCLOG(@"pickup\n");
                 if(itemsHeld < 3) {
                     currItem.rotation = 0;
@@ -281,12 +282,13 @@ static CCNode* opponentActivatedItem;
                     [_physicsNode removeChild:currItem];
                     //[inventory addChild:currItem];
                     //Networking - Notice
-                    if (_player == _dave) {
-                        [NetworkManager sendItemInfoMsgToServer:@"KILL"];
+                    if(_player == _dave) {
+                        [NetworkManager sendItemInfoMsgToServer:@"KILL_HUEY_ITEM"];
                     }
                     else {
-                        [NetworkManager sendItemInfoMsgToServer:@"PICK"];
+                        [NetworkManager sendItemInfoMsgToServer:@"KILL_DAVE_ITEM"];
                     }
+                    
                     
                     [itemBox[itemsHeld] addChild:currItem];
                     
@@ -637,30 +639,41 @@ static CCNode* opponentActivatedItem;
 
 + (void)itemInfo:(NSString *) msg
 {
-    if ( [msg isEqualToString:@"PICK"] ) {
+    if ( [msg isEqualToString:@"KILL"] ) {
         [globalPhysicsNode removeChild:currItem];
         currItem = nil;
+    }
+    
+    if ( [msg isEqualToString:@"KILL_HUEY_ITEM"] ) {
+        if(_player == _huey) {
+            [globalPhysicsNode removeChild:currItem];
+            currItem = nil;
+        }
+    }
+    
+    if ( [msg isEqualToString:@"KILL_DAVE_ITEM"] ) {
+        if(_player == _dave) {
+            [globalPhysicsNode removeChild:currItem];
+            currItem = nil;
+        }
     }
 }
 
 + (void)updateItems:(CGPoint) msg name: (NSString*) name
 {    
-    CCNode* item = [CCBReader load:name];
-    item.scale*=0.3;
-    [item setColor:[CCColor colorWithWhite:0.5 alpha:1.0]];
-    item.position = msg;
-    item.physicsBody.collisionMask = @[];
-    
-    currItem = item;
-    [globalPhysicsNode addChild:currItem];
-}
-
-+ (void) killItem: (NSString*) msg{
-    if ([msg isEqual: @"KILL"]) {
-        [globalPhysicsNode removeChild:currItem];
-        currItem = nil;
+    if(_player == _huey) {
+        CCNode* item = [CCBReader load:name];
+        item.scale*=0.3;
+        [item setColor:[CCColor colorWithWhite:0.5 alpha:1.0]];
+        item.position = msg;
+        item.physicsBody.collisionMask = @[];
+        
+        currItem = item;
+        [globalPhysicsNode addChild:currItem];
     }
 }
+
+
 
 +(void) activateItems:(NSString *)itemName iPosition:(CGPoint)itemPosition
 {

@@ -96,7 +96,7 @@
     
 }
 
-
+//item events
 + (void) updateItemInfoFromServer: (NSString*)msg
 {
     [MainScene itemInfo:msg];
@@ -110,28 +110,14 @@
     }
 }
 
-
+//item dropping
 + (void) updateItemsFromServer:(CGPoint) msg name: (NSString*) name
 {
-    //CCLOG(@"\n\nI got %f, %f\n\n",msg.x, msg.y);
-    //_dave.position = ccp(abs(msg.x),abs(msg.y));
     if(name != nil) {
         [MainScene updateItems:msg name: name];
     }
     
 }
-/*
-+ (void) activateItemsFromServer:(CGPoint) msg name: (NSString*) name{
-    if(name != nil) {
-        [MainScene activateItems:msg name: name];
-        //CCLOG(@"msg = %@ , name = %@", NSStringFromCGPoint(msg),name);
-    }
-}
-*/
-    
-//+ (void) updateItemInfoFromServer: (NSString*) msg{
-//    [MainScene killItem:msg];
-//}
 
 
 
