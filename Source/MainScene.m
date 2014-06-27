@@ -231,11 +231,12 @@ static CCNode* opponentActivatedItem;
     //items
     timeElapsed = [startTime timeIntervalSinceNow];
     [self checkGameEnd];
-
+    [self checkGong];
+    
     //CCLOG(@"%d",(int)timeElapsed);
     //drop item
-    if (_player == _dave) {
-        if(timeElapsed < -5) {
+    if(timeElapsed < -5) {
+        if (_player == _dave) {
             if(((int)timeElapsed % ITEM_DROP_PERIOD) == 0) {
                 //CCLOG(@"drop\n");
                 //startTime = [NSDate date];
@@ -249,11 +250,12 @@ static CCNode* opponentActivatedItem;
                     [NetworkManager sendItemToServer:currItem.name iPosition:currItem.position];
                 }
             }
-            
-            [self checkGong];
-            [self checkGameEnd];
+        }
+        
+        if (_player == _dave) {
             //kill item
             if(itemHasDroppedForThisPeriod == YES) {
+                
                 if((timeElapsed - currItemDropTime) <= ITEM_ALIVE_PERIOD) {
                     //CCLOG(@"kill\n");
                     [_physicsNode removeChild:currItem];
@@ -262,52 +264,41 @@ static CCNode* opponentActivatedItem;
                     }
                     itemHasDroppedForThisPeriod = NO;
                 }
-                else {
-                    //item pickup
-                    currItem.rotation+=10;
-                    if(CGRectContainsPoint([_dave boundingBox], currItem.position)) {
-                        //CCLOG(@"pickup\n");
-                        if(itemsHeld < 3) {
-                            currItem.rotation = 0;
-                            [ItemManager itemEntersInventory:currItem];
-                            currItem.zOrder = itemBox[itemsHeld].zOrder - 1;
-                            [currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
-                            
-                            [_physicsNode removeChild:currItem];
-                            //[inventory addChild:currItem];
-                            //Networking - Notice
-                            [NetworkManager sendItemInfoMsgToServer:@"KILL"];
-                            [itemBox[itemsHeld] addChild:currItem];
-                            
-                            itemsHeld++;
-                            itemHasDroppedForThisPeriod = NO;
-                            //send event over to kill this item and update _dave's inventory on huey's side too
-                        }
-                    }
-                }
-            }
-        }//time
-    }//_dave
-    else {//_huey
-        if(CGRectContainsPoint([_dave boundingBox], currItem.position)) {
-            //CCLOG(@"pickup\n");
-            if(itemsHeld < 3) {
-                currItem.rotation = 0;
-                [ItemManager itemEntersInventory:currItem];
-                currItem.zOrder = itemBox[itemsHeld].zOrder - 1;
-                [currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
-                
-                [_physicsNode removeChild:currItem];
-                //[inventory addChild:currItem];
-                [itemBox[itemsHeld] addChild:currItem];
-                //Networking - Notice
-                [NetworkManager sendItemInfoMsgToServer:@"PICK"];
-                itemsHeld++;
-                itemHasDroppedForThisPeriod = NO;
-                //send event over to kill this item and update _dave's inventory on huey's side too
             }
         }
-    }//_huey
+        
+        if (currItem != nil) {
+            //item pickup
+            currItem.rotation+=10;
+            if(CGRectContainsPoint([_dave boundingBox], currItem.position)) {
+                //CCLOG(@"pickup\n");
+                if(itemsHeld < 3) {
+                    currItem.rotation = 0;
+                    [ItemManager itemEntersInventory:currItem];
+                    currItem.zOrder = itemBox[itemsHeld].zOrder - 1;
+                    [currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
+                    
+                    [_physicsNode removeChild:currItem];
+                    //[inventory addChild:currItem];
+                    //Networking - Notice
+                    if (_player == _dave) {
+                        [NetworkManager sendItemInfoMsgToServer:@"KILL"];
+                    }
+                    else {
+                        [NetworkManager sendItemInfoMsgToServer:@"PICK"];
+                    }
+                    
+                    [itemBox[itemsHeld] addChild:currItem];
+                    
+                    itemsHeld++;
+                    itemHasDroppedForThisPeriod = NO;
+                    currItem = nil;
+                    //send event over to kill this item and update _dave's inventory on huey's side too
+                }
+            }
+
+        }
+    }
     
     
     //detect falloff
@@ -676,8 +667,7 @@ static CCNode* opponentActivatedItem;
     opponentActivatedItem = [CCBReader load:itemName];
     opponentActivatedItem.scale = 0.4;
     opponentActivatedItem.anchorPoint = ccp(0.5,0.5);
-    //usedItem.physicsBody.sensor = true;
-    
+
     [globalPhysicsNode addChild:opponentActivatedItem];
     
     //activatedItem.name = name;
