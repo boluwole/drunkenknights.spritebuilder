@@ -23,9 +23,14 @@
 }
 
 @property NSString* Random_num;
+//Position
 @property CGPoint huey_position;
 @property CGPoint dave_position;
 @property CGPoint princess_position;
+//Item
+@property NSString* Item_info;
+@property NSString* ActivatedItem_name;
+@property CGPoint ActivatedItem_position;
 
 @property CGPoint New_impulse;
 

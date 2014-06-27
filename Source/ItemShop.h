@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 #import "ManagerIncludes.h"
+#import "GameConstants.h"
 
 @interface ItemShop : CCNode  <UIAlertViewDelegate> {
     

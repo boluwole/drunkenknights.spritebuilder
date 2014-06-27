@@ -10,6 +10,7 @@
 #import "cocos2d.h"
 #import "GameConstants.h"
 #import "PhysicsManager.h"
+#import "NetworkManager.h"
 
 @interface ItemManager : CCNode {
     

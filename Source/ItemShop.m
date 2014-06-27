@@ -205,6 +205,7 @@
         if (noOfPlayers == 2)
         {
             //startgame
+            CCLOG(@"roomPosition = %i", [GameVariables getRoomPosition]);
             CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
             [[CCDirector sharedDirector] replaceScene:mainScene];
         }

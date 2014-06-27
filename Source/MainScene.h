@@ -93,13 +93,14 @@
     CCNode* ghostPrincess;
     int ghostCount;
 }
-//RandomNum Generate
-+(void) playerPositionSet:(NSString*) num;
+
 //Update Client Side
-+(void) updateEveryPosition:(CGPoint)msgH positionDave:(CGPoint)msgD positionPrincess:(CGPoint)msgP;
++ (void) updateEveryPosition:(CGPoint)msgH positionDave:(CGPoint)msgD positionPrincess:(CGPoint)msgP;
 
++ (void) itemInfo:(NSString *) msg;
++ (void) activateItems:(NSString *)itemName iPosition:(CGPoint)itemPosition;
 
-+(void) updateOpponent :(CGPoint) msg;
++ (void) updateOpponent :(CGPoint) msg;
 
 //@property (nonatomic, retain) int time;
 

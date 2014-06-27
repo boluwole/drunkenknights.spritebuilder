@@ -11,12 +11,13 @@
 #import "ManagerIncludes.h"
 #import <AppWarp_iOS_SDK/AppWarp_iOS_SDK.h>
 #import "AppWarpHelper.h"
+#import "GameConstants.h"
 
 @interface GameRoom : CCNode {
     
 }
 
-@property int roomPosition;
+//@property int roomPosition;
 
 
 -(void) loadRooms;

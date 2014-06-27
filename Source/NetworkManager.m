@@ -46,8 +46,8 @@
 
 + (void) receiveEveryPositionFromServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP
 {
- //   [MainScene updateEveryPosition:msgH positionDave:msgD positionPrincess:msgP];
-}
+    [MainScene updateEveryPosition:msgH positionDave:msgD positionPrincess:msgP];
+}  
 
 + (void) sendItemToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition
 {
@@ -80,7 +80,7 @@
 
 + (void) updateItemInfoFromServer: (NSString*)msg
 {
- //   [MainScene itemInfo:msg];
+    [MainScene itemInfo:msg];
 }
 
 + (void) activateItemsFromServer:(NSString *)itemName iPosition:(CGPoint)itemPosition

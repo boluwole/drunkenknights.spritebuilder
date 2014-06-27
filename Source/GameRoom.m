@@ -119,12 +119,12 @@
     
     chosenRoomId = _sender.name;
     
-    //int roomJoinPosition  = [GameVariables getNoOfRoomOccupants:chosenRoomId] + 1;
+    int roomJoinPosition  = [GameVariables getNoOfRoomOccupants:chosenRoomId] + 1;
     //[GameVariables : roomJoinPosition ];
     
-    //self.roomPosition = arc4random();
+    [GameVariables setRoomPosition: roomJoinPosition];
     
-    CCLOG(@"roomPosition = %i", self.roomPosition);
+    CCLOG(@"roomPosition = %i", [GameVariables getRoomPosition]);
     
     [[WarpClient getInstance]joinRoom: chosenRoomId];
     
@@ -153,8 +153,8 @@
     }
     else if ([status isEqualToString: @"error"]) {
         
-//        [GameVariables setRoomPosition:-1];
-        self.roomPosition = -1;
+        [GameVariables setRoomPosition:-1];
+        //roomPosition = -1;
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"We're really sorry."
                                                        message: @"There was a problem joining the room.\n"
                                                       delegate: self

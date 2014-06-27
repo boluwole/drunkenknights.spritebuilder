@@ -4,6 +4,7 @@ static CCSprite *_dave;
 static CCSprite *_huey;
 static CCSprite *_princess;
 static CCSprite *_player;
+//static int roomPosition;
 
 #define PI (3.14159265359)
 

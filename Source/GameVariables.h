@@ -20,7 +20,9 @@
 +(NSString*) getCurrentRoom;
 +(NSMutableArray*) RoomList;
 +(NSMutableArray*) RoomInfoList;
-//+ (int) getRoomPosition;
+
++ (int) getRoomPosition;
+
 + (void) setItemIndex1 :(int) value ;
 + (void) setItemIndex2 :(int) value ;
 + (void) setInitConnectionStatus :(NSString*) value ;
@@ -28,7 +30,7 @@
 + (void) setCurrentRoom:(NSString*) value;
 
 + (int) getNoOfRoomOccupants:(NSString*) roomId;
++ (void) setRoomPosition :(int) value;
 
-//+ (void) setRoomPosition :(int) value;
 
 @end

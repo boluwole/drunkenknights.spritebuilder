@@ -31,7 +31,7 @@
     //generate random string of 8 chars
     NSString *_playerName = [[[NSUUID UUID] UUIDString] substringToIndex:8];
     //NSString *_playerName = [[NSUUID UUID] UUIDString];
-    
+
     
     //login player
     if(NETWORKED) {

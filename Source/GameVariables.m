@@ -16,6 +16,7 @@ static int itemIndex2 = 0;
 static NSString* initConnectionStatus ;
 static NSString* roomJoinSuccess;
 static NSString* currentRoom;
+static int roomPosition=0;
 
 
 +(int) getItemIndex1
@@ -108,6 +109,16 @@ static NSString* currentRoom;
     }
     
     return  -1;
+}
+
++(int) getRoomPosition
+{
+    return roomPosition;
+}
+
++(void) setRoomPosition:(int)value
+{
+    roomPosition = value;
 }
 
 @end

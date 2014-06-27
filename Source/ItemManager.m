@@ -117,6 +117,8 @@
         
         if((currTime - bt) < VOMIT_LIFE) {
             [activeVomits removeChild:allVomits[i]];
+            //Network
+            [NetworkManager sendItemVomitKillMsgToServer:[NSString stringWithFormat:@"%i", i]];
             [activeVomitLifetimes removeObject:[activeVomitLifetimes objectAtIndex:i]];
             break;
         }
