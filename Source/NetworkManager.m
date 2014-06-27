@@ -111,11 +111,12 @@
 }
 
 
-+ (void) updateItemsFromServer:(CGPoint) msg name: (NSString*) name{
++ (void) updateItemsFromServer:(CGPoint) msg name: (NSString*) name
+{
     //CCLOG(@"\n\nI got %f, %f\n\n",msg.x, msg.y);
     //_dave.position = ccp(abs(msg.x),abs(msg.y));
     if(name != nil) {
-        //[MainScene updateItems:msg name: name];
+        [MainScene updateItems:msg name: name];
     }
     
 }

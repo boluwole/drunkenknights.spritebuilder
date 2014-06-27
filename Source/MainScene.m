@@ -627,7 +627,13 @@ static CCNode* opponentActivatedItem;
         activatedItem.scale = 0.4;
         activatedItem.zOrder = _dave.zOrder - 1;
         [self activateItemAbilities:activatedItem];
-        [NetworkManager sendDaveActivatedToServer:activatedItem.name iPosition:activatedItem.position];
+        if (_player == _dave) {
+            [NetworkManager sendDaveActivatedToServer:activatedItem.name iPosition:activatedItem.position];
+        }
+        else {
+            [NetworkManager sendHueyActivatedToServer:activatedItem.name iPosition:activatedItem.position];
+        }
+
     }
     else if(validItemMove) {
         [ItemManager itemEntersInventory:activatedItem];
@@ -644,6 +650,18 @@ static CCNode* opponentActivatedItem;
         [globalPhysicsNode removeChild:currItem];
         currItem = nil;
     }
+}
+
++ (void)updateItems:(CGPoint) msg name: (NSString*) name
+{    
+    CCNode* item = [CCBReader load:name];
+    item.scale*=0.3;
+    [item setColor:[CCColor colorWithWhite:0.5 alpha:1.0]];
+    item.position = msg;
+    item.physicsBody.collisionMask = @[];
+    
+    currItem = item;
+    [globalPhysicsNode addChild:currItem];
 }
 
 + (void) killItem: (NSString*) msg{

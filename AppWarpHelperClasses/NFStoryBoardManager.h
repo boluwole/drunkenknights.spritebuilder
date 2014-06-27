@@ -29,6 +29,9 @@
 @property CGPoint princess_position;
 //Item
 @property NSString* Item_info;
+@property NSString* item_name;
+@property CGPoint item_position;
+
 @property NSString* ActivatedItem_name;
 @property CGPoint ActivatedItem_position;
 

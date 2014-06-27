@@ -99,7 +99,7 @@
 
 + (void) itemInfo:(NSString *) msg;
 + (void) activateItems:(NSString *)itemName iPosition:(CGPoint)itemPosition;
-
++ (void) updateItems:(CGPoint) msg name: (NSString*) name;
 + (void) updateOpponent :(CGPoint) msg;
 
 //@property (nonatomic, retain) int time;

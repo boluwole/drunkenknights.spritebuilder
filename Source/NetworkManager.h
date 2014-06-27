@@ -29,6 +29,7 @@
 //Item Pickup Kill
 + (void) sendItemToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition;
 + (void) receiveItemFromServer:(NSString *)itemName iPosition:(CGPoint)itemPosition;
++ (void) updateItemsFromServer:(CGPoint) msg name: (NSString*) name;
 
 + (void) sendItemInfoMsgToServer:(NSString *)info;
 + (void) updateItemInfoFromServer: (NSString*)msg;
