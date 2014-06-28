@@ -496,10 +496,10 @@ static NSMutableArray *activeVomitLifetimes;
         _princess.physicsBody.collisionMask=@[];
         
         if(_player == _dave) {
-            [NetworkManager sendActivatedToServer:activatedItem.name iPosition:CGPointZero player:@"Dave"];
+            [NetworkManager sendActivatedToServer:activatedItem.name iPosition:CGPointZero player:@"dave"];
         }
         else {
-            [NetworkManager sendActivatedToServer:activatedItem.name iPosition:CGPointZero player:@"Huey"];
+            [NetworkManager sendActivatedToServer:activatedItem.name iPosition:CGPointZero player:@"huey"];
         }
         
         [self schedule:@selector(princessMist:) interval:1.0f];
@@ -518,6 +518,14 @@ static NSMutableArray *activeVomitLifetimes;
         ghostCount=0;
         _princess.opacity=1;
         _princess.physicsBody.collisionMask=NULL;
+        
+        if ( _player == _dave ) {
+            [NetworkManager sendDeActivateItemsToServer:activatedItem.name iPosition:activatedItem.position playerInfo:@"dave" iIndex:[NSString stringWithFormat:@"0"]];
+        }
+        else {
+            [NetworkManager sendDeActivateItemsToServer:activatedItem.name iPosition:activatedItem.position playerInfo:@"huey" iIndex:[NSString stringWithFormat:@"0"]];
+        }
+        
         [self unschedule:@selector(princessMist:)];
         
         
@@ -581,8 +589,7 @@ static NSMutableArray *activeVomitLifetimes;
 - (void)releaseTouch {
     
     if(validMove) {
-        
-        
+
         if (_player == _dave) {//Server
             [MoveManager movePlayer:_dave :launchDirection];
         }
@@ -691,6 +698,23 @@ static NSMutableArray *activeVomitLifetimes;
 
     }
 }
+
++ (void) deActivateItem:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString*) player iIndex:(NSString*) index
+{
+    if (_player == _huey && [itemName isEqual:@"Vomit" ]) {
+        NSArray* allVomits = activeVomits.children;
+        CCLOG(@"\nallVomits: %d\n",allVomits.count);
+        [activeVomits removeChild:allVomits[index.intValue]];
+        [activeVomitLifetimes removeObject:[activeVomitLifetimes objectAtIndex:index.intValue]];
+    }
+    else if ( [itemName isEqual:@"Ghost"] ) {
+        if(_player != _huey) {
+            _princess.physicsBody.collisionMask = NULL;
+        }
+        _princess.opacity = 1.0f;
+    }
+}
+
 
 -(void) touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
 {

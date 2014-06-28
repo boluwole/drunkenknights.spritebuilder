@@ -32,14 +32,13 @@
 @property NSString* item_name;
 @property CGPoint item_position;
 //Activated Item
-@property NSString* ActivatedItem_name_dave;
-@property NSString* ActivatedItem_name_huey;
-@property CGPoint ActivatedItem_position_dave;
-@property CGPoint ActivatedItem_position_huey;
-
 @property NSString* ActivatedItem_name;
 @property CGPoint ActivatedItem_position;
 @property NSString* player_info;
+
+@property NSString* deActivatedItem_name;
+@property CGPoint deActivatedItem_position;
+@property NSString* deplayer_info;
 
 //Kill Vomit
 @property NSString *vomit_index;

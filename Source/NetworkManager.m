@@ -49,6 +49,13 @@
     [MainScene updateEveryPosition:msgH positionDave:msgD positionPrincess:msgP];
 }  
 
++ (void) sendItemInfoMsgToServer:(NSString *)info
+{
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:info, @"item_info", nil];
+    [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
+}
+
+
 + (void) sendItemToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition
 {
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:itemName, @"item_name",
@@ -60,21 +67,6 @@
 
 
 //---Activated Item---Sending---
-+ (void) sendDaveActivatedToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition
-{
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:itemName, @"activateditem_name_dave",
-                          NSStringFromCGPoint(itemPosition), @"activateditem_position_dave", nil];
-    [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
-}
-
-+ (void) sendHueyActivatedToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition
-{
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:itemName, @"activateditem_name_huey",
-                          NSStringFromCGPoint(itemPosition), @"activateditem_position_huey", nil];
-    CCLOG(@"ActivatedItem name %@ and position %@", itemName, NSStringFromCGPoint(itemPosition));
-    [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
-}
-
 + (void) sendActivatedToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition player:(NSString*) player
 {
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:itemName, @"activateditem_name",
@@ -96,12 +88,29 @@
 
 
 
-
-+ (void) sendItemInfoMsgToServer:(NSString *)info
++ (void) sendDeActivateItemsToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString*) player iIndex:(NSString*) index
 {
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:info, @"item_info", nil];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:itemName, @"deActivatedItem_name",
+                                            NSStringFromCGPoint(itemPosition), @"deActivatedItem_position",
+                                            player, @"deplayer_info",
+                                            index, @"index_info", nil];
+    //NSLog(@"Item name %@ and position %@", itemName, NSStringFromCGPoint(itemPosition));
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
+
 }
+
+
+
++ (void) deActivateItemsFromServer:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString*) player iIndex:(NSString*) index
+{
+    if(itemName != nil)
+    {
+        [MainScene deActivateItem:itemName iPosition:itemPosition playerInfo:player iIndex:index];
+    }
+
+}
+
+
 
 
 + (void) sendItemVomitKillMsgToServer:(NSString *)index

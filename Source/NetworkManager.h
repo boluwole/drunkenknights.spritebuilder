@@ -40,17 +40,15 @@
 
 
 
-
-
-
-+ (void) sendDaveActivatedToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition;
-+ (void) sendHueyActivatedToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition;
-
 + (void) sendActivatedToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition player:(NSString*) player;
 + (void) activateItemsFromServer:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString*) player;
 
++ (void) sendDeActivateItemsToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString*) player iIndex:(NSString*) index;
++ (void) deActivateItemsFromServer:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString*) player iIndex:(NSString*) index;
+
 + (void) sendItemVomitKillMsgToServer:(NSString *)index;
 + (void) killActivateVomit: (NSString *)vomitIndex;
+
 
 
 

@@ -91,10 +91,13 @@
 
 + (void) itemInfo:(NSString *) msg;
 + (void) activateItems:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo: (NSString*)player;
+
 + (void) updateItems:(CGPoint) msg name: (NSString*) name;
 + (void) updateOpponent :(CGPoint) msg;
 
 + (void) killVomit:(NSString *) msg;
++ (void) deActivateItem:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString*) player iIndex:(NSString*) index;
+
 //@property (nonatomic, retain) int time;
 
 @end
