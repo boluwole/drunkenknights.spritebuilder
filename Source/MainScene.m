@@ -170,6 +170,8 @@ static NSMutableArray *activeVomitLifetimes;
         _player = _huey;
     }
     
+    //CCLOG(@"my name is %@\n\n",_player.name);
+    
     //start game timer
     startTime = [NSDate date];
 }
@@ -493,7 +495,12 @@ static NSMutableArray *activeVomitLifetimes;
         _princess.opacity=0.3;
         _princess.physicsBody.collisionMask=@[];
         
-        [NetworkManager sendActivatedToServer:activatedItem.name iPosition:CGPointZero player:@"Dave"];
+        if(_player == _dave) {
+            [NetworkManager sendActivatedToServer:activatedItem.name iPosition:CGPointZero player:@"Dave"];
+        }
+        else {
+            [NetworkManager sendActivatedToServer:activatedItem.name iPosition:CGPointZero player:@"Huey"];
+        }
         
         [self schedule:@selector(princessMist:) interval:1.0f];
 
@@ -653,28 +660,13 @@ static NSMutableArray *activeVomitLifetimes;
 
 +(void) activateItems:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString *)player
 {
-    if (_player == _dave) {
+    //if this is activated by opposing player
+    if ((_player == _dave && [player isEqual:@"huey"]) || (_player == _huey &&  [player isEqual:@"dave"])) {
         if([itemName isEqual:@"Ghost"]) {
-            
+            _princess.opacity=0.3;
+            _princess.physicsBody.collisionMask=@[];
         }
         else {
-            
-            if([player isEqual:@"huey"]) {
-                opponentActivatedItem = [CCBReader load:itemName];
-                opponentActivatedItem.scale = 0.4;
-                opponentActivatedItem.anchorPoint = ccp(0.5,0.5);
-                CCLOG(@"opponenetActiveted in activateItems = %@", opponentActivatedItem.name);
-                [globalPhysicsNode addChild:opponentActivatedItem];
-                
-                opponentActivatedItem.position = itemPosition;
-                opponentActivatedItem.opacity = 1.0;
-                opponentActivatedItem.zOrder = _player.zOrder - 1;
-            }
-        }
-        
-    }
-    else {
-        if([player isEqual:@"dave"]) {
             opponentActivatedItem = [CCBReader load:itemName];
             opponentActivatedItem.scale = 0.4;
             opponentActivatedItem.anchorPoint = ccp(0.5,0.5);
@@ -686,6 +678,8 @@ static NSMutableArray *activeVomitLifetimes;
             opponentActivatedItem.zOrder = _player.zOrder - 1;
         }
     }
+        
+    
 }
 
 + (void) killVomit:(NSString *) msg{
