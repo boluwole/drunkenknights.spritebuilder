@@ -59,7 +59,8 @@ static NFStoryBoardManager *nFStoryBoardManager;
     [[AppWarpHelper sharedAppWarpHelper] setCustomDataWithData:convertedData];
 }
 
--(void)updateInformation:(NSDictionary*)dataDict{
+-(void)updateInformation:(NSDictionary*)dataDict
+{
     CCLOG(@"==updateInformation==");
     //_Random_num = [dataDict objectForKey:@"random_num"];
     //[NetworkManager receieRandomNum:_Random_num];
@@ -68,9 +69,13 @@ static NFStoryBoardManager *nFStoryBoardManager;
     _dave_position = CGPointFromString([dataDict objectForKey:@"position_dave"]);
     _princess_position = CGPointFromString([dataDict objectForKey:@"position_princess"]);
     [NetworkManager receiveEveryPositionFromServer:_huey_position poitionDave:_dave_position poitionPrincess:_princess_position];
+    
+    
     //---Item
     _Item_info = [dataDict objectForKey:@"item_info"];
     [NetworkManager updateItemInfoFromServer:_Item_info];
+    
+    
     //---Item Name & Position---
     _item_position = CGPointFromString([dataDict objectForKey:@"item_position"]);
     _item_name = [dataDict objectForKey:@"item_name"];
@@ -78,20 +83,19 @@ static NFStoryBoardManager *nFStoryBoardManager;
     //[NetworkManager activateItemsFromServer:_acitme_position name:_acitem_name];
     
     
-    _ActivatedItem_name = [dataDict objectForKey:@"activateditem_name_huey"];
-    _ActivatedItem_position = CGPointFromString([dataDict objectForKey:@"activateditem_position_huey"]);
-    [NetworkManager activateItemsFromServer:_ActivatedItem_name iPosition:_ActivatedItem_position];
+    _ActivatedItem_name_huey = [dataDict objectForKey:@"activateditem_name_huey"];
+    _ActivatedItem_position_huey = CGPointFromString([dataDict objectForKey:@"activateditem_position_huey"]);
+    [NetworkManager activateItemsFromServer:_ActivatedItem_name_huey iPosition:_ActivatedItem_position_huey];
     
+    _ActivatedItem_name_dave = [dataDict objectForKey:@"activateditem_name_dave"];
+    _ActivatedItem_position_dave = CGPointFromString([dataDict objectForKey:@"activateditem_position_dave"]);
+    [NetworkManager activateItemsFromServer:_ActivatedItem_name_dave iPosition:_ActivatedItem_position_dave];
+
     _New_impulse = CGPointFromString([dataDict objectForKey:@"impulse"]);
-   // NSLog(@"Testtt %@", NSStringFromCGPoint( _New_impulse));
-    
+    // NSLog(@"Testtt %@", NSStringFromCGPoint( _New_impulse));
     [NetworkManager receiveCGPointFromServer:_New_impulse];
     
     
-    //[[MainScene sharedMainScene] movePlayer: [[MainScene sharedMainScene] dave]];
-    //[[[MainScene sharedMainScene] dave] physicsBody applyImpulse _New_impulse];
-//    [[MainScene sharedMainScene] moveDave:_New_impulse];
-    //return impulse;
 }
 
 -(void)moveDave:(CGPoint) im{

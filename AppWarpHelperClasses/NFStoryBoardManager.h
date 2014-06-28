@@ -31,9 +31,11 @@
 @property NSString* Item_info;
 @property NSString* item_name;
 @property CGPoint item_position;
-
-@property NSString* ActivatedItem_name;
-@property CGPoint ActivatedItem_position;
+//Activated Item
+@property NSString* ActivatedItem_name_dave;
+@property NSString* ActivatedItem_name_huey;
+@property CGPoint ActivatedItem_position_dave;
+@property CGPoint ActivatedItem_position_huey;
 
 @property CGPoint New_impulse;
 

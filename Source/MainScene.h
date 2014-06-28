@@ -60,9 +60,7 @@
     
     //for items
     BOOL itemHasDroppedForThisPeriod;
-    //CCNode *itemNode;
-    CCNode* currItem;
-    CCNode* inventory;
+
     CCNode* activatedItem;
     int activatedItemIndex;
     int itemsHeld;

@@ -19,6 +19,7 @@ static CCNode* activatedItem;
 static CCNode* opponentActivatedItem;
 
 
+
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
 
@@ -113,18 +114,12 @@ static CCNode* opponentActivatedItem;
     
     //item node
     currItem = [[CCNode alloc] init];
-    //inventory = [[CCNode alloc] init];
-    //[self addChild:inventory];
-    //inventory.position = ccp(INVENTORY_POSITION,INVENTORY_POSITION);
-    //inventory.zOrder = _stage.zOrder + INVENTORY_Z;
   
     for(int i = 0; i < 3; i++) {
         itemBox[i]=[CCBReader load: @"Box"];
         itemBox[i].scale *= 0.3;
-        //[inventory addChild: itemBox[i]];
         [_physicsNode addChild:itemBox[i]];
         itemBox[i].position = ccp(INVENTORY_POSITION + INVENTORY_DISTANCE*i,INVENTORY_POSITION);
-        //itemBox[i].position = ccp(INVENTORY_DISTANCE*i,0);
         itemBox[i].opacity *= 0.6;
         itemBox[i].zOrder = _stage.zOrder + INVENTORY_Z;
     }
@@ -172,38 +167,11 @@ static CCNode* opponentActivatedItem;
     else {
         _player = _huey;
     }
-    //myRandom = arc4random();
-    //[NetworkManager sendRandomNum:[NSString stringWithFormat:@"%i", myRandom]];
-    //_networkManager = [[NetworkManager alloc] init];
-    //[_networkManager setOpponentAndPrincess:_huey :_princess];
-    //    if(NETWORKED) {
-    //        [[AppWarpHelper sharedAppWarpHelper] initializeAppWarp];
-    //        [[AppWarpHelper sharedAppWarpHelper] connectToWarp];
-    //    }
     
     //start game timer
     startTime = [NSDate date];
 }
 
-/*
-+(void) playerPositionSet:(NSString*) num
-{
-    //[MoveManager movePlayer:_huey :msg];
-    int oppRandom = num.intValue;
-    if (myRandom > oppRandom) {
-        CCLOG(@"Im DAve");
-        _player = _dave;
-    }
-    else if(myRandom < oppRandom){
-        CCLOG(@"Im Huey");
-        _player = _huey;
-    }
-    else{
-        //ignore this shit
-        CCLOG(@"its fucking impossible! CRASH!!");
-    }
-}
-*/
 
 -(void)checkGameEnd{
 
@@ -213,15 +181,6 @@ static CCNode* opponentActivatedItem;
         checkEnd=NO;
         [[CCDirector sharedDirector] pushScene:[CCBReader loadAsScene:@"SplashScreen"]];
     }
-    
-    
- /*   if(checkEnd && (ccpDistanceSQ(daveRess.position, _princess.position) <= 25 || ccpDistanceSQ(hueyRess.position, _princess.position) <= 25)){
-        
-        CCLOG(@"\n BITCH IS HOME...");
-        checkEnd=NO;
-        
-    }*/
-    
     
 }
 
@@ -234,15 +193,11 @@ static CCNode* opponentActivatedItem;
     [self checkGameEnd];
     [self checkGong];
     
-    //CCLOG(@"%d",(int)timeElapsed);
     //drop item
     if(timeElapsed < -5) {
         if (_player == _dave) {
             if(((int)timeElapsed % ITEM_DROP_PERIOD) == 0) {
-                //CCLOG(@"drop\n");
-                //startTime = [NSDate date];
                 if(itemHasDroppedForThisPeriod == NO) {
-                    //  CCLOG(@"DROP IT!\n");
                     itemHasDroppedForThisPeriod = YES;
                     currItem = [ItemManager dropItem];
                     [_physicsNode addChild:currItem];
@@ -254,49 +209,55 @@ static CCNode* opponentActivatedItem;
         }
         
         //kill item
-        if(itemHasDroppedForThisPeriod == YES) {
+        if(currItem != nil) {
+            currItem.rotation+=10;
+            //item pickup
+                if(CGRectContainsPoint([_player boundingBox], currItem.position)) {
+                    if(itemsHeld < 3) {
+                        currItem.rotation = 0;
+                        [ItemManager itemEntersInventory:currItem];
+                        currItem.zOrder = itemBox[itemsHeld].zOrder - 1;
+                        [currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
+                        
+                        [_physicsNode removeChild:currItem];
+                        
+                        //Networking - Notice
+                        if(_player == _dave) {
+                            [NetworkManager sendItemInfoMsgToServer:@"KILL_HUEY_ITEM"];
+                        }
+                        else {
+                            [NetworkManager sendItemInfoMsgToServer:@"KILL_DAVE_ITEM"];
+                        }
+                        
+                        
+                        [itemBox[itemsHeld] addChild:currItem];
+                        
+                        itemsHeld++;
+                        itemHasDroppedForThisPeriod = NO;
+                        currItem = nil;
+                        
+                    }
+                }
+
+            
+                            
+            
             if (_player == _dave) {
                 if((timeElapsed - currItemDropTime) <= ITEM_ALIVE_PERIOD) {
                     //CCLOG(@"kill\n");
-                    //[_physicsNode removeChild:currItem];
-                    if (currItem != nil) {
-                        [NetworkManager sendItemInfoMsgToServer:@"KILL"];
-                    }
-                    itemHasDroppedForThisPeriod = NO;
-                }
-            }
-        }
-        else {
-            //item pickup
-            currItem.rotation+=10;
-            if(CGRectContainsPoint([_player boundingBox], currItem.position)) {
-                //CCLOG(@"pickup\n");
-                if(itemsHeld < 3) {
-                    currItem.rotation = 0;
-                    [ItemManager itemEntersInventory:currItem];
-                    currItem.zOrder = itemBox[itemsHeld].zOrder - 1;
-                    [currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
                     
-                    [_physicsNode removeChild:currItem];
-                    //[inventory addChild:currItem];
-                    //Networking - Notice
-                    if(_player == _dave) {
+                    
+                        [_physicsNode removeChild:currItem];
                         [NetworkManager sendItemInfoMsgToServer:@"KILL_HUEY_ITEM"];
-                    }
-                    else {
-                        [NetworkManager sendItemInfoMsgToServer:@"KILL_DAVE_ITEM"];
-                    }
+                        currItem = nil;
                     
-                    
-                    [itemBox[itemsHeld] addChild:currItem];
-                    
-                    itemsHeld++;
                     itemHasDroppedForThisPeriod = NO;
-                    currItem = nil;
-                    //send event over to kill this item and update _dave's inventory on huey's side too
                 }
             }
+
         }
+        
+        
     }
     
     
@@ -348,7 +309,9 @@ static CCNode* opponentActivatedItem;
 
 + (void)itemInfo:(NSString *) msg
 {
+    CCLOG(@"KILL = %@", msg);
     if ( [msg isEqualToString:@"KILL"] ) {
+        //CCLOG(@"KILL = %@", msg);
         [globalPhysicsNode removeChild:currItem];
         currItem = nil;
     }
@@ -371,14 +334,15 @@ static CCNode* opponentActivatedItem;
 + (void)updateItems:(CGPoint) msg name: (NSString*) name
 {
     if(_player == _huey) {
-        CCNode* item = [CCBReader load:name];
-        item.scale*=0.3;
-        [item setColor:[CCColor colorWithWhite:0.5 alpha:1.0]];
-        item.position = msg;
-        item.physicsBody.collisionMask = @[];
+        currItem = [CCBReader load:name];
+        currItem.scale*=0.3;
+        [currItem setColor:[CCColor colorWithWhite:0.5 alpha:1.0]];
+        currItem.position = msg;
+        currItem.physicsBody.collisionMask = @[];
         
-        currItem = item;
+        //currItem = item;
         [globalPhysicsNode addChild:currItem];
+        
     }
 }
 
@@ -684,10 +648,6 @@ static CCNode* opponentActivatedItem;
 
     [globalPhysicsNode addChild:opponentActivatedItem];
     
-    //activatedItem.name = name;
-    
-    
-    //usedItem.position= ccpAdd(msg, ccp(15, 15));
     opponentActivatedItem.position = itemPosition;
     opponentActivatedItem.opacity = 1.0;
     opponentActivatedItem.zOrder = _dave.zOrder - 1;
@@ -751,18 +711,25 @@ static CCNode* opponentActivatedItem;
 
 - (void) activateItemAbilities: (CCNode*) item {
     if([item.name  isEqual: @"Barrel"]) {
-        item.physicsBody.collisionMask = NULL;
+        if (_player == _dave) {
+            item.physicsBody.collisionMask = NULL;
+        }
     }
     else if([item.name  isEqual: @"Vomit"]) {
         [item removeFromParent];
+        if (_player == _huey) {
+            item.physicsBody.collisionMask = @[];
+        }
         [activeVomits addChild:item];
-        //NSTimeInterval currTime = timeElapsed;
         [activeVomitLifetimes addObject:[NSNumber numberWithFloat:timeElapsed]];
     }
     
     else if([item.name isEqual:@"Ghost"]){
         
         [item removeFromParent];
+        if (_player == _huey) {
+            item.physicsBody.collisionMask = @[];
+        }
         [activeGhost addChild:item];
         
     }

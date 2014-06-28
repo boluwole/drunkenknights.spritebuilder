@@ -57,11 +57,13 @@
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
 }
 
+
+
+//---Activated Item---Sending---
 + (void) sendDaveActivatedToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition
 {
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:itemName, @"activateditem_name_dave",
                           NSStringFromCGPoint(itemPosition), @"activateditem_position_dave", nil];
-    //CCLOG(@"ActivatedItem name %@ and position %@", itemName, NSStringFromCGPoint(itemPosition));
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
 }
 
@@ -72,6 +74,17 @@
     CCLOG(@"ActivatedItem name %@ and position %@", itemName, NSStringFromCGPoint(itemPosition));
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
 }
+
+//---Item Activated---Update----
++ (void) activateItemsFromServer:(NSString *)itemName iPosition:(CGPoint)itemPosition
+{
+    if(itemName != nil) {
+        [MainScene activateItems:itemName iPosition:itemPosition];
+    }
+}
+
+
+
 
 + (void) sendItemInfoMsgToServer:(NSString *)info
 {
@@ -102,13 +115,7 @@
     [MainScene itemInfo:msg];
 }
 
-+ (void) activateItemsFromServer:(NSString *)itemName iPosition:(CGPoint)itemPosition
-{
-    if(itemName != nil) {
- //       [MainScene activateItems:itemName iPosition:itemPosition];
-        //CCLOG(@"msg = %@ , name = %@", NSStringFromCGPoint(msg),name);
-    }
-}
+
 
 //item dropping
 + (void) updateItemsFromServer:(CGPoint) msg name: (NSString*) name
@@ -118,7 +125,6 @@
     }
     
 }
-
 
 
 
