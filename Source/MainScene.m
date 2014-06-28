@@ -520,10 +520,10 @@ static NSMutableArray *activeVomitLifetimes;
         _princess.physicsBody.collisionMask=NULL;
         
         if ( _player == _dave ) {
-            [NetworkManager sendDeActivateItemsToServer:activatedItem.name iPosition:activatedItem.position playerInfo:@"dave" iIndex:[NSString stringWithFormat:@"0"]];
+            [NetworkManager sendDeActivateItemsToServer:activatedItem.name iPosition:activatedItem.position playerInfo:@"dave" iIndex:[NSString stringWithFormat:@"-1"]];
         }
         else {
-            [NetworkManager sendDeActivateItemsToServer:activatedItem.name iPosition:activatedItem.position playerInfo:@"huey" iIndex:[NSString stringWithFormat:@"0"]];
+            [NetworkManager sendDeActivateItemsToServer:activatedItem.name iPosition:activatedItem.position playerInfo:@"huey" iIndex:[NSString stringWithFormat:@"-1"]];
         }
         
         [self unschedule:@selector(princessMist:)];
@@ -689,15 +689,15 @@ static NSMutableArray *activeVomitLifetimes;
     
 }
 
-+ (void) killVomit:(NSString *) msg{
-    if (_player == _huey) {
-        NSArray* allVomits = activeVomits.children;
-        CCLOG(@"\nallVomits: %d\n",allVomits.count);
-        [activeVomits removeChild:allVomits[msg.intValue]];
-        [activeVomitLifetimes removeObject:[activeVomitLifetimes objectAtIndex:msg.intValue]];
-
-    }
-}
+//+ (void) killVomit:(NSString *) msg{
+//    if (_player == _huey) {
+//        NSArray* allVomits = activeVomits.children;
+//        CCLOG(@"\nallVomits: %d\n",allVomits.count);
+//        [activeVomits removeChild:allVomits[msg.intValue]];
+//        [activeVomitLifetimes removeObject:[activeVomitLifetimes objectAtIndex:msg.intValue]];
+//
+//    }
+//}
 
 + (void) deActivateItem:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString*) player iIndex:(NSString*) index
 {
@@ -733,10 +733,10 @@ static NSMutableArray *activeVomitLifetimes;
 -(void) checkGong{
     
     
-    if(CGRectContainsPoint([gong boundingBox] , _dave.position) && gongAccess){
+    if( (CGRectContainsPoint([gong boundingBox] , _dave.position) || CGRectContainsPoint([gong boundingBox] , _huey.position))  && gongAccess) {
         
         if(gongColorChange){
-        [gong setColor:[CCColor colorWithRed:0.5 green:0.8 blue:0.9 alpha:1.0]];
+            [gong setColor:[CCColor colorWithRed:0.5 green:0.8 blue:0.9 alpha:1.0]];
             gongColorChange=NO;
         }
             CGPoint daveRes = daveRess.position;
@@ -748,6 +748,9 @@ static NSMutableArray *activeVomitLifetimes;
             [self schedule:@selector(reactivateGong:) interval:1.0f];
         
     }
+    
+    
+    
 }
 
 -(void) reactivateGong: (CCTime)delta {
