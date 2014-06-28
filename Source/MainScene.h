@@ -100,6 +100,7 @@
 + (void) updateItems:(CGPoint) msg name: (NSString*) name;
 + (void) updateOpponent :(CGPoint) msg;
 
++ (void) killVomit:(NSString *) msg;
 //@property (nonatomic, retain) int time;
 
 @end

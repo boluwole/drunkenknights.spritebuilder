@@ -104,7 +104,7 @@
 {
     if(vomitIndex != nil)
     {
-        //[MainScene killVomit:vomitIndex];
+        [MainScene killVomit:vomitIndex];
     }
     
 }

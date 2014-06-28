@@ -36,7 +36,9 @@
 @property NSString* ActivatedItem_name_huey;
 @property CGPoint ActivatedItem_position_dave;
 @property CGPoint ActivatedItem_position_huey;
-
+//Kill Vomit
+@property NSString *vomit_index;
+//
 @property CGPoint New_impulse;
 
 

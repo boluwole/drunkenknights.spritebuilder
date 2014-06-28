@@ -17,7 +17,8 @@ static CCPhysicsNode *globalPhysicsNode;
 static CCNode* currItem;
 static CCNode* activatedItem;
 static CCNode* opponentActivatedItem;
-
+static CCNode* activeVomits;
+static NSMutableArray *activeVomitLifetimes;
 
 
 // is called when CCB file has completed loading
@@ -233,7 +234,7 @@ static CCNode* opponentActivatedItem;
                         [itemBox[itemsHeld] addChild:currItem];
                         
                         itemsHeld++;
-                        itemHasDroppedForThisPeriod = NO;
+                        //itemHasDroppedForThisPeriod = NO;
                         currItem = nil;
                         
                     }
@@ -251,12 +252,15 @@ static CCNode* opponentActivatedItem;
                         [NetworkManager sendItemInfoMsgToServer:@"KILL_HUEY_ITEM"];
                         currItem = nil;
                     
-                    itemHasDroppedForThisPeriod = NO;
+                    //itemHasDroppedForThisPeriod = NO;
                 }
             }
 
+            
+            
         }
         
+        if(currItem == nil) itemHasDroppedForThisPeriod = NO;
         
     }
     
@@ -285,23 +289,23 @@ static CCNode* opponentActivatedItem;
         }
     }
 
-
+     //Activated Item - Opponent
+    if (opponentActivatedItem != nil) {
+        [self activateItemAbilities:opponentActivatedItem];
+        opponentActivatedItem = nil;
+    }
     
     //vomit check
-    [ItemManager vomitCheck:activeVomits :activeVomitLifetimes :timeElapsed :_dave :_huey :_princess];
-    //CCLOG(@"%d, %d",[GameVariables getItemIndex1],[GameVariables getItemIndex2]);
-    
-    [ItemManager ghostUse:_princess :activeGhost];
+    if (_player == _dave) {
+        [ItemManager vomitCheck:activeVomits :activeVomitLifetimes :timeElapsed :_dave :_huey :_princess];
+
+    }
     
     //NetWorking
     //Server
     if (_player == _dave) {
         [NetworkManager sendEveryPositionToServer:_huey.position poitionDave:_dave.position poitionPrincess:_princess.position];
-        //Activated Item - Opponent
-        if (opponentActivatedItem != nil) {
-            [self activateItemAbilities:opponentActivatedItem];
-            opponentActivatedItem = nil;
-        }
+       
     }
     
     
@@ -618,7 +622,7 @@ static CCNode* opponentActivatedItem;
         itemsHeld = [ItemManager useItem:(itemBox) :activatedItemIndex :itemsHeld];
         activatedItem.opacity = 1.0;
         activatedItem.scale = 0.4;
-        activatedItem.zOrder = _dave.zOrder - 1;
+        activatedItem.zOrder = _player.zOrder - 1;
         [self activateItemAbilities:activatedItem];
         if (_player == _dave) {
             [NetworkManager sendDaveActivatedToServer:activatedItem.name iPosition:activatedItem.position];
@@ -650,9 +654,18 @@ static CCNode* opponentActivatedItem;
     
     opponentActivatedItem.position = itemPosition;
     opponentActivatedItem.opacity = 1.0;
-    opponentActivatedItem.zOrder = _dave.zOrder - 1;
+    opponentActivatedItem.zOrder = _player.zOrder - 1;
 }
 
++ (void) killVomit:(NSString *) msg{
+    if (_player == _huey) {
+        NSArray* allVomits = activeVomits.children;
+        CCLOG(@"\nallVomits: %d\n",allVomits.count);
+        [activeVomits removeChild:allVomits[msg.intValue]];
+        [activeVomitLifetimes removeObject:[activeVomitLifetimes objectAtIndex:msg.intValue]];
+
+    }
+}
 
 -(void) touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
 {
@@ -717,9 +730,9 @@ static CCNode* opponentActivatedItem;
     }
     else if([item.name  isEqual: @"Vomit"]) {
         [item removeFromParent];
-        if (_player == _huey) {
-            item.physicsBody.collisionMask = @[];
-        }
+
+        item.physicsBody.collisionMask = @[];
+        
         [activeVomits addChild:item];
         [activeVomitLifetimes addObject:[NSNumber numberWithFloat:timeElapsed]];
     }

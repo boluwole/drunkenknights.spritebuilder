@@ -141,12 +141,7 @@
     }
 }
 
-+ (void) ghostUse:(CCNode *)statue :(CCNode*)activeNode {
-    
-    
-    
-    
-}
+
 
 
 @end

@@ -80,8 +80,11 @@ static NFStoryBoardManager *nFStoryBoardManager;
     _item_position = CGPointFromString([dataDict objectForKey:@"item_position"]);
     _item_name = [dataDict objectForKey:@"item_name"];
     [NetworkManager updateItemsFromServer:_item_position name:_item_name];
-    //[NetworkManager activateItemsFromServer:_acitme_position name:_acitem_name];
     
+    
+    //---Kill Vomit
+    _vomit_index = [dataDict objectForKey:@"vomit_index_kill"];
+    [NetworkManager killActivateVomit: _vomit_index];
     
     _ActivatedItem_name_huey = [dataDict objectForKey:@"activateditem_name_huey"];
     _ActivatedItem_position_huey = CGPointFromString([dataDict objectForKey:@"activateditem_position_huey"]);
