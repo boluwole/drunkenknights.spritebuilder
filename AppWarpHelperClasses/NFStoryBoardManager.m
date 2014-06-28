@@ -86,14 +86,19 @@ static NFStoryBoardManager *nFStoryBoardManager;
     _vomit_index = [dataDict objectForKey:@"vomit_index_kill"];
     [NetworkManager killActivateVomit: _vomit_index];
     
-    _ActivatedItem_name_huey = [dataDict objectForKey:@"activateditem_name_huey"];
-    _ActivatedItem_position_huey = CGPointFromString([dataDict objectForKey:@"activateditem_position_huey"]);
-    [NetworkManager activateItemsFromServer:_ActivatedItem_name_huey iPosition:_ActivatedItem_position_huey];
+//    _ActivatedItem_name_huey = [dataDict objectForKey:@"activateditem_name_huey"];
+//    _ActivatedItem_position_huey = CGPointFromString([dataDict objectForKey:@"activateditem_position_huey"]);
+//    [NetworkManager activateItemsFromServer:_ActivatedItem_name_huey iPosition:_ActivatedItem_position_huey];
+//    
+//    _ActivatedItem_name_dave = [dataDict objectForKey:@"activateditem_name_dave"];
+//    _ActivatedItem_position_dave = CGPointFromString([dataDict objectForKey:@"activateditem_position_dave"]);
+//    [NetworkManager activateItemsFromServer:_ActivatedItem_name_dave iPosition:_ActivatedItem_position_dave];
     
-    _ActivatedItem_name_dave = [dataDict objectForKey:@"activateditem_name_dave"];
-    _ActivatedItem_position_dave = CGPointFromString([dataDict objectForKey:@"activateditem_position_dave"]);
-    [NetworkManager activateItemsFromServer:_ActivatedItem_name_dave iPosition:_ActivatedItem_position_dave];
-
+    _ActivatedItem_name = [dataDict objectForKey:@"activateditem_name"];
+    _ActivatedItem_position = CGPointFromString([dataDict objectForKey:@"activateditem_position"]);
+    _player_info = [dataDict objectForKey:@"player_info"];
+    [NetworkManager activateItemsFromServer:_ActivatedItem_name iPosition:_ActivatedItem_position playerInfo:_player_info];
+    
     _New_impulse = CGPointFromString([dataDict objectForKey:@"impulse"]);
     // NSLog(@"Testtt %@", NSStringFromCGPoint( _New_impulse));
     [NetworkManager receiveCGPointFromServer:_New_impulse];

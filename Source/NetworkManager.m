@@ -75,11 +75,22 @@
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
 }
 
++ (void) sendActivatedToServer:(NSString *)itemName iPosition:(CGPoint)itemPosition player:(NSString*) player
+{
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:itemName, @"activateditem_name",
+                          NSStringFromCGPoint(itemPosition), @"activateditem_position",
+                          player, @"player_info",  nil];
+    CCLOG(@"ActivatedItem name %@ and position %@", itemName, NSStringFromCGPoint(itemPosition));
+    [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
+
+}
+
+
 //---Item Activated---Update----
-+ (void) activateItemsFromServer:(NSString *)itemName iPosition:(CGPoint)itemPosition
++ (void) activateItemsFromServer:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString *)player
 {
     if(itemName != nil) {
-        [MainScene activateItems:itemName iPosition:itemPosition];
+        [MainScene activateItems:itemName iPosition:itemPosition playerInfo: player];
     }
 }
 

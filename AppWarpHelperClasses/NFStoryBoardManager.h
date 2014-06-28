@@ -36,6 +36,11 @@
 @property NSString* ActivatedItem_name_huey;
 @property CGPoint ActivatedItem_position_dave;
 @property CGPoint ActivatedItem_position_huey;
+
+@property NSString* ActivatedItem_name;
+@property CGPoint ActivatedItem_position;
+@property NSString* player_info;
+
 //Kill Vomit
 @property NSString *vomit_index;
 //

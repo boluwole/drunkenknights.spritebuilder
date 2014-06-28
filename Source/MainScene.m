@@ -25,6 +25,7 @@ static NSMutableArray *activeVomitLifetimes;
 - (void)didLoadFromCCB {
 
     globalPhysicsNode = _physicsNode;
+    opponentActivatedItem = nil;
     
     gongColorChange=YES;
     gongAccess=YES;
@@ -289,6 +290,8 @@ static NSMutableArray *activeVomitLifetimes;
         }
     }
 
+    NSArray* allVomits = activeVomits.children;
+    CCLOG(@"\activeVomits: %d\n",allVomits.count);
      //Activated Item - Opponent
     if (opponentActivatedItem != nil) {
         [self activateItemAbilities:opponentActivatedItem];
@@ -625,10 +628,11 @@ static NSMutableArray *activeVomitLifetimes;
         activatedItem.zOrder = _player.zOrder - 1;
         [self activateItemAbilities:activatedItem];
         if (_player == _dave) {
-            [NetworkManager sendDaveActivatedToServer:activatedItem.name iPosition:activatedItem.position];
+            [NetworkManager sendActivatedToServer:activatedItem.name iPosition:activatedItem.position player:@"dave"];
         }
         else {
-            [NetworkManager sendHueyActivatedToServer:activatedItem.name iPosition:activatedItem.position];
+            [NetworkManager sendActivatedToServer:activatedItem.name iPosition:activatedItem.position player:@"huey"];
+
         }
 
     }
@@ -644,17 +648,34 @@ static NSMutableArray *activeVomitLifetimes;
 
 
 
-+(void) activateItems:(NSString *)itemName iPosition:(CGPoint)itemPosition
++(void) activateItems:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString *)player
 {
-    opponentActivatedItem = [CCBReader load:itemName];
-    opponentActivatedItem.scale = 0.4;
-    opponentActivatedItem.anchorPoint = ccp(0.5,0.5);
-
-    [globalPhysicsNode addChild:opponentActivatedItem];
-    
-    opponentActivatedItem.position = itemPosition;
-    opponentActivatedItem.opacity = 1.0;
-    opponentActivatedItem.zOrder = _player.zOrder - 1;
+    if (_player == _dave) {
+        if([player isEqual:@"huey"]) {
+            opponentActivatedItem = [CCBReader load:itemName];
+            opponentActivatedItem.scale = 0.4;
+            opponentActivatedItem.anchorPoint = ccp(0.5,0.5);
+            CCLOG(@"opponenetActiveted in activateItems = %@", opponentActivatedItem.name);
+            [globalPhysicsNode addChild:opponentActivatedItem];
+            
+            opponentActivatedItem.position = itemPosition;
+            opponentActivatedItem.opacity = 1.0;
+            opponentActivatedItem.zOrder = _player.zOrder - 1;
+        }
+    }
+    else {
+        if([player isEqual:@"dave"]) {
+            opponentActivatedItem = [CCBReader load:itemName];
+            opponentActivatedItem.scale = 0.4;
+            opponentActivatedItem.anchorPoint = ccp(0.5,0.5);
+            CCLOG(@"opponenetActiveted in activateItems = %@", opponentActivatedItem.name);
+            [globalPhysicsNode addChild:opponentActivatedItem];
+            
+            opponentActivatedItem.position = itemPosition;
+            opponentActivatedItem.opacity = 1.0;
+            opponentActivatedItem.zOrder = _player.zOrder - 1;
+        }
+    }
 }
 
 + (void) killVomit:(NSString *) msg{
@@ -732,7 +753,7 @@ static NSMutableArray *activeVomitLifetimes;
         [item removeFromParent];
 
         item.physicsBody.collisionMask = @[];
-        
+        CCLOG(@"opponenetActiveted in Abilities = %@", item.name);
         [activeVomits addChild:item];
         [activeVomitLifetimes addObject:[NSNumber numberWithFloat:timeElapsed]];
     }

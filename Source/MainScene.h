@@ -61,15 +61,9 @@
     //for items
     BOOL itemHasDroppedForThisPeriod;
 
-    CCNode* activatedItem;
     int activatedItemIndex;
     int itemsHeld;
     NSTimeInterval currItemDropTime;
-    
-
-    //item effects
-    CCNode* activeVomits;
-    NSMutableArray* activeVomitLifetimes;
 
     //for RessStones
     CCNode* daveRess;
@@ -96,7 +90,7 @@
 + (void) updateEveryPosition:(CGPoint)msgH positionDave:(CGPoint)msgD positionPrincess:(CGPoint)msgP;
 
 + (void) itemInfo:(NSString *) msg;
-+ (void) activateItems:(NSString *)itemName iPosition:(CGPoint)itemPosition;
++ (void) activateItems:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo: (NSString*)player;
 + (void) updateItems:(CGPoint) msg name: (NSString*) name;
 + (void) updateOpponent :(CGPoint) msg;
 
