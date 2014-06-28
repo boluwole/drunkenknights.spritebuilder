@@ -476,7 +476,7 @@ static NSMutableArray *activeVomitLifetimes;
             activatedItemIndex = i;
             validItemMove = YES;
             [self princessGoThru];
-                       break;
+            break;
         }
     }
     
@@ -492,6 +492,9 @@ static NSMutableArray *activeVomitLifetimes;
         [activatedItem.parent removeChild:activatedItem];
         _princess.opacity=0.3;
         _princess.physicsBody.collisionMask=@[];
+        
+        [NetworkManager sendActivatedToServer:activatedItem.name iPosition:CGPointZero player:@"Dave"];
+        
         [self schedule:@selector(princessMist:) interval:1.0f];
 
     }
@@ -651,17 +654,24 @@ static NSMutableArray *activeVomitLifetimes;
 +(void) activateItems:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString *)player
 {
     if (_player == _dave) {
-        if([player isEqual:@"huey"]) {
-            opponentActivatedItem = [CCBReader load:itemName];
-            opponentActivatedItem.scale = 0.4;
-            opponentActivatedItem.anchorPoint = ccp(0.5,0.5);
-            CCLOG(@"opponenetActiveted in activateItems = %@", opponentActivatedItem.name);
-            [globalPhysicsNode addChild:opponentActivatedItem];
+        if([itemName isEqual:@"Ghost"]) {
             
-            opponentActivatedItem.position = itemPosition;
-            opponentActivatedItem.opacity = 1.0;
-            opponentActivatedItem.zOrder = _player.zOrder - 1;
         }
+        else {
+            
+            if([player isEqual:@"huey"]) {
+                opponentActivatedItem = [CCBReader load:itemName];
+                opponentActivatedItem.scale = 0.4;
+                opponentActivatedItem.anchorPoint = ccp(0.5,0.5);
+                CCLOG(@"opponenetActiveted in activateItems = %@", opponentActivatedItem.name);
+                [globalPhysicsNode addChild:opponentActivatedItem];
+                
+                opponentActivatedItem.position = itemPosition;
+                opponentActivatedItem.opacity = 1.0;
+                opponentActivatedItem.zOrder = _player.zOrder - 1;
+            }
+        }
+        
     }
     else {
         if([player isEqual:@"dave"]) {
