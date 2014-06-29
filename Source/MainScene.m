@@ -701,6 +701,9 @@ static NSMutableArray *activeBarrelLifetimes;
         [activeVomits removeChild:allVomits[index.intValue]];
         [activeVomitLifetimes removeObject:[activeVomitLifetimes objectAtIndex:index.intValue]];
     }
+    else if(_player == _huey && [itemName isEqual:@"Barrel"]) {
+        [ItemManager barrelUpdate:activeBarrelLifetimes :[index intValue]];
+    }
     else if ( [itemName isEqual:@"Ghost"] ) {
         if(_player != _huey) {
             _princess.physicsBody.collisionMask = NULL;
@@ -764,7 +767,7 @@ static NSMutableArray *activeBarrelLifetimes;
 
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair barrel:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
     
-   // if(_player == _dave) {
+   if(_player == _dave) {
     
     float energy = [pair totalKineticEnergy];
     
@@ -780,7 +783,7 @@ static NSMutableArray *activeBarrelLifetimes;
         } key:nodeA];
     }
         
-  //  }
+    }
 }
 
 - (void) activateItemAbilities: (CCNode*) item {

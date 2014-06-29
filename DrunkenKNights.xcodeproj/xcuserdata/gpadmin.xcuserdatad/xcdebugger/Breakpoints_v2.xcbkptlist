@@ -618,13 +618,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/MainScene.m"
-            timestampString = "425692456.44376"
+            timestampString = "425693139.467824"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "779"
-            endingLineNumber = "779"
-            landmarkName = "@implementation MainScene"
-            landmarkType = "3">
+            startingLineNumber = "754"
+            endingLineNumber = "754"
+            landmarkName = "-reactivateGong:"
+            landmarkType = "5">
             <Locations>
                <Location
                   shouldBeEnabled = "No"

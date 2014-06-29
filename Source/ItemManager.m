@@ -111,27 +111,37 @@
         if((CCNode*)activeBarrelLifetimes[i] == barrel) {
             activeBarrelLifetimes[i+1] = [NSNumber numberWithInt:([activeBarrelLifetimes[i+1] intValue] - 1)];
             
+            [NetworkManager sendDeActivateItemsToServer:@"Barrel" iPosition:CGPointZero playerInfo:@"dave" iIndex:[NSString stringWithFormat:@"%i", i]];
             
+            [ItemManager barrelUpdate:activeBarrelLifetimes :i];
             
-            switch([activeBarrelLifetimes[i+1] intValue]) {
-                case 3:
-                    barrel.opacity = 1.0f;
-                    break;
-                case 2:
-                    barrel.opacity = 0.8f;
-                    break;
-                case 1:
-                    barrel.opacity = 0.5f;
-                    break;
-                case 0:
-                    //kill
-                    [barrel removeFromParent];
-                    break;
-            }
-        
             break;
         }
     }
+}
+
++ (void) barrelUpdate: (NSMutableArray*) activeBarrelLifetimes : (int) index {
+    
+    CCNode* barrel = (CCNode*) activeBarrelLifetimes[index];
+    
+    switch([activeBarrelLifetimes[index+1] intValue]) {
+        case 3:
+            barrel.opacity = 1.0f;
+            break;
+        case 2:
+            barrel.opacity = 0.8f;
+            break;
+        case 1:
+            barrel.opacity = 0.5f;
+            break;
+        case 0:
+            //kill
+            [barrel removeFromParent];
+            [activeBarrelLifetimes removeObject:[activeBarrelLifetimes objectAtIndex:index+1]];
+            [activeBarrelLifetimes removeObject:[activeBarrelLifetimes objectAtIndex:index]];
+            break;
+    }
+
 }
 
 + (void) vomitCheck: (CCNode*) activeVomits : (NSMutableArray*) activeVomitLifetimes : (NSTimeInterval) currTime :
