@@ -111,20 +111,22 @@
         if((CCNode*)activeBarrelLifetimes[i] == barrel) {
             activeBarrelLifetimes[i+1] = [NSNumber numberWithInt:([activeBarrelLifetimes[i+1] intValue] - 1)];
             
-            [NetworkManager sendDeActivateItemsToServer:@"Barrel" iPosition:CGPointZero playerInfo:@"dave" iIndex:[NSString stringWithFormat:@"%i", i]];
+            [NetworkManager sendDeActivateItemsToServer:@"Barrel" iPosition:ccp([activeBarrelLifetimes[i+1] intValue],0) playerInfo:@"dave" iIndex:[NSString stringWithFormat:@"%i", i]];
             
-            [ItemManager barrelUpdate:activeBarrelLifetimes :i];
+            [ItemManager barrelUpdate:activeBarrelLifetimes :i :[activeBarrelLifetimes[i+1] intValue]];
             
             break;
         }
     }
 }
 
-+ (void) barrelUpdate: (NSMutableArray*) activeBarrelLifetimes : (int) index {
++ (void) barrelUpdate: (NSMutableArray*) activeBarrelLifetimes : (int) index : (int) life {
     
     CCNode* barrel = (CCNode*) activeBarrelLifetimes[index];
+    activeBarrelLifetimes[index+1] = [NSNumber numberWithInt:life];
     
-    switch([activeBarrelLifetimes[index+1] intValue]) {
+    CCLOG(@"\n\nthis barrel has %d lives left\n\n", [activeBarrelLifetimes[index+1] intValue]);
+    switch(life) {
         case 3:
             barrel.opacity = 1.0f;
             break;

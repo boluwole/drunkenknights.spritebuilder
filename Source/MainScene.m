@@ -297,7 +297,7 @@ static NSMutableArray *activeBarrelLifetimes;
     }
 
     NSArray* allVomits = activeVomits.children;
-    CCLOG(@"\activeVomits: %d\n",allVomits.count);
+    //CCLOG(@"\activeVomits: %d\n",allVomits.count);
      //Activated Item - Opponent
     if (opponentActivatedItem != nil) {
         [self activateItemAbilities:opponentActivatedItem];
@@ -702,7 +702,9 @@ static NSMutableArray *activeBarrelLifetimes;
         [activeVomitLifetimes removeObject:[activeVomitLifetimes objectAtIndex:index.intValue]];
     }
     else if(_player == _huey && [itemName isEqual:@"Barrel"]) {
-        [ItemManager barrelUpdate:activeBarrelLifetimes :[index intValue]];
+        
+        //life time is stored in position x
+        [ItemManager barrelUpdate:activeBarrelLifetimes :[index intValue] :itemPosition.x];
     }
     else if ( [itemName isEqual:@"Ghost"] ) {
         if(_player != _huey) {
@@ -791,11 +793,9 @@ static NSMutableArray *activeBarrelLifetimes;
         if (_player == _dave) {
             item.physicsBody.collisionMask = NULL;
             item.physicsBody.collisionType = @"barrel";
-           
-            [activeBarrelLifetimes addObject:item];
-            [activeBarrelLifetimes addObject:[NSNumber numberWithInt:3]];
-            
         }
+        [activeBarrelLifetimes addObject:item];
+        [activeBarrelLifetimes addObject:[NSNumber numberWithInt:3]];
     }
     else if([item.name  isEqual: @"Vomit"]) {
         [item removeFromParent];

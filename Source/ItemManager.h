@@ -31,6 +31,6 @@ enum ItemType {
 + (void) vomitCheck: (CCNode*) activeVomits : (NSMutableArray*) activeVomitLifetimes : (NSTimeInterval) currTime :
     (CCSprite*) dave : (CCSprite*) huey : (CCSprite*) princess;
 + (void) barrelCheck: (CCNode*) barrel : (NSMutableArray*) activeBarrelLifetimes;
-+ (void) barrelUpdate: (NSMutableArray*) activeBarrelLifetimes : (int) index;
++ (void) barrelUpdate: (NSMutableArray*) activeBarrelLifetimes : (int) index : (int) life;
 
 @end
