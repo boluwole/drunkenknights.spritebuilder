@@ -623,8 +623,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "779"
             endingLineNumber = "779"
-            landmarkName = "-ccPhysicsCollisionPostSolve:barrel:wildcard:"
-            landmarkType = "5">
+            landmarkName = "@implementation MainScene"
+            landmarkType = "3">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -667,6 +667,52 @@
                   startingLineNumber = "776"
                   endingLineNumber = "776"
                   offsetFromSymbolStart = "17">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppWarpHelperClasses/NFStoryBoardManager.h"
+            timestampString = "425692908.048669"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "deplayer_info"
+            landmarkType = "19">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[NFStoryBoardManager deplayer_info]"
+                  moduleName = "DrunkenKNights"
+                  urlString = "file:///Users/gpadmin/Documents/DrunkenKnights062714/drunkenknights.spritebuilder/AppWarpHelperClasses/NFStoryBoardManager.h"
+                  timestampString = "425692908.072623"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "41"
+                  endingLineNumber = "41"
+                  offsetFromSymbolStart = "30">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[NFStoryBoardManager setDeplayer_info:]"
+                  moduleName = "DrunkenKNights"
+                  urlString = "file:///Users/gpadmin/Documents/DrunkenKnights062714/drunkenknights.spritebuilder/AppWarpHelperClasses/NFStoryBoardManager.h"
+                  timestampString = "425692908.072859"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "41"
+                  endingLineNumber = "41"
+                  offsetFromSymbolStart = "43">
                </Location>
             </Locations>
          </BreakpointContent>

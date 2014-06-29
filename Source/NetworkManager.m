@@ -105,21 +105,11 @@
 {
     if(itemName != nil && index != nil)
     {
+        
         [MainScene deActivateItem:itemName iPosition:itemPosition playerInfo:player iIndex:index];
     }
 
 }
-
-
-
-
-+ (void) sendItemVomitKillMsgToServer:(NSString *)index
-{
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:index,@"vomit_index_kill", nil];
-    CCLOG(@"index = %@", index);
-    [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
-}
-
 
 
 //item events

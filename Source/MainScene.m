@@ -726,11 +726,10 @@ static NSMutableArray *activeBarrelLifetimes;
 
 -(void) checkGong{
     
-    
     if((CGRectContainsPoint([gong boundingBox] , _dave.position) || CGRectContainsPoint([gong boundingBox] , _huey.position))  && gongAccess){
-        
+
         if(gongColorChange){
-        [gong setColor:[CCColor colorWithRed:0.5 green:0.8 blue:0.9 alpha:1.0]];
+            [gong setColor:[CCColor colorWithRed:0.5 green:0.8 blue:0.9 alpha:1.0]];
             gongColorChange=NO;
         }
             CGPoint daveRes = daveRess.position;
@@ -742,7 +741,6 @@ static NSMutableArray *activeBarrelLifetimes;
             [self schedule:@selector(reactivateGong:) interval:1.0f];
         
     }
-
 }
 
 -(void) reactivateGong: (CCTime)delta {

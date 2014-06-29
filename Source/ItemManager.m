@@ -146,8 +146,8 @@
         if((currTime - bt) < VOMIT_LIFE) {
             [activeVomits removeChild:allVomits[i]];
             //Network
-            //[NetworkManager sendItemVomitKillMsgToServer:[NSString stringWithFormat:@"%i", i]];
             [NetworkManager sendDeActivateItemsToServer:@"Vomit" iPosition:CGPointZero playerInfo:@"dave" iIndex:[NSString stringWithFormat:@"%i", i]];
+
             [activeVomitLifetimes removeObject:[activeVomitLifetimes objectAtIndex:i]];
             break;
         }
@@ -164,7 +164,6 @@
             huey.physicsBody.velocity = ccpMult(huey.physicsBody.velocity, VOMIT_MULTIPLIER);
         }
         if(CGRectContainsPoint([allVomits[i] boundingBox], princess.position)) {
-           // CCLOG(@"\n\nvomit all up");
             princess.physicsBody.velocity = ccpMult(princess.physicsBody.velocity, VOMIT_MULTIPLIER);
         }
     }

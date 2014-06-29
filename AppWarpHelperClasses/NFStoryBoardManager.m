@@ -81,11 +81,11 @@ static NFStoryBoardManager *nFStoryBoardManager;
     _item_name = [dataDict objectForKey:@"item_name"];
     [NetworkManager updateItemsFromServer:_item_position name:_item_name];
     
-    
-    
+
     _ActivatedItem_name = [dataDict objectForKey:@"activateditem_name"];
     _ActivatedItem_position = CGPointFromString([dataDict objectForKey:@"activateditem_position"]);
     _player_info = [dataDict objectForKey:@"player_info"];
+
     [NetworkManager activateItemsFromServer:_ActivatedItem_name iPosition:_ActivatedItem_position playerInfo:_player_info];
     
     
