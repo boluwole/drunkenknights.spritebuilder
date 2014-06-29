@@ -105,6 +105,34 @@
     }
 }
 
+//activeBarrelLifetimes is stored as: barrel A, life, barrel B, life, barrel C, life... etc
++ (void) barrelCheck: (CCNode*) barrel : (NSMutableArray*) activeBarrelLifetimes {
+    for(int i = 0; i < activeBarrelLifetimes.count; i+=2) {
+        if((CCNode*)activeBarrelLifetimes[i] == barrel) {
+            activeBarrelLifetimes[i+1] = [NSNumber numberWithInt:([activeBarrelLifetimes[i+1] intValue] - 1)];
+            
+            
+            
+            switch([activeBarrelLifetimes[i+1] intValue]) {
+                case 3:
+                    barrel.opacity = 1.0f;
+                    break;
+                case 2:
+                    barrel.opacity = 0.8f;
+                    break;
+                case 1:
+                    barrel.opacity = 0.5f;
+                    break;
+                case 0:
+                    //kill
+                    [barrel removeFromParent];
+                    break;
+            }
+        
+            break;
+        }
+    }
+}
 
 + (void) vomitCheck: (CCNode*) activeVomits : (NSMutableArray*) activeVomitLifetimes : (NSTimeInterval) currTime :
     (CCSprite*) dave : (CCSprite*) huey : (CCSprite*) princess {
@@ -118,7 +146,8 @@
         if((currTime - bt) < VOMIT_LIFE) {
             [activeVomits removeChild:allVomits[i]];
             //Network
-            [NetworkManager sendItemVomitKillMsgToServer:[NSString stringWithFormat:@"%i", i]];
+            //[NetworkManager sendItemVomitKillMsgToServer:[NSString stringWithFormat:@"%i", i]];
+            [NetworkManager sendDeActivateItemsToServer:@"Vomit" iPosition:CGPointZero playerInfo:@"dave" iIndex:[NSString stringWithFormat:@"%i", i]];
             [activeVomitLifetimes removeObject:[activeVomitLifetimes objectAtIndex:i]];
             break;
         }
@@ -127,15 +156,15 @@
         //CCLOG(@"\n\n%f, %f",[allVomits[i] boundingBox].origin.x,[allVomits[i] boundingBox].origin.y);
         //CCLOG(@"\n\n%f, %f",davePos.x,davePos.y);
         if(CGRectContainsPoint([allVomits[i] boundingBox], dave.position)) {
-            CCLOG(@"\n\nvomit all up");
+            //CCLOG(@"\n\nvomit all up");
             dave.physicsBody.velocity = ccpMult(dave.physicsBody.velocity, VOMIT_MULTIPLIER);
         }
         if(CGRectContainsPoint([allVomits[i] boundingBox], huey.position)) {
-            CCLOG(@"\n\nvomit all up");
+            //CCLOG(@"\n\nvomit all up");
             huey.physicsBody.velocity = ccpMult(huey.physicsBody.velocity, VOMIT_MULTIPLIER);
         }
         if(CGRectContainsPoint([allVomits[i] boundingBox], princess.position)) {
-            CCLOG(@"\n\nvomit all up");
+           // CCLOG(@"\n\nvomit all up");
             princess.physicsBody.velocity = ccpMult(princess.physicsBody.velocity, VOMIT_MULTIPLIER);
         }
     }

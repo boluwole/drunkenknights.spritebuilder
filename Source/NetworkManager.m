@@ -103,7 +103,7 @@
 
 + (void) deActivateItemsFromServer:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString*) player iIndex:(NSString*) index
 {
-    if(itemName != nil)
+    if(itemName != nil && index != nil)
     {
         [MainScene deActivateItem:itemName iPosition:itemPosition playerInfo:player iIndex:index];
     }
@@ -120,14 +120,7 @@
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
 }
 
-+ (void) killActivateVomit:(NSString *)vomitIndex
-{
-    if(vomitIndex != nil)
-    {
-        [MainScene killVomit:vomitIndex];
-    }
-    
-}
+
 
 //item events
 + (void) updateItemInfoFromServer: (NSString*)msg

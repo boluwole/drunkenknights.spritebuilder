@@ -19,12 +19,14 @@ static CCNode* activatedItem;
 static CCNode* opponentActivatedItem;
 static CCNode* activeVomits;
 static NSMutableArray *activeVomitLifetimes;
+static NSMutableArray *activeBarrelLifetimes;
 
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
 
     globalPhysicsNode = _physicsNode;
+    _physicsNode.collisionDelegate = self;
     opponentActivatedItem = nil;
     
     gongColorChange=YES;
@@ -151,6 +153,8 @@ static NSMutableArray *activeVomitLifetimes;
     activeVomits = [[CCNode alloc] init];
     [_physicsNode addChild:activeVomits];
     activeVomitLifetimes = [[NSMutableArray alloc] init];
+    
+    activeBarrelLifetimes = [[NSMutableArray alloc] init];
     
     activeGhost=[[CCNode alloc] init];
     [_physicsNode addChild: activeGhost];
@@ -520,10 +524,10 @@ static NSMutableArray *activeVomitLifetimes;
         _princess.physicsBody.collisionMask=NULL;
         
         if ( _player == _dave ) {
-            [NetworkManager sendDeActivateItemsToServer:activatedItem.name iPosition:activatedItem.position playerInfo:@"dave" iIndex:[NSString stringWithFormat:@"0"]];
+            [NetworkManager sendDeActivateItemsToServer:activatedItem.name iPosition:activatedItem.position playerInfo:@"dave" iIndex:[NSString stringWithFormat:@"-1"]];
         }
         else {
-            [NetworkManager sendDeActivateItemsToServer:activatedItem.name iPosition:activatedItem.position playerInfo:@"huey" iIndex:[NSString stringWithFormat:@"0"]];
+            [NetworkManager sendDeActivateItemsToServer:activatedItem.name iPosition:activatedItem.position playerInfo:@"huey" iIndex:[NSString stringWithFormat:@"-1"]];
         }
         
         [self unschedule:@selector(princessMist:)];
@@ -677,7 +681,7 @@ static NSMutableArray *activeVomitLifetimes;
             opponentActivatedItem = [CCBReader load:itemName];
             opponentActivatedItem.scale = 0.4;
             opponentActivatedItem.anchorPoint = ccp(0.5,0.5);
-            CCLOG(@"opponenetActiveted in activateItems = %@", opponentActivatedItem.name);
+            //CCLOG(@"opponenetActiveted in activateItems = %@", opponentActivatedItem.name);
             [globalPhysicsNode addChild:opponentActivatedItem];
             
             opponentActivatedItem.position = itemPosition;
@@ -687,16 +691,6 @@ static NSMutableArray *activeVomitLifetimes;
     }
         
     
-}
-
-+ (void) killVomit:(NSString *) msg{
-    if (_player == _huey) {
-        NSArray* allVomits = activeVomits.children;
-        CCLOG(@"\nallVomits: %d\n",allVomits.count);
-        [activeVomits removeChild:allVomits[msg.intValue]];
-        [activeVomitLifetimes removeObject:[activeVomitLifetimes objectAtIndex:msg.intValue]];
-
-    }
 }
 
 + (void) deActivateItem:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString*) player iIndex:(NSString*) index
@@ -733,7 +727,7 @@ static NSMutableArray *activeVomitLifetimes;
 -(void) checkGong{
     
     
-    if(CGRectContainsPoint([gong boundingBox] , _dave.position) && gongAccess){
+    if((CGRectContainsPoint([gong boundingBox] , _dave.position) || CGRectContainsPoint([gong boundingBox] , _huey.position))  && gongAccess){
         
         if(gongColorChange){
         [gong setColor:[CCColor colorWithRed:0.5 green:0.8 blue:0.9 alpha:1.0]];
@@ -748,6 +742,7 @@ static NSMutableArray *activeVomitLifetimes;
             [self schedule:@selector(reactivateGong:) interval:1.0f];
         
     }
+
 }
 
 -(void) reactivateGong: (CCTime)delta {
@@ -769,19 +764,43 @@ static NSMutableArray *activeVomitLifetimes;
 }
 
 
-
+- (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair barrel:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
+    
+   // if(_player == _dave) {
+    
+    float energy = [pair totalKineticEnergy];
+    
+    // if energy is large enough, remove the seal
+    if (energy > 20000.f) {
+        [[_physicsNode space] addPostStepBlock:^{
+            //[self sealRemoved:nodeA];
+            
+            [ItemManager barrelCheck:nodeA :activeBarrelLifetimes];
+            
+            //[nodeA setColor:[CCColor colorWithWhite:0.5 alpha:1.0]];
+            //CCLOG(@"\n\n\nbarrel hit\n\n\n");
+        } key:nodeA];
+    }
+        
+  //  }
+}
 
 - (void) activateItemAbilities: (CCNode*) item {
     if([item.name  isEqual: @"Barrel"]) {
         if (_player == _dave) {
             item.physicsBody.collisionMask = NULL;
+            item.physicsBody.collisionType = @"barrel";
+           
+            [activeBarrelLifetimes addObject:item];
+            [activeBarrelLifetimes addObject:[NSNumber numberWithInt:3]];
+            
         }
     }
     else if([item.name  isEqual: @"Vomit"]) {
         [item removeFromParent];
 
         item.physicsBody.collisionMask = @[];
-        CCLOG(@"opponenetActiveted in Abilities = %@", item.name);
+        //CCLOG(@"opponenetActiveted in Abilities = %@", item.name);
         [activeVomits addChild:item];
         [activeVomitLifetimes addObject:[NSNumber numberWithFloat:timeElapsed]];
     }

@@ -82,11 +82,6 @@ static NFStoryBoardManager *nFStoryBoardManager;
     [NetworkManager updateItemsFromServer:_item_position name:_item_name];
     
     
-    //---Kill Vomit (Huey need to kill from its screen)
-    _vomit_index = [dataDict objectForKey:@"vomit_index_kill"];
-    [NetworkManager deActivateItemsFromServer:@"Vomit" iPosition:CGPointZero playerInfo:@"huey" iIndex:_vomit_index];
-    //[NetworkManager killActivateVomit: _vomit_index];
-    
     
     _ActivatedItem_name = [dataDict objectForKey:@"activateditem_name"];
     _ActivatedItem_position = CGPointFromString([dataDict objectForKey:@"activateditem_position"]);
@@ -97,7 +92,8 @@ static NFStoryBoardManager *nFStoryBoardManager;
     _deActivatedItem_name = [dataDict objectForKey:@"deActivatedItem_name"];
     _deActivatedItem_position = CGPointFromString([dataDict objectForKey:@"deActivatedItem_position"]);
     _deplayer_info = [dataDict objectForKey:@"deplayer_info"];
-    [NetworkManager deActivateItemsFromServer:_deActivatedItem_name iPosition:_deActivatedItem_position playerInfo:_deplayer_info iIndex:@"0"];
+    _item_index = [dataDict objectForKey:@"index_info"];
+    [NetworkManager deActivateItemsFromServer:_deActivatedItem_name iPosition:_deActivatedItem_position playerInfo:_deplayer_info iIndex:_item_index];
 
     
     _New_impulse = CGPointFromString([dataDict objectForKey:@"impulse"]);

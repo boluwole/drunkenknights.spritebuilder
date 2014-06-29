@@ -29,6 +29,7 @@ enum ItemType {
 + (void) itemEntersInventory: (CCNode*) item;
 + (void) activateItemAbilities: (CCNode*) item;
 + (void) vomitCheck: (CCNode*) activeVomits : (NSMutableArray*) activeVomitLifetimes : (NSTimeInterval) currTime :
-        (CCSprite*) dave : (CCSprite*) huey : (CCSprite*) princess;
-+ (void) ghostUse: (CCNode*) statue : (CCNode*) activeNode;
+    (CCSprite*) dave : (CCSprite*) huey : (CCSprite*) princess;
++ (void) barrelCheck: (CCNode*) barrel : (NSMutableArray*) activeBarrelLifetimes;
+
 @end

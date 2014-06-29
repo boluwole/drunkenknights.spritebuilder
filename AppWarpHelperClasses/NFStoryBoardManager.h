@@ -39,9 +39,9 @@
 @property NSString* deActivatedItem_name;
 @property CGPoint deActivatedItem_position;
 @property NSString* deplayer_info;
+@property NSString* item_index;
 
-//Kill Vomit
-@property NSString *vomit_index;
+
 //
 @property CGPoint New_impulse;
 

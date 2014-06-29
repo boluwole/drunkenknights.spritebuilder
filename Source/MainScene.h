@@ -13,6 +13,7 @@
 
 #import "AppWarpHelper.h"
 #import <AppWarp_iOS_SDK/AppWarp_iOS_SDK.h>
+#import "CCPhysics+ObjectiveChipmunk.h"
 
 @interface MainScene : CCScene <CCPhysicsCollisionDelegate> {
     
@@ -95,7 +96,6 @@
 + (void) updateItems:(CGPoint) msg name: (NSString*) name;
 + (void) updateOpponent :(CGPoint) msg;
 
-+ (void) killVomit:(NSString *) msg;
 + (void) deActivateItem:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString*) player iIndex:(NSString*) index;
 
 //@property (nonatomic, retain) int time;
