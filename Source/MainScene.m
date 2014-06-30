@@ -198,6 +198,13 @@ static NSMutableArray *activeBarrelLifetimes;
     
     //items
     timeElapsed = [startTime timeIntervalSinceNow];
+    
+    if(_player == _huey) {
+        _dave.physicsBody.sensor = true;
+        _huey.physicsBody.sensor = true;
+        _princess.physicsBody.sensor = true;
+    }
+    
     [self checkGameEnd];
     [self checkGong];
     
@@ -271,7 +278,7 @@ static NSMutableArray *activeBarrelLifetimes;
         
     }
     
-    
+    if(_player == _dave) {
     //detect falloff
     if([PhysicsManager detectFallOff:_dave.position :uiimage]) {
         if(falling[DAVE] == NO) [self dropPlayer:_dave :DAVE];
@@ -295,8 +302,9 @@ static NSMutableArray *activeBarrelLifetimes;
 
         }
     }
+    }
 
-    NSArray* allVomits = activeVomits.children;
+    //NSArray* allVomits = activeVomits.children;
     //CCLOG(@"\activeVomits: %d\n",allVomits.count);
      //Activated Item - Opponent
     if (opponentActivatedItem != nil) {
@@ -623,17 +631,17 @@ static NSMutableArray *activeBarrelLifetimes;
 + (void)updateEveryPosition:(CGPoint)msgH positionDave:(CGPoint)msgD positionPrincess:(CGPoint)msgP :(NSString*)zH :(NSString*)zD :(NSString*)zP
 {
     if (_player == _huey) {
-        if (msgH.x != 0 && msgH.y != 0 && zH != 0) {
+        if (msgH.x != 0 && msgH.y != 0) {
             _huey.position = msgH;
             _huey.zOrder = [zH intValue];
         }
         
-        if (msgD.x != 0 && msgD.y != 0 && zD != 0) {
+        if (msgD.x != 0 && msgD.y != 0) {
             _dave.position = msgD;
             _dave.zOrder = [zD intValue];
         }
         
-        if (msgP.x != 0 && msgP.y != 0 && zP != 0) {
+        if (msgP.x != 0 && msgP.y != 0) {
             _princess.position = msgP;
             _princess.zOrder = [zP intValue];
         }
