@@ -313,8 +313,9 @@ static NSMutableArray *activeBarrelLifetimes;
     //NetWorking
     //Server
     if (_player == _dave) {
-        [NetworkManager sendEveryPositionToServer:_huey.position poitionDave:_dave.position poitionPrincess:_princess.position];
-       
+        [NetworkManager sendEveryPositionToServer:_huey.position poitionDave:_dave.position poitionPrincess:_princess.position
+                                                 :[NSString stringWithFormat:@"%i",_huey.zOrder] :[NSString stringWithFormat:@"%i",_dave.zOrder] :[NSString stringWithFormat:@"%i",_princess.zOrder]];
+         
     }
     
     
@@ -450,43 +451,7 @@ static NSMutableArray *activeBarrelLifetimes;
     
 }
 
-//TOUCH STUFF
 
-// called on every touch in this scene
-- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
-    
-    CGPoint touchLocation = [touch locationInNode:self];
-    
-    //CCLOG(@"touch began");
-    
-    // start catapult dragging when a touch inside of the catapult arm occurs
-    if (CGRectContainsPoint([_player boundingBox], touchLocation))
-        //&& abs(ccpLengthSQ(_dave.physicsBody.velocity)) < 64)//abs(_dave.physicsBody.velocity.x) < 0.5 && abs(_dave.physicsBody.velocity.y) < 0.5)
-    {
-        validMove = YES;
-        
-        start = touchLocation;
-        end = touchLocation;
-        
-    }
-    else
-    {
-        validMove = NO;
-    }
-    
-    //item usage
-    for(int i = 0; i < itemsHeld; i++) {
-        if(CGRectContainsPoint([itemBox[i] boundingBox], touchLocation)) {
-            NSArray* child = itemBox[i].children;
-            activatedItem = (CCNode*)child[0];
-            activatedItemIndex = i;
-            validItemMove = YES;
-            [self princessGoThru];
-            break;
-        }
-    }
-    
-}
 
 
 -(void) princessGoThru{
@@ -537,6 +502,45 @@ static NSMutableArray *activeBarrelLifetimes;
     
 }
 
+//TOUCH STUFF
+
+// called on every touch in this scene
+- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
+    
+    CGPoint touchLocation = [touch locationInNode:self];
+    
+    //CCLOG(@"touch began");
+    
+    CGRect playerTouchBounds = CGRectMake([_player boundingBox].origin.x, [_player boundingBox].origin.y, [_player boundingBox].size.width*1.5, [_player boundingBox].size.height*1.5);
+    
+    // start catapult dragging when a touch inside of the catapult arm occurs
+    if (CGRectContainsPoint(playerTouchBounds, touchLocation))
+        //&& abs(ccpLengthSQ(_dave.physicsBody.velocity)) < 64)//abs(_dave.physicsBody.velocity.x) < 0.5 && abs(_dave.physicsBody.velocity.y) < 0.5)
+    {
+        validMove = YES;
+        
+        start = touchLocation;
+        end = touchLocation;
+        
+    }
+    else
+    {
+        validMove = NO;
+    }
+    
+    //item usage
+    for(int i = 0; i < itemsHeld; i++) {
+        if(CGRectContainsPoint([itemBox[i] boundingBox], touchLocation)) {
+            NSArray* child = itemBox[i].children;
+            activatedItem = (CCNode*)child[0];
+            activatedItemIndex = i;
+            validItemMove = YES;
+            [self princessGoThru];
+            break;
+        }
+    }
+    
+}
 
 - (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
@@ -616,21 +620,25 @@ static NSMutableArray *activeBarrelLifetimes;
     }
 }
 
-+ (void)updateEveryPosition:(CGPoint)msgH positionDave:(CGPoint)msgD positionPrincess:(CGPoint)msgP
++ (void)updateEveryPosition:(CGPoint)msgH positionDave:(CGPoint)msgD positionPrincess:(CGPoint)msgP :(NSString*)zH :(NSString*)zD :(NSString*)zP
 {
     if (_player == _huey) {
-        if (msgH.x != 0 && msgH.y != 0) {
+        if (msgH.x != 0 && msgH.y != 0 && zH != 0) {
             _huey.position = msgH;
+            _huey.zOrder = [zH intValue];
         }
         
-        if (msgD.x != 0 && msgD.y != 0) {
+        if (msgD.x != 0 && msgD.y != 0 && zD != 0) {
             _dave.position = msgD;
+            _dave.zOrder = [zD intValue];
         }
         
-        if (msgP.x != 0 && msgP.y != 0) {
+        if (msgP.x != 0 && msgP.y != 0 && zP != 0) {
             _princess.position = msgP;
+            _princess.zOrder = [zP intValue];
         }
 
+        
     }
 }
 

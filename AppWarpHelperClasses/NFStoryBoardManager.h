@@ -27,6 +27,10 @@
 @property CGPoint huey_position;
 @property CGPoint dave_position;
 @property CGPoint princess_position;
+@property NSString* zorder_huey;
+@property NSString* zorder_dave;
+@property NSString* zorder_princess;
+
 //Item
 @property NSString* Item_info;
 @property NSString* item_name;

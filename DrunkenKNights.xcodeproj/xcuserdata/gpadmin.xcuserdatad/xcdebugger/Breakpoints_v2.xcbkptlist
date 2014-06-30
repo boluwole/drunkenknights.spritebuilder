@@ -506,11 +506,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/MainScene.m"
-            timestampString = "425689143.613804"
+            timestampString = "425795606.170216"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "495"
-            endingLineNumber = "495"
+            startingLineNumber = "459"
+            endingLineNumber = "459"
             landmarkName = "-princessGoThru"
             landmarkType = "5">
          </BreakpointContent>
@@ -602,11 +602,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/MainScene.m"
-            timestampString = "425689143.613804"
+            timestampString = "425795606.170216"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "691"
-            endingLineNumber = "691"
+            startingLineNumber = "694"
+            endingLineNumber = "694"
             landmarkName = "+activateItems:iPosition:playerInfo:"
             landmarkType = "5">
          </BreakpointContent>
@@ -618,11 +618,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/MainScene.m"
-            timestampString = "425695573.021309"
+            timestampString = "425795606.170216"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "758"
-            endingLineNumber = "758"
+            startingLineNumber = "762"
+            endingLineNumber = "762"
             landmarkName = "-reactivateGong:"
             landmarkType = "5">
             <Locations>
@@ -724,11 +724,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/MainScene.m"
-            timestampString = "425695563.572687"
+            timestampString = "425795606.170216"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "705"
-            endingLineNumber = "705"
+            startingLineNumber = "708"
+            endingLineNumber = "708"
             landmarkName = "+deActivateItem:iPosition:playerInfo:iIndex:"
             landmarkType = "5">
          </BreakpointContent>
@@ -740,11 +740,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/ItemManager.m"
-            timestampString = "425695602.102927"
+            timestampString = "425696157.593599"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
             landmarkName = "+barrelUpdate:::"
             landmarkType = "5">
          </BreakpointContent>
@@ -756,11 +756,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/ItemManager.m"
-            timestampString = "425695619.275736"
+            timestampString = "425696157.593599"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
             landmarkName = "+barrelUpdate:::"
             landmarkType = "5">
          </BreakpointContent>
@@ -772,11 +772,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/ItemManager.m"
-            timestampString = "425695620.508674"
+            timestampString = "425696157.593599"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
             landmarkName = "+barrelUpdate:::"
             landmarkType = "5">
          </BreakpointContent>

@@ -36,17 +36,21 @@
     [MainScene updateOpponent:msg];
 }
 
-+ (void) sendEveryPositionToServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP
++ (void) sendEveryPositionToServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP
 {
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:NSStringFromCGPoint(msgH), @"position_huey",
                           NSStringFromCGPoint(msgD), @"position_dave",
-                          NSStringFromCGPoint(msgP), @"position_princess", nil];
+                          NSStringFromCGPoint(msgP), @"position_princess",
+                          zH, @"zorder_huey",
+                          zD, @"zorder_dave",
+                          zP, @"zorder_princess",
+                          nil];
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
 }
 
-+ (void) receiveEveryPositionFromServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP
++ (void) receiveEveryPositionFromServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP
 {
-    [MainScene updateEveryPosition:msgH positionDave:msgD positionPrincess:msgP];
+    [MainScene updateEveryPosition:msgH positionDave:msgD positionPrincess:msgP :zH :zD :zP];
 }  
 
 + (void) sendItemInfoMsgToServer:(NSString *)info
