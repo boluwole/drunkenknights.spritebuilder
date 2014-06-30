@@ -49,9 +49,9 @@
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
 }
 
-+ (void) receiveEveryPositionFromServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP
++ (void) receiveEveryPositionFromServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP :(NSString*) fallingH
 {
-    [MainScene updateEveryPosition:msgH positionDave:msgD positionPrincess:msgP :zH :zD :zP];
+    [MainScene updateEveryPosition:msgH positionDave:msgD positionPrincess:msgP :zH :zD :zP :fallingH];
 }  
 
 + (void) sendItemInfoMsgToServer:(NSString *)info

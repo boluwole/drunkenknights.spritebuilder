@@ -71,7 +71,8 @@ static NFStoryBoardManager *nFStoryBoardManager;
     _zorder_dave = [dataDict objectForKey:@"zorder_dave"];
     _zorder_huey = [dataDict objectForKey:@"zorder_huey"];
     _zorder_princess = [dataDict objectForKey:@"zorder_princess"];
-    [NetworkManager receiveEveryPositionFromServer:_huey_position poitionDave:_dave_position poitionPrincess:_princess_position :_zorder_huey :_zorder_dave :_zorder_princess];
+    _falling_huey = [dataDict objectForKey:@"falling_huey"];
+    [NetworkManager receiveEveryPositionFromServer:_huey_position poitionDave:_dave_position poitionPrincess:_princess_position :_zorder_huey :_zorder_dave :_zorder_princess :_falling_huey];
     
     
     //---Item

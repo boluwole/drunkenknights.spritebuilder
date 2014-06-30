@@ -24,8 +24,8 @@
 + (void) sendCGPointToServer:(CGPoint) msg;
 + (void) receiveCGPointFromServer:(CGPoint) msg;
 //Movement
-+ (void) sendEveryPositionToServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP;
-+ (void) receiveEveryPositionFromServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msg :(NSString*)zH : (NSString*)zD : (NSString*) zP;
++ (void) sendEveryPositionToServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP : (NSString*) fallingH;
++ (void) receiveEveryPositionFromServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP : (NSString*) fallingH;
 
 
 //Item Pickup Kill

@@ -20,7 +20,7 @@ static CCNode* opponentActivatedItem;
 static CCNode* activeVomits;
 static NSMutableArray *activeVomitLifetimes;
 static NSMutableArray *activeBarrelLifetimes;
-
+static bool isFallingHuey;
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
@@ -226,8 +226,9 @@ static NSMutableArray *activeBarrelLifetimes;
         //kill item
         if(currItem != nil) {
             currItem.rotation+=10;
+            bool isFalling = (_player == _dave) ? falling[DAVE] : isFallingHuey;
             //item pickup
-                if(CGRectContainsPoint([_player boundingBox], currItem.position)) {
+                if(CGRectContainsPoint([_player boundingBox], currItem.position) && !isFalling) {
                     if(itemsHeld < 3) {
                         currItem.rotation = 0;
                         [ItemManager itemEntersInventory:currItem];
@@ -322,7 +323,8 @@ static NSMutableArray *activeBarrelLifetimes;
     //Server
     if (_player == _dave) {
         [NetworkManager sendEveryPositionToServer:_huey.position poitionDave:_dave.position poitionPrincess:_princess.position
-                                                 :[NSString stringWithFormat:@"%i",_huey.zOrder] :[NSString stringWithFormat:@"%i",_dave.zOrder] :[NSString stringWithFormat:@"%i",_princess.zOrder]];
+                                                 :[NSString stringWithFormat:@"%i",_huey.zOrder] :[NSString stringWithFormat:@"%i",_dave.zOrder] :[NSString stringWithFormat:@"%i",_princess.zOrder]
+                                                 :[NSString stringWithFormat:@"%i",falling[HUEY]]];
          
     }
     
@@ -628,7 +630,7 @@ static NSMutableArray *activeBarrelLifetimes;
     }
 }
 
-+ (void)updateEveryPosition:(CGPoint)msgH positionDave:(CGPoint)msgD positionPrincess:(CGPoint)msgP :(NSString*)zH :(NSString*)zD :(NSString*)zP
++ (void)updateEveryPosition:(CGPoint)msgH positionDave:(CGPoint)msgD positionPrincess:(CGPoint)msgP :(NSString*)zH :(NSString*)zD :(NSString*)zP :(NSString*) fallingH
 {
     if (_player == _huey) {
         if (msgH.x != 0 && msgH.y != 0) {
@@ -645,7 +647,8 @@ static NSMutableArray *activeBarrelLifetimes;
             _princess.position = msgP;
             _princess.zOrder = [zP intValue];
         }
-
+        
+        isFallingHuey = [fallingH intValue];
         
     }
 }
@@ -662,7 +665,8 @@ static NSMutableArray *activeBarrelLifetimes;
         itemsHeld = [ItemManager useItem:(itemBox) :activatedItemIndex :itemsHeld];
         activatedItem.opacity = 1.0;
         activatedItem.scale = 0.4;
-        activatedItem.zOrder = _player.zOrder - 1;
+        activatedItem.zOrder = _stage.zOrder+1;//(_player == _dave) ? ((falling[DAVE]) ? _stage.zOrder + 1 : _player.zOrder - 1) : ((isFallingHuey) ? _stage.zOrder + 1 : _player.zOrder - 1);
+        
         [self activateItemAbilities:activatedItem];
         if (_player == _dave) {
             [NetworkManager sendActivatedToServer:activatedItem.name iPosition:activatedItem.position player:@"dave"];

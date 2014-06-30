@@ -30,6 +30,7 @@
 @property NSString* zorder_huey;
 @property NSString* zorder_dave;
 @property NSString* zorder_princess;
+@property NSString* falling_huey;
 
 //Item
 @property NSString* Item_info;
