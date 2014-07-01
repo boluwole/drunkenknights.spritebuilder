@@ -22,7 +22,7 @@
 
 }
 
-@property NSString* Random_num;
+@property NSString* game_start;
 //Position
 @property CGPoint huey_position;
 @property CGPoint dave_position;

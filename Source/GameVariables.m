@@ -17,7 +17,14 @@ static NSString* initConnectionStatus ;
 static NSString* roomJoinSuccess;
 static NSString* currentRoom;
 static int roomPosition=0;
+static NSString* currentScene;
 
++(void) setCurrentScene: (NSString*) sceneName {
+    currentScene = sceneName;
+}
++(NSString*) getCurrentScene {
+    return currentScene;
+}
 
 +(int) getItemIndex1
 {

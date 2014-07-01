@@ -17,6 +17,8 @@
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
     
+    [GameVariables setCurrentScene:@"SplashScreen"];
+    
     [self enterGame];
     
 }

@@ -12,13 +12,14 @@
 #import "NFStoryBoardManager.h"
 #import "MainScene.h"
 #import "ManagerIncludes.h"
+#import "ItemShop.h"
 
 @interface NetworkManager : CCNode {
     
 }
 
-+ (void) sendRandomNum:(NSString *)num;
-+ (void) receieRandomNum:(NSString *)num;
++ (void) sendGameStart:(NSString *)info;
++ (void) receiveGameStart:(NSString *)info;
 
 
 + (void) sendCGPointToServer:(CGPoint) msg;

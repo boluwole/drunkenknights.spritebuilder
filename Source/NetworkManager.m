@@ -13,15 +13,16 @@
 
 }
 
-+ (void) sendRandomNum:(NSString *)num
++ (void) sendGameStart:(NSString *)info
 {
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:num, @"random_num", nil];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:info, @"game_start", nil];
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
 }
 
-+ (void) receieRandomNum:(NSString *)num
++ (void) receiveGameStart:(NSString *)info
 {
-    
+    if(info)
+    [ItemShop enterMainScene:info];
 }
 
 + (void) sendCGPointToServer:(CGPoint) msg {
@@ -33,6 +34,10 @@
 + (void) receiveCGPointFromServer:(CGPoint) msg {
     //CCLOG(@"\n\nI got %f, %f\n\n",msg.x, msg.y);
     //_dave.position = ccp(abs(msg.x),abs(msg.y));
+    
+   // if([MainScene returnDave] == nil) CCLOG(@"\n\n dave is nil\n\n");
+    //if([MainScene returnHuey] == nil) CCLOG(@"\n\n huey is nil\n\n");
+    if(msg.x == msg.x && msg.y == msg.y && [MainScene returnHuey] != nil && [MainScene returnDave] != nil)
     [MainScene updateOpponent:msg];
 }
 

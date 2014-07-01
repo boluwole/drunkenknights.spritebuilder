@@ -98,6 +98,9 @@
 
 + (void) deActivateItem:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString*) player iIndex:(NSString*) index;
 
++ (CCSprite*) returnDave;
++ (CCSprite*) returnHuey;
+
 //@property (nonatomic, retain) int time;
 
 @end

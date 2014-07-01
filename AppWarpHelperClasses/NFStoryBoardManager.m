@@ -62,8 +62,13 @@ static NFStoryBoardManager *nFStoryBoardManager;
 -(void)updateInformation:(NSDictionary*)dataDict
 {
     CCLOG(@"==updateInformation==");
-    //_Random_num = [dataDict objectForKey:@"random_num"];
-    //[NetworkManager receieRandomNum:_Random_num];
+    
+    if([[GameVariables getCurrentScene] isEqual:@"ItemShop"]) {
+        _game_start = [dataDict objectForKey:@"game_start"];
+        [NetworkManager receiveGameStart:_game_start];
+    }
+    
+    if([[GameVariables getCurrentScene] isEqual:@"MainScene"]) {
     //---Movement---
     _huey_position = CGPointFromString([dataDict objectForKey:@"position_huey"]);
     _dave_position = CGPointFromString([dataDict objectForKey:@"position_dave"]);
@@ -103,7 +108,7 @@ static NFStoryBoardManager *nFStoryBoardManager;
     _New_impulse = CGPointFromString([dataDict objectForKey:@"impulse"]);
     // NSLog(@"Testtt %@", NSStringFromCGPoint( _New_impulse));
     [NetworkManager receiveCGPointFromServer:_New_impulse];
-    
+    }
     
 }
 

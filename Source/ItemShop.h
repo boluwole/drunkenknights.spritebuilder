@@ -15,6 +15,7 @@
     
 }
 
++ (void) enterMainScene:(NSString*) info;
 - (void) loadItem: (int) itemIndex : (CCSprite*) loadableItem;
 
 @end

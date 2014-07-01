@@ -13,11 +13,15 @@
 
 + (void)movePlayer: (CCNode *) player :(CGPoint) launchDirection {
     
+    if(player && launchDirection.x == launchDirection.x && launchDirection.y == launchDirection.y) {
+    
     // manually create & apply a force to launch the knight
     
     CGPoint impulse = ccpMult(launchDirection, MOVE_SPEED);
     
     [player.physicsBody applyImpulse:impulse];
+        
+    }
 }
 
 + (CGPoint)calculateMoveVector: (CGPoint) start : (CGPoint) end {

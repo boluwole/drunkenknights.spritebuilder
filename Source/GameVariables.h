@@ -21,6 +21,7 @@
 +(NSMutableArray*) RoomList;
 +(NSMutableArray*) RoomInfoList;
 
+
 + (int) getRoomPosition;
 
 + (void) setItemIndex1 :(int) value ;
@@ -32,5 +33,7 @@
 + (int) getNoOfRoomOccupants:(NSString*) roomId;
 + (void) setRoomPosition :(int) value;
 
++(void) setCurrentScene: (NSString*) sceneName;
++(NSString*) getCurrentScene;
 
 @end

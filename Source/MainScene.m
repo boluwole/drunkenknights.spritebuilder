@@ -25,6 +25,8 @@ static bool isFallingHuey;
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
 
+    
+    
     globalPhysicsNode = _physicsNode;
     _physicsNode.collisionDelegate = self;
     opponentActivatedItem = nil;
@@ -52,6 +54,17 @@ static bool isFallingHuey;
     _princess.position = PRINCESS_START;
     _princess.scale *= 0.30;
     princessStart = _princess.position;
+    
+    // Networking - Generate Dave & Huey
+    //CCLOG(@"roomPosition = %i", [GameVariables getRoomPosition]);
+    if ([GameVariables getRoomPosition] == 1) {
+        _player = _dave;
+    }
+    else {
+        _player = _huey;
+    }
+    
+    [GameVariables setCurrentScene:@"MainScene"];
     
     daveRess = (CCSprite*)[CCBReader load:@"DaveRess"];
     hueyRess = (CCSprite*)[CCBReader load:@"HueyRess"];
@@ -165,14 +178,7 @@ static bool isFallingHuey;
     _huey.zOrder = _stage.zOrder + HUEY_Z;
     _princess.zOrder = _stage.zOrder + PRINCESS_Z;
     
-    // Networking - Generate Dave & Huey
-    CCLOG(@"roomPosition = %i", [GameVariables getRoomPosition]);
-    if ([GameVariables getRoomPosition] == 1) {
-        _player = _dave;
-    }
-    else {
-        _player = _huey;
-    }
+
     
     //CCLOG(@"my name is %@\n\n",_player.name);
     
@@ -186,10 +192,47 @@ static bool isFallingHuey;
 
    if(checkEnd && (CGRectContainsPoint([daveRess boundingBox], _princess.position) || CGRectContainsPoint([hueyRess boundingBox], _princess.position))) {
     
-        checkEnd=NO;
-        [[CCDirector sharedDirector] pushScene:[CCBReader loadAsScene:@"SplashScreen"]];
-    }
+       checkEnd=NO;
+       
+       NSString* gameEndMessage;
+       NSString* victory = @"The Day Is Yours!";
+       NSString* defeat = @"Sorry, You Sad Drunk";
+       if(CGRectContainsPoint([daveRess boundingBox], _princess.position)) {
+           gameEndMessage = (_player == _dave) ? victory : defeat;
+       }
+       else {
+           gameEndMessage = (_player == _dave) ? defeat : victory;
+       }
+       
+       _dave.physicsBody.velocity = CGPointZero;
+       _huey.physicsBody.velocity = CGPointZero;
+       _princess.physicsBody.velocity = CGPointZero;
+ 
+       
+       UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"GG Nubs!"
+                                                      message: gameEndMessage
+                                                     delegate: self
+                                            cancelButtonTitle:nil
+                                            otherButtonTitles:@"Return to Lobby",nil];
+       [alert show];
+   }
     
+}
+
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    //CCLOG(@"\n\nBUTTON INDEX %d \n\n",buttonIndex);
+    if (buttonIndex == 0) {
+        
+        _dave = nil;
+        _princess = nil;
+        _huey = nil;
+
+        
+                
+        //gameroom
+        CCScene *gameRoomScene = [CCBReader loadAsScene:@"GameRoom"];
+        [[CCDirector sharedDirector] replaceScene:gameRoomScene];    }
 }
 
 
@@ -625,7 +668,7 @@ static bool isFallingHuey;
 + (void)updateOpponent:(CGPoint) msg
 {
     //CCLOG(@"\n\nupdating: %f, %f\n\n",msg.x,msg.y);
-    if (_player == _dave) {//Server
+    if (_player == _dave && msg.x == msg.x && msg.y == msg.y && _huey != nil) {//Server
         [MoveManager movePlayer:_huey :msg];
     }
 }
@@ -837,6 +880,11 @@ static bool isFallingHuey;
     }
 }
 
-
++ (CCSprite*) returnDave {
+    return _dave;
+}
++ (CCSprite*) returnHuey {
+    return _huey;
+}
 
 @end

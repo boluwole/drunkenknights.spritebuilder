@@ -30,8 +30,15 @@
     
 }
 
+static bool ready = NO;
+static bool opponentReady = NO;
+
+
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
+    
+    [GameVariables setCurrentScene:@"ItemShop"];
+    
     _currentItem = 0;
     
     //load first game item
@@ -204,10 +211,26 @@
         
         if (noOfPlayers == 2)
         {
-            //startgame
-            CCLOG(@"roomPosition = %i", [GameVariables getRoomPosition]);
-            CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
-            [[CCDirector sharedDirector] replaceScene:mainScene];
+            //[NetworkManager sendGameStart:[NSString stringWithFormat:@"%i", [GameVariables getRoomPosition]]];
+            ready = YES;
+            
+            
+//            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Ready!"
+//                                                           message: @"Waiting for Opponent to Start..."
+//                                                          delegate: self
+//                                                 cancelButtonTitle:nil
+//                                                 otherButtonTitles:nil,nil];
+            //if(!opponentReady) [alert show];
+            
+            
+            //if(ready && opponentReady) {
+                //startgame
+                //[alert delete:alert];
+                //CCLOG(@"roomPosition = %i", [GameVariables getRoomPosition]);
+                CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
+                [[CCDirector sharedDirector] replaceScene:mainScene];
+            //}
+
         }
         else{
             //ask to wait or leave to game room
@@ -224,6 +247,20 @@
         [self unschedule:@selector(checkRoomUpdate:)];
     }
     
+}
+
++ (void) enterMainScene:(NSString*) info {
+    
+    if(([info intValue] != [GameVariables getRoomPosition])) {
+        opponentReady = YES;
+    }
+    
+    if(ready && opponentReady) {
+        //startgame
+        CCLOG(@"roomPosition = %i", [GameVariables getRoomPosition]);
+        CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
+        [[CCDirector sharedDirector] replaceScene:mainScene];
+    }
 }
 
 
