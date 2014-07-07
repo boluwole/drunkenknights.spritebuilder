@@ -21,9 +21,13 @@
     CCPhysicsNode *_backPhysicsNode;
 
     CCSprite *_stage;
+    
+    //UI
     CCNode *itemBox[3];
     
     CCNode *arrowNode;
+    
+    CCNode *drunkMeter;
     
     //network manager
 

@@ -11,13 +11,13 @@
 
 @implementation MoveManager
 
-+ (void)movePlayer: (CCNode *) player :(CGPoint) launchDirection {
++ (void)movePlayer: (CCNode *) player :(CGPoint) launchDirection :(int) playerDrunkeness {
     
     if(player && launchDirection.x == launchDirection.x && launchDirection.y == launchDirection.y) {
     
     // manually create & apply a force to launch the knight
     
-    CGPoint impulse = ccpMult(launchDirection, MOVE_SPEED);
+    CGPoint impulse = ccpMult(launchDirection, (MOVE_SPEED*playerDrunkeness) + MOVE_SPEED);
     
     [player.physicsBody applyImpulse:impulse];
         

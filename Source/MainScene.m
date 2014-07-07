@@ -18,9 +18,12 @@ static CCNode* currItem;
 static CCNode* activatedItem;
 static CCNode* opponentActivatedItem;
 static CCNode* activeVomits;
+static CCNode* beerNodes[NUM_BEER_NODES];
 static NSMutableArray *activeVomitLifetimes;
 static NSMutableArray *activeBarrelLifetimes;
 static bool isFallingHuey;
+static int _drunkLevelDave;
+static int _drunkLevelHuey;
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
@@ -42,12 +45,14 @@ static bool isFallingHuey;
     _dave.position = DAVE_START;
     _dave.scale *= 0.25;
     daveStart = _dave.position;
+    _drunkLevelDave = 0;
     
     _huey = (CCSprite*)[CCBReader load:@"Huey"];
     [_physicsNode addChild:_huey];
     _huey.position = HUEY_START;
     _huey.scale *= 0.25;
     hueyStart = _huey.position;
+    _drunkLevelHuey = 0;
     
     _princess = (CCSprite*)[CCBReader load:@"Princess"];
     [_physicsNode addChild:_princess];
@@ -125,6 +130,12 @@ static bool isFallingHuey;
 
     [self addChild:arrowNode];
     
+    //UI drunk meter
+    drunkMeter = [CCBReader load:@"Box"];
+    drunkMeter.position = ccp(50, 300);
+    drunkMeter.scaleY *= 0.3;
+    [self addChild:drunkMeter];
+    
     //always damp
     [self schedule:@selector(damping:) interval:0.02];
 
@@ -161,6 +172,20 @@ static bool isFallingHuey;
     [tempItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
     [itemBox[itemsHeld] addChild:tempItem];
     itemsHeld++;
+    
+    //beer bottles
+    for(int i = 0; i < NUM_BEER_NODES; i++) {
+        CCNode* beerBottle = [CCBReader load:@"Barrel"];
+        beerBottle.scale *= 0.3;
+        beerBottle.scaleX *= 0.2;
+        beerBottle.rotation -= 25;
+        beerNodes[i] = [[CCNode alloc] init];
+        beerNodes[i].position = ccpAdd(princessStart, ccp(-120 + i*80,-60));
+        [beerNodes[i] addChild:beerBottle];
+        beerBottle.physicsBody.sensor = true;
+        [_physicsNode addChild:beerNodes[i]];
+    }
+    
     
     //item effects
     activeVomits = [[CCNode alloc] init];
@@ -250,6 +275,13 @@ static bool isFallingHuey;
     
     [self checkGameEnd];
     [self checkGong];
+    
+    int beerPickedUp =
+                [ItemManager checkBeerBottles:_dave :_huey :(&_drunkLevelDave) :(&_drunkLevelHuey) :beerNodes];
+    if(beerPickedUp >= 0) {
+        
+    }
+    drunkMeter.scaleX = (_drunkLevelDave + 1);
     
     //drop item
     if(timeElapsed < -5) {
@@ -652,7 +684,7 @@ static bool isFallingHuey;
     if(validMove) {
 
         if (_player == _dave) {//Server
-            [MoveManager movePlayer:_dave :launchDirection];
+            [MoveManager movePlayer:_dave :launchDirection :_drunkLevelDave];
         }
         else {
             [NetworkManager sendCGPointToServer:launchDirection];
@@ -669,7 +701,7 @@ static bool isFallingHuey;
 {
     //CCLOG(@"\n\nupdating: %f, %f\n\n",msg.x,msg.y);
     if (_player == _dave && msg.x == msg.x && msg.y == msg.y && _huey != nil) {//Server
-        [MoveManager movePlayer:_huey :msg];
+        [MoveManager movePlayer:_huey :msg :_drunkLevelHuey];
     }
 }
 

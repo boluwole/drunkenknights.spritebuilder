@@ -23,6 +23,7 @@ enum ItemType {
     POWERUP = 3,
 };
 
++ (int) checkBeerBottles : (CCSprite*) dave :(CCSprite*) huey :(int*) daveDrunkLevel :(int*) hueyDrunkLevel :(__strong CCNode*[]) beerNodes;
 + (CCNode*)dropItem;;
 + (CGPoint)itemDisplay;
 + (int) useItem: (__strong CCNode*[]) itemBoxes : (int) index : (int) itemsHeld;

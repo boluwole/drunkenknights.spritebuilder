@@ -12,11 +12,11 @@ static CCSprite *_player;
 #define HUEY 1
 #define PRINCESS 2
 
-#define DAVE_START ccp(130,165)
-#define HUEY_START ccp(450,165)
-#define PRINCESS_START ccp(280,189)
+#define DAVE_START ccp(105,160)
+#define HUEY_START ccp(465,160)
+#define PRINCESS_START ccp(285,160)
 
-#define MOVE_SPEED (20)
+#define MOVE_SPEED (5)  //originally 20
 #define VECTOR_CAP (150)
 #define DAMPING (0.978)
 #define DAMPING_STATUE (0.9)
@@ -29,25 +29,27 @@ static CCSprite *_player;
 #define ITEM_ALIVE_PERIOD (-4)
 #define INVENTORY_DISTANCE (40)
 #define INVENTORY_POSITION (30)
-#define DAVE_RESS ccp(35,165)
-#define HUEY_RESS ccp(510,165)
+#define DAVE_RESS ccp(55,160)
+#define HUEY_RESS ccp(515,160)
 #define PRINCESS_GHOST_PERIOD (5)
 #define VOMIT_LIFE (-7)
 #define VOMIT_MULTIPLIER (1.2)
 
-#define ARROW_DOTS 10
+#define NUM_BEER_NODES (4)
+
+#define ARROW_DOTS (10)
 
 //zOrder
-#define DAVE_Z 2
-#define HUEY_Z 2
-#define ITEM_Z 1
-#define PRINCESS_Z 3
-#define INVENTORY_Z 5
+#define DAVE_Z (2)
+#define HUEY_Z (2)
+#define ITEM_Z (1)
+#define PRINCESS_Z (3)
+#define INVENTORY_Z (5)
 
 //Gong
-#define GONG_POSITION ccp(295,295)
-#define GONG_DURATION 5
-#define GONG_COOLDOWN 10
+#define GONG_POSITION ccp(285,275)
+#define GONG_DURATION (10)
+#define GONG_COOLDOWN (30)
 
 
 //Portal

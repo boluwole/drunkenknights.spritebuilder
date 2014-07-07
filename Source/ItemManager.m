@@ -11,6 +11,34 @@
 
 @implementation ItemManager
 
+//return index of beer bottle that needs to start a respawn counter, -1 if none
++ (int) checkBeerBottles : (CCSprite*) dave :(CCSprite*) huey :(int*) daveDrunkLevel :(int*) hueyDrunkLevel :(__strong CCNode*[]) beerNodes {
+    
+    for(int i = 0; i < NUM_BEER_NODES; i++) {
+        
+        NSArray* child = beerNodes[i].children;
+        
+        if(child.count > 0) {
+            if(CGRectContainsPoint([dave boundingBox], beerNodes[i].position)) {
+                (*daveDrunkLevel)++;
+                CCNode* temp = (CCNode*)child[0];
+                [temp removeFromParent];
+                return i;
+            }
+            else if(CGRectContainsPoint([huey boundingBox], beerNodes[i].position)) {
+                (*hueyDrunkLevel)++;
+                CCNode* temp = (CCNode*)child[0];
+                [temp removeFromParent];
+                return i;
+            }
+        }
+        
+    }
+    
+    return -1;
+    
+}
+
 + (CCNode*)dropItem {
     
     //randomly choose a type of item to drop
