@@ -19,6 +19,7 @@ static CCNode* activatedItem;
 static CCNode* opponentActivatedItem;
 static CCNode* activeVomits;
 static CCNode* beerNodes[NUM_BEER_NODES];
+static int beerNodesCounters[NUM_BEER_NODES];
 static NSMutableArray *activeVomitLifetimes;
 static NSMutableArray *activeBarrelLifetimes;
 static bool isFallingHuey;
@@ -132,8 +133,9 @@ static int _drunkLevelHuey;
     
     //UI drunk meter
     drunkMeter = [CCBReader load:@"Box"];
-    drunkMeter.position = ccp(50, 300);
-    drunkMeter.scaleY *= 0.3;
+    drunkMeter.position = ccp(10, 300);
+    drunkMeter.anchorPoint = ccp(0,0.5);
+    drunkMeter.scaleY *= 0.1;
     [self addChild:drunkMeter];
     
     //always damp
@@ -184,8 +186,10 @@ static int _drunkLevelHuey;
         [beerNodes[i] addChild:beerBottle];
         beerBottle.physicsBody.sensor = true;
         [_physicsNode addChild:beerNodes[i]];
+        
+        beerNodesCounters[i] = BEER_BOTTLE_RESPAWN_TIME;
     }
-    
+    [self schedule:@selector(respawnBeerBottles:) interval:1.0f];
     
     //item effects
     activeVomits = [[CCNode alloc] init];
@@ -276,12 +280,20 @@ static int _drunkLevelHuey;
     [self checkGameEnd];
     [self checkGong];
     
-    int beerPickedUp =
-                [ItemManager checkBeerBottles:_dave :_huey :(&_drunkLevelDave) :(&_drunkLevelHuey) :beerNodes];
-    if(beerPickedUp >= 0) {
+    //dave authorities over beer bottle pickups
+    if(_player == _dave) {
+        int beerPickedUp =
+                    [ItemManager checkBeerBottles:_dave :_huey :(&_drunkLevelDave) :(&_drunkLevelHuey) :beerNodes];
+        if(beerPickedUp >= 0) {
+            beerNodesCounters[beerPickedUp] = 0;
+        }
         
+        drunkMeter.scaleX = (_drunkLevelDave + 1);
     }
-    drunkMeter.scaleX = (_drunkLevelDave + 1);
+    else {
+        drunkMeter.scaleX = (_drunkLevelHuey + 1);
+    }
+
     
     //drop item
     if(timeElapsed < -5) {
@@ -445,6 +457,23 @@ static int _drunkLevelHuey;
     }
 }
 
+- (void)respawnBeerBottles:(CCTime)delta {
+    for(int i = 0; i < NUM_BEER_NODES; i++) {
+        if(beerNodesCounters[i] < BEER_BOTTLE_RESPAWN_TIME) {
+            beerNodesCounters[i]++;
+            
+            //time to respawn
+            if(beerNodesCounters[i] == BEER_BOTTLE_RESPAWN_TIME) {
+                CCNode* beerBottle = [CCBReader load:@"Barrel"];
+                beerBottle.scale *= 0.3;
+                beerBottle.scaleX *= 0.2;
+                beerBottle.rotation -= 25;
+                [beerNodes[i] addChild:beerBottle];
+                beerBottle.physicsBody.sensor = true;
+            }
+        }
+    }
+}
 
 
 

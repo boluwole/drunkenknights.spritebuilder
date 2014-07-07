@@ -36,6 +36,8 @@ static CCSprite *_player;
 #define VOMIT_MULTIPLIER (1.2)
 
 #define NUM_BEER_NODES (4)
+#define BEER_BOTTLE_RESPAWN_TIME (10)
+#define DRUNK_METER_CAP (5)
 
 #define ARROW_DOTS (10)
 

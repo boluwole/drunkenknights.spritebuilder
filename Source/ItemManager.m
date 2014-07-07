@@ -19,16 +19,25 @@
         NSArray* child = beerNodes[i].children;
         
         if(child.count > 0) {
-            if(CGRectContainsPoint([dave boundingBox], beerNodes[i].position)) {
+            if(CGRectContainsPoint([dave boundingBox], beerNodes[i].position) && (*daveDrunkLevel) < DRUNK_METER_CAP) {
                 (*daveDrunkLevel)++;
                 CCNode* temp = (CCNode*)child[0];
                 [temp removeFromParent];
+                
+                //TODO: network index i to Huey to kill child of beerNode[i]
+                // & and set beerNodesCounters[i] to 0
+                
                 return i;
             }
-            else if(CGRectContainsPoint([huey boundingBox], beerNodes[i].position)) {
+            else if(CGRectContainsPoint([huey boundingBox], beerNodes[i].position) && (*hueyDrunkLevel) < DRUNK_METER_CAP) {
                 (*hueyDrunkLevel)++;
                 CCNode* temp = (CCNode*)child[0];
                 [temp removeFromParent];
+                
+                //TODO: network index i to Huey to kill child of beerNode[i]
+                // & and set beerNodesCounters[i] to 0
+                // & network hueyDrunkLevel to update _hueyDrunkLevel on his side
+                
                 return i;
             }
         }
