@@ -26,6 +26,7 @@
                 
                 //TODO: network index i to Huey to kill child of beerNode[i]
                 // & and set beerNodesCounters[i] to 0
+                [NetworkManager sendDeActivateItemsToServer:@"Beer" iPosition:beerNodes[i].position playerInfo:@"DAVE" iIndex:[NSString stringWithFormat:@"%i",i]];
                 
                 return i;
             }
@@ -37,7 +38,10 @@
                 //TODO: network index i to Huey to kill child of beerNode[i]
                 // & and set beerNodesCounters[i] to 0
                 // & network hueyDrunkLevel to update _hueyDrunkLevel on his side
-                
+                [NetworkManager sendDeActivateItemsToServer:@"Beer"
+                                                  iPosition:beerNodes[i].position
+                                                 playerInfo:[NSString stringWithFormat:@"%i", *hueyDrunkLevel]
+                                                     iIndex:[NSString stringWithFormat:@"%i", i]];
                 return i;
             }
         }

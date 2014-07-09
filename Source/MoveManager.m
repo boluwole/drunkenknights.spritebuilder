@@ -11,13 +11,20 @@
 
 @implementation MoveManager
 
++ (void)drunkSwaying: (CCNode*) player :(int) playerDrunkeness :(float) time {
+    CGPoint impulse = ccp(playerDrunkeness * 6 * cos(2*time),playerDrunkeness * 10 * sin(2*time));
+    [player.physicsBody applyImpulse:impulse];
+    
+    //player.rotation = playerDrunkeness*sin(time);
+}
+
 + (void)movePlayer: (CCNode *) player :(CGPoint) launchDirection :(int) playerDrunkeness {
     
     if(player && launchDirection.x == launchDirection.x && launchDirection.y == launchDirection.y) {
     
     // manually create & apply a force to launch the knight
     
-    CGPoint impulse = ccpMult(launchDirection, (MOVE_SPEED*playerDrunkeness) + MOVE_SPEED);
+    CGPoint impulse = ccpMult(launchDirection, (MOVE_SPEED*min(playerDrunkeness,BUZZ_LEVEL)) + MOVE_SPEED);
     
     [player.physicsBody applyImpulse:impulse];
         

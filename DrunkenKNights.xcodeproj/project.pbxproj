@@ -310,8 +310,8 @@
 			children = (
 				F594CD0B194B7E6F00FE0029 /* MoveManager.h */,
 				F594CD0C194B7E6F00FE0029 /* MoveManager.m */,
-				F594CD12194B93BA00FE0029 /* PhysicsManager.h */,
 				F594CD13194B93BA00FE0029 /* PhysicsManager.m */,
+				F594CD12194B93BA00FE0029 /* PhysicsManager.h */,
 				F594CD15194BAC9400FE0029 /* ItemManager.h */,
 				F594CD16194BAC9400FE0029 /* ItemManager.m */,
 				F594CD3F194BC68200FE0029 /* NetworkManager.h */,

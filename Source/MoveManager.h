@@ -17,6 +17,6 @@
 
 + (void)movePlayer: (CCNode *) player :(CGPoint) launchDirection :(int) playerDrunkeness;
 + (CGPoint)calculateMoveVector: (CGPoint) start : (CGPoint) end;
-
++ (void)drunkSwaying: (CCNode*) player :(int) playerDrunkeness :(float) time;
 
 @end

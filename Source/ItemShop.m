@@ -209,7 +209,7 @@ static bool opponentReady = NO;
         RemoteRoomData *room = [allRooms objectAtIndex:0];
         int noOfPlayers =  room.roomOccupants.count;
         
-        if (noOfPlayers == 1)
+        if (noOfPlayers == 2)
         {
             //[NetworkManager sendGameStart:[NSString stringWithFormat:@"%i", [GameVariables getRoomPosition]]];
             ready = YES;

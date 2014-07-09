@@ -289,6 +289,13 @@ static int _drunkLevelHuey;
         }
         
         drunkMeter.scaleX = (_drunkLevelDave + 1);
+        
+        if(_drunkLevelDave > BUZZ_LEVEL) {
+            [MoveManager drunkSwaying:_dave :_drunkLevelDave :timeElapsed];
+        }
+        if(_drunkLevelHuey > BUZZ_LEVEL) {
+            [MoveManager drunkSwaying:_huey :_drunkLevelHuey :timeElapsed];
+        }
     }
     else {
         drunkMeter.scaleX = (_drunkLevelHuey + 1);
@@ -525,6 +532,7 @@ static int _drunkLevelHuey;
         _dave.position = daveStart;
         _dave.physicsBody.collisionMask = NULL;
         _dave.physicsBody.velocity = ccp(0,0);
+        _drunkLevelDave = 0;
         [self unschedule:@selector(reviveDave:)];
     }
     
@@ -544,6 +552,12 @@ static int _drunkLevelHuey;
         _huey.position = hueyStart;
         _huey.physicsBody.collisionMask = NULL;
         _huey.physicsBody.velocity = ccp(0,0);
+        _drunkLevelHuey = 0;
+        //TODO : network updated drunklevel to huey, or send it over in sendEveryPositionToServer
+        [NetworkManager sendDeActivateItemsToServer:@"DrunkLevel"
+                                          iPosition:CGPointZero
+                                         playerInfo:[NSString stringWithFormat:@"%i", _drunkLevelHuey]
+                                             iIndex:[NSString stringWithFormat:@"%i", _drunkLevelHuey]];
         [self unschedule:@selector(reviveHuey:)];
     }
     
@@ -835,6 +849,20 @@ static int _drunkLevelHuey;
             _princess.physicsBody.collisionMask = NULL;
         }
         _princess.opacity = 1.0f;
+    }
+    else if ( _player == _huey && [itemName isEqual:@"Beer"] ){
+        if([index intValue] >= 0) {
+            beerNodesCounters[[index intValue]] = 0;
+            NSArray* child = beerNodes[[index intValue]].children;
+            CCNode* temp = (CCNode*)child[0];
+            [temp removeFromParent];
+            if ( ![player isEqual:@"DAVE"] ) {
+                _drunkLevelHuey = [player intValue];
+            }
+        }
+    }
+    else if( _player == _huey && [itemName isEqual:@"DrunkLevel"] ){
+        _drunkLevelHuey = [player intValue];
     }
 }
 
