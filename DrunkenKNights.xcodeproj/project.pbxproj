@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A3A08CC196CF2B6001D7D46 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3A08CB196CF2B6001D7D46 /* GLKit.framework */; };
 		8517F45D194D4CD900AD4D85 /* SplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 8517F45C194D4CD900AD4D85 /* SplashScreen.m */; };
 		8517F461194D4CF000AD4D85 /* ItemShop.m in Sources */ = {isa = PBXBuildFile; fileRef = 8517F460194D4CF000AD4D85 /* ItemShop.m */; };
 		8517F464194FE2B500AD4D85 /* GameItemData.m in Sources */ = {isa = PBXBuildFile; fileRef = 8517F463194FE2B500AD4D85 /* GameItemData.m */; };
@@ -80,6 +81,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A3A08CB196CF2B6001D7D46 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		8517F45B194D4CD900AD4D85 /* SplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SplashScreen.h; path = Source/SplashScreen.h; sourceTree = "<group>"; };
 		8517F45C194D4CD900AD4D85 /* SplashScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SplashScreen.m; path = Source/SplashScreen.m; sourceTree = "<group>"; };
 		8517F45F194D4CF000AD4D85 /* ItemShop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemShop.h; path = Source/ItemShop.h; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A3A08CC196CF2B6001D7D46 /* GLKit.framework in Frameworks */,
 				B737898A1807642B0076A88C /* libcocos2d.a in Frameworks */,
 				B77F1B3217B978D7009739AE /* QuartzCore.framework in Frameworks */,
 				B77F1B3417B978D7009739AE /* OpenGLES.framework in Frameworks */,
@@ -270,6 +273,7 @@
 		B77F1B3017B978D7009739AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0A3A08CB196CF2B6001D7D46 /* GLKit.framework */,
 				F594CD3A194BB68400FE0029 /* Shephertz_App42_iOS_API.framework */,
 				F594CD38194BB67B00FE0029 /* AppWarp_iOS_SDK.framework */,
 				B7B3713D180358F1007369CC /* libObjectiveChipmunk.a */,
@@ -393,7 +397,7 @@
 				ORGANIZATIONNAME = Apportable;
 				TargetAttributes = {
 					B77F1B2D17B978D7009739AE = {
-						DevelopmentTeam = SBVP8ED765;
+						DevelopmentTeam = LM6GHZGLCV;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 0;
