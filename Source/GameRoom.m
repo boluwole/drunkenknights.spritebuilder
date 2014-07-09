@@ -101,16 +101,17 @@
                     lblRoomId = [CCLabelTTF labelWithString: [room.roomName.uppercaseString stringByAppendingString: roomStatus]
                                                    fontName:@"Helvetica" fontSize:12   ];
                     [lblRoomId setHorizontalAlignment:CCTextAlignmentLeft ];
-                    lblRoomId.position = ccp(100, 230 - ( roomCount * 25));
+                    lblRoomId.position = ccp(80, 250 - ( roomCount * 35));
                     lblRoomId.anchorPoint = ccp(0,0.5);
+                    lblRoomId.fontSize = 15.0;
                     [self addChild:lblRoomId];
         
                     // Standard method to create a
                     CCSprite *sprite = [CCSprite spriteWithImageNamed:@"ccbResources/ccbButtonNormal.png"];
                     CCButton *btnJoin = [CCButton buttonWithTitle:@"Join room"  spriteFrame:sprite.spriteFrame ];
                     [btnJoin setTarget:self selector:@selector(joinRoom:) ];
-                    btnJoin.position = ccp(370, 230 -( roomCount * 25));
-                    btnJoin.preferredSize = CGSizeMake(100.0, 20.0);
+                    btnJoin.position = ccp(410, 250 -( roomCount * 35));
+                    btnJoin.preferredSize = CGSizeMake(100.0, 30.0);
                     btnJoin.anchorPoint = ccp(0,0.5);
                     btnJoin.name = room.roomId;
                 

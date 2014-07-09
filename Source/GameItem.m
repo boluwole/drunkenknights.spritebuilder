@@ -34,7 +34,7 @@ NSMutableArray* _allGameItems;
     //load vomit
     item = [[GameItemData alloc] init];
     
-    item.itemName = @"Vomit";
+    item.itemName = @"Slime";
     item.itemImage = @"Assets/vomit.png";
     item.itemDescription = @"Fast fools lose control on this yucky muck.";
     

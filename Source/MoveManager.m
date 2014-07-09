@@ -24,7 +24,7 @@
     
     // manually create & apply a force to launch the knight
     
-    CGPoint impulse = ccpMult(launchDirection, (MOVE_SPEED*min(playerDrunkeness,BUZZ_LEVEL)) + MOVE_SPEED);
+    CGPoint impulse = ccpMult(launchDirection, (MOVE_SPEED*playerDrunkeness) + MOVE_SPEED);
     
     [player.physicsBody applyImpulse:impulse];
         
