@@ -575,6 +575,7 @@ static int _drunkLevelHuey;
         _princess.position = princessStart;
         _princess.physicsBody.collisionMask = NULL;
         _princess.physicsBody.velocity = ccp(0,0);
+        _princess.opacity = 1.0;
         [self unschedule:@selector(revivePrincess:)];
     }
     
@@ -782,6 +783,9 @@ static int _drunkLevelHuey;
        //valid use of item
         
         itemsHeld = [ItemManager useItem:(itemBox) :activatedItemIndex :itemsHeld];
+        [activatedItem.parent removeChild:activatedItem];
+        activatedItem.scale = 0.4;
+        [_physicsNode addChild:activatedItem];
         activatedItem.opacity = 1.0;
         //activatedItem.scale = 0.4;
         activatedItem.zOrder = _stage.zOrder+1;//(_player == _dave) ? ((falling[DAVE]) ? _stage.zOrder + 1 : _player.zOrder - 1) : ((isFallingHuey) ? _stage.zOrder + 1 : _player.zOrder - 1);
@@ -800,6 +804,7 @@ static int _drunkLevelHuey;
         [ItemManager itemEntersInventory:activatedItem];
         activatedItem.zOrder = itemBox[activatedItemIndex].zOrder - 1;
         [activatedItem.parent removeChild:activatedItem];
+        activatedItem.scale = 1.0;
         [itemBox[activatedItemIndex] addChild:activatedItem];
     }
     validItemMove = NO;
@@ -836,7 +841,7 @@ static int _drunkLevelHuey;
 {
     if (_player == _huey && [itemName isEqual:@"Slime" ]) {
         NSArray* allSlimes = activeSlimes.children;
-        CCLOG(@"\nallSlimes: %d\n",allSlimes.count);
+        //CCLOG(@"\nallSlimes: %d\n",allSlimes.count);
         [activeSlimes removeChild:allSlimes[index.intValue]];
         [activeSlimeLifetimes removeObject:[activeSlimeLifetimes objectAtIndex:index.intValue]];
     }

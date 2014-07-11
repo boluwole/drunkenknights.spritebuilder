@@ -113,7 +113,7 @@
 
 + (int) useItem: (__strong CCNode*[]) itemBoxes : (int) index : (int) itemsHeld {
     //[itemBoxes[index] removeAllChildren];
-
+    //shifts inventory items forward
 
     for(int j = index+1; j < itemsHeld; j++) {
         NSArray* child = itemBoxes[j].children;
