@@ -17,10 +17,10 @@ static CCPhysicsNode *globalPhysicsNode;
 static CCNode* currItem;
 static CCNode* activatedItem;
 static CCNode* opponentActivatedItem;
-static CCNode* activeVomits;
+static CCNode* activeSlimes;
 static CCNode* beerNodes[NUM_BEER_NODES];
 static int beerNodesCounters[NUM_BEER_NODES];
-static NSMutableArray *activeVomitLifetimes;
+static NSMutableArray *activeSlimeLifetimes;
 static NSMutableArray *activeBarrelLifetimes;
 static bool isFallingHuey;
 static int _drunkLevelDave;
@@ -192,9 +192,9 @@ static int _drunkLevelHuey;
     [self schedule:@selector(respawnBeerBottles:) interval:1.0f];
     
     //item effects
-    activeVomits = [[CCNode alloc] init];
-    [_physicsNode addChild:activeVomits];
-    activeVomitLifetimes = [[NSMutableArray alloc] init];
+    activeSlimes = [[CCNode alloc] init];
+    [_physicsNode addChild:activeSlimes];
+    activeSlimeLifetimes = [[NSMutableArray alloc] init];
     
     activeBarrelLifetimes = [[NSMutableArray alloc] init];
     
@@ -399,17 +399,17 @@ static int _drunkLevelHuey;
     }
     }
 
-    //NSArray* allVomits = activeVomits.children;
-    //CCLOG(@"\activeVomits: %d\n",allVomits.count);
+    //NSArray* allSlimes = activeSlimes.children;
+    //CCLOG(@"\activeSlimes: %d\n",allSlimes.count);
      //Activated Item - Opponent
     if (opponentActivatedItem != nil) {
         [self activateItemAbilities:opponentActivatedItem];
         opponentActivatedItem = nil;
     }
     
-    //vomit check
+    //Slime check
     if (_player == _dave) {
-        [ItemManager vomitCheck:activeVomits :activeVomitLifetimes :timeElapsed :_dave :_huey :_princess];
+        [ItemManager SlimeCheck:activeSlimes :activeSlimeLifetimes :timeElapsed :_dave :_huey :_princess];
 
     }
     
@@ -833,11 +833,11 @@ static int _drunkLevelHuey;
 
 + (void) deActivateItem:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString*) player iIndex:(NSString*) index
 {
-    if (_player == _huey && [itemName isEqual:@"Vomit" ]) {
-        NSArray* allVomits = activeVomits.children;
-        CCLOG(@"\nallVomits: %d\n",allVomits.count);
-        [activeVomits removeChild:allVomits[index.intValue]];
-        [activeVomitLifetimes removeObject:[activeVomitLifetimes objectAtIndex:index.intValue]];
+    if (_player == _huey && [itemName isEqual:@"Slime" ]) {
+        NSArray* allSlimes = activeSlimes.children;
+        CCLOG(@"\nallSlimes: %d\n",allSlimes.count);
+        [activeSlimes removeChild:allSlimes[index.intValue]];
+        [activeSlimeLifetimes removeObject:[activeSlimeLifetimes objectAtIndex:index.intValue]];
     }
     else if(_player == _huey && [itemName isEqual:@"Barrel"]) {
         
@@ -949,13 +949,13 @@ static int _drunkLevelHuey;
         [activeBarrelLifetimes addObject:item];
         [activeBarrelLifetimes addObject:[NSNumber numberWithInt:3]];
     }
-    else if([item.name  isEqual: @"Vomit"]) {
+    else if([item.name  isEqual: @"Slime"]) {
         [item removeFromParent];
 
         item.physicsBody.collisionMask = @[];
         //CCLOG(@"opponenetActiveted in Abilities = %@", item.name);
-        [activeVomits addChild:item];
-        [activeVomitLifetimes addObject:[NSNumber numberWithFloat:timeElapsed]];
+        [activeSlimes addChild:item];
+        [activeSlimeLifetimes addObject:[NSNumber numberWithFloat:timeElapsed]];
     }
     
     else if([item.name isEqual:@"Ghost"]){

@@ -32,8 +32,8 @@ static CCSprite *_player;
 #define DAVE_RESS ccp(55,160)
 #define HUEY_RESS ccp(515,160)
 #define PRINCESS_GHOST_PERIOD (5)
-#define VOMIT_LIFE (-7)
-#define VOMIT_MULTIPLIER (1.2)
+#define Slime_LIFE (-7)
+#define Slime_MULTIPLIER (1.2)
 
 #define NUM_BEER_NODES (4)
 #define BEER_BOTTLE_RESPAWN_TIME (10)

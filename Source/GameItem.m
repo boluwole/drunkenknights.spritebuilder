@@ -31,7 +31,7 @@ NSMutableArray* _allGameItems;
     
     [_allGameItems addObject: item];
     
-    //load vomit
+    //load Slime
     item = [[GameItemData alloc] init];
     
     item.itemName = @"Slime";

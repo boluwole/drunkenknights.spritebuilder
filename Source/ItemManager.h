@@ -18,7 +18,7 @@
 
 enum ItemType {
     BARREL = 0,
-    VOMIT = 1,
+    Slime = 1,
     GHOST = 2,
     POWERUP = 3,
 };
@@ -29,7 +29,7 @@ enum ItemType {
 + (int) useItem: (__strong CCNode*[]) itemBoxes : (int) index : (int) itemsHeld;
 + (void) itemEntersInventory: (CCNode*) item;
 + (void) activateItemAbilities: (CCNode*) item;
-+ (void) vomitCheck: (CCNode*) activeVomits : (NSMutableArray*) activeVomitLifetimes : (NSTimeInterval) currTime :
++ (void) SlimeCheck: (CCNode*) activeSlimes : (NSMutableArray*) activeSlimeLifetimes : (NSTimeInterval) currTime :
     (CCSprite*) dave : (CCSprite*) huey : (CCSprite*) princess;
 + (void) barrelCheck: (CCNode*) barrel : (NSMutableArray*) activeBarrelLifetimes;
 + (void) barrelUpdate: (NSMutableArray*) activeBarrelLifetimes : (int) index : (int) life;
