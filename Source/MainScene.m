@@ -330,6 +330,7 @@ static int _drunkLevelHuey;
                         [currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
                         
                         [_physicsNode removeChild:currItem];
+                        currItem.scale = 1.0;
                         
                         //Networking - Notice
                         if(_player == _dave) {
@@ -639,7 +640,7 @@ static int _drunkLevelHuey;
     
     //CCLOG(@"touch began");
     
-    CGRect playerTouchBounds = CGRectMake([_player boundingBox].origin.x, [_player boundingBox].origin.y, [_player boundingBox].size.width*1.5, [_player boundingBox].size.height*1.5);
+    CGRect playerTouchBounds = CGRectMake([_player boundingBox].origin.x, [_player boundingBox].origin.y, [_player boundingBox].size.width*2.5, [_player boundingBox].size.height*2.5);
     
     // start catapult dragging when a touch inside of the catapult arm occurs
     if (CGRectContainsPoint(playerTouchBounds, touchLocation))
@@ -714,8 +715,8 @@ static int _drunkLevelHuey;
     if(validItemMove) {
         //touchLocation = [touch locationInNode:self];
         [activatedItem.parent removeChild:activatedItem];
-        [_physicsNode addChild:activatedItem];
         activatedItem.scale = 0.5;
+        [_physicsNode addChild:activatedItem];
         activatedItem.anchorPoint = ccp(0.5,0.5);
         activatedItem.opacity = 0.5;
         activatedItem.position = touchLocation;
@@ -782,7 +783,7 @@ static int _drunkLevelHuey;
         
         itemsHeld = [ItemManager useItem:(itemBox) :activatedItemIndex :itemsHeld];
         activatedItem.opacity = 1.0;
-        activatedItem.scale = 0.4;
+        //activatedItem.scale = 0.4;
         activatedItem.zOrder = _stage.zOrder+1;//(_player == _dave) ? ((falling[DAVE]) ? _stage.zOrder + 1 : _player.zOrder - 1) : ((isFallingHuey) ? _stage.zOrder + 1 : _player.zOrder - 1);
         
         [self activateItemAbilities:activatedItem];

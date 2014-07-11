@@ -73,7 +73,7 @@
     }
     
     //[_physicsNode addChild:currItem];
-    item.scale*=0.3;
+    item.scale = 0.3;
     [item setColor:[CCColor colorWithWhite:0.5 alpha:1.0]];
     item.position = [ItemManager itemDisplay];
     item.physicsBody.collisionMask = @[];
@@ -107,10 +107,6 @@
 + (void) itemEntersInventory: (CCNode*) item {
     item.physicsBody.collisionMask = @[];
     item.anchorPoint = CGPointZero;
-    item.scale = 0.3;
-    if([item.name isEqual:@"Ghost"]) {
-        item.scale = 1.0;
-    }
     item.position = CGPointZero;
     item.opacity = 1.0;
 }
