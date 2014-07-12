@@ -6,6 +6,8 @@ static CCSprite *_princess;
 static CCSprite *_player;
 //static int roomPosition;
 
+
+#define ROOM_REFRESH 2
 #define PI (3.14159265359)
 
 #define DAVE 0

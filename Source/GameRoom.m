@@ -12,17 +12,47 @@
 @implementation GameRoom
 {
     NSMutableArray *rooms;
-    int networkTimeLimit;
     CCLabelTTF *_lblUpdate;
     NSString* chosenRoomId;
+    NSMutableArray *labels;
+    BOOL newScreen;
 }
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
     
-    [GameVariables setCurrentScene:@"GameRoom"];
-    
     [[WarpClient getInstance] leaveRoom: [GameVariables getCurrentRoom]];
+    
+    //reset selected items
+    [GameVariables setItemIndex1:-1];
+    [GameVariables setItemIndex2:-1];
+    
+    [self initiateRoomLoad];
+    
+    labels = [[NSMutableArray alloc] init];
+    
+    for (int i=0; i<5; i++)
+    {
+        
+        CCLabelTTF *lblRoomId ;
+        
+        lblRoomId = [CCLabelTTF labelWithString: @"" fontName:@"Helvetica" fontSize:12   ];
+        [lblRoomId setHorizontalAlignment:CCTextAlignmentLeft ];
+        lblRoomId.position = ccp(80, 250 - ( (i+1) * 35));
+        lblRoomId.anchorPoint = ccp(0,0.5);
+        lblRoomId.fontSize = 15.0;
+        [labels addObject:lblRoomId];
+        
+    }
+    
+    //decides if to add labels and buttons to screen or jsut update labels
+    newScreen = YES;
+}
+
+- (void) initiateRoomLoad
+{
+    
+    [GameVariables setCurrentScene:@"GameRoom"];
     
     
     NSMutableArray* allrooms = [GameVariables RoomInfoList];
@@ -31,26 +61,19 @@
     NSMutableArray* allroomsids = [GameVariables RoomList];
     [allroomsids  removeAllObjects];
     
-    //just in case we decide to go back, we need a fresh copy of room info
+    // we need a fresh copy of room info
     [[WarpClient getInstance] getAllRooms];
-    
-    //reset selected items
-    [GameVariables setItemIndex1:-1];
-    [GameVariables setItemIndex2:-1];
-
-    
-    //get rooms (already done after connection)
-    //[[WarpClient getInstance] getAllRooms];
     
     //callback for room list request status
     [self schedule:@selector(roomListMonitor:) interval:1] ;
-    
 }
 
 //get list of room ids
 -(void) roomListMonitor:(CCTime)delta
 {
-    if ([[GameVariables RoomList] count] == 5)
+    
+    int countt = [[GameVariables RoomList] count];
+    if (countt == 5)
     {
         rooms = [GameVariables RoomList];
         [self loadRooms];
@@ -73,14 +96,14 @@
 
 
 //load detailed room info into screen after rooms have loaded
-//stop after 3 seconds
 -(void) printRooms:(CCTime)delta
 {
+    
     NSMutableArray *array = [GameVariables RoomInfoList];
-    
-        if (array.count == 5)
+    int countt = array.count;
+        if (countt == 5)
         {
-    
+            
             _lblUpdate.visible = NO;
     
             int roomCount = 1; //for positioning label
@@ -98,39 +121,51 @@
                     
         
                     // Create a label for display purposes
-                    lblRoomId = [CCLabelTTF labelWithString: [room.roomName.uppercaseString stringByAppendingString: roomStatus]
-                                                   fontName:@"Helvetica" fontSize:12   ];
-                    [lblRoomId setHorizontalAlignment:CCTextAlignmentLeft ];
-                    lblRoomId.position = ccp(80, 250 - ( roomCount * 35));
-                    lblRoomId.anchorPoint = ccp(0,0.5);
-                    lblRoomId.fontSize = 15.0;
-                    [self addChild:lblRoomId];
+                    lblRoomId = labels[roomCount-1];
+                    lblRoomId.string = [room.roomName stringByAppendingString:  roomStatus];
+                    if ( newScreen )
+                    {
+                        //add label to scene if first time checking for rooms
+                        [self addChild:lblRoomId];
         
-                    // Standard method to create a
-                    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"ccbResources/ccbButtonNormal.png"];
-                    CCButton *btnJoin = [CCButton buttonWithTitle:@"Join room"  spriteFrame:sprite.spriteFrame ];
-                    [btnJoin setTarget:self selector:@selector(joinRoom:) ];
-                    btnJoin.position = ccp(410, 250 -( roomCount * 35));
-                    btnJoin.preferredSize = CGSizeMake(100.0, 30.0);
-                    btnJoin.anchorPoint = ccp(0,0.5);
-                    btnJoin.name = room.roomId;
+                        // create a join button if first time checking for rooms
+                        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"ccbResources/ccbButtonNormal.png"];
+                        CCButton *btnJoin = [CCButton buttonWithTitle:@"Join room"  spriteFrame:sprite.spriteFrame ];
+                        [btnJoin setTarget:self selector:@selector(joinRoom:) ];
+                        btnJoin.position = ccp(410, 250 -( roomCount * 35));
+                        btnJoin.preferredSize = CGSizeMake(100.0, 30.0);
+                        btnJoin.anchorPoint = ccp(0,0.5);
+                        btnJoin.name = room.roomId;
                 
-                    if (room.roomOccupants.count == 2){
-                        btnJoin.enabled = NO;
+                        if (room.roomOccupants.count == 2){
+                            btnJoin.enabled = NO;
+                        }
+                        
+                        [self addChild:btnJoin];
+                        
                     }
                 
-                    [self addChild:btnJoin];
                 
                     roomCount++;
             }
             
-    
+            newScreen =NO;
+            
+            [self schedule:@selector(updateRoomList:) interval: ROOM_REFRESH] ;
             [self unschedule:@selector(printRooms:)];
+            
     
         }
     
-    networkTimeLimit++;
 }
+
+//load detailed room info into screen after rooms have loaded
+-(void) updateRoomList:(CCTime)delta
+{
+    [self initiateRoomLoad];
+    [self unschedule:@selector(updateRoomList:)];
+}
+
 
 //button action to join room
 - (void)joinRoom:(id)sender {

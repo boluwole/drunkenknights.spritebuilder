@@ -270,23 +270,6 @@ static bool opponentReady = NO;
     //u need to change 0 to other value(,1,2,3) if u have more buttons.then u can check which button was pressed.
     
     if (buttonIndex == 1){
-        
-        [[WarpClient getInstance] leaveRoom: [GameVariables getCurrentRoom]];
-        
-        
-        NSMutableArray* allrooms = [GameVariables RoomInfoList];
-        [allrooms  removeAllObjects];
-        
-        NSMutableArray* allroomsids = [GameVariables RoomList];
-        [allroomsids  removeAllObjects];
-        
-        //just in case we decide to go back, we need a fresh copy of room info
-        [[WarpClient getInstance] getAllRooms];
-        
-        //reset selected items
-        [GameVariables setItemIndex1:-1];
-        [GameVariables setItemIndex2:-1];
-        
         //gameroom
         CCScene *gameRoomScene = [CCBReader loadAsScene:@"GameRoom"];
         [[CCDirector sharedDirector] replaceScene:gameRoomScene];
