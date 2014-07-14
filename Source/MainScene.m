@@ -213,16 +213,22 @@ bool playerCharacterSet;
 
 
 -(void)checkGameEnd{
-
-
-   if(checkEnd && (CGRectContainsPoint([daveRess boundingBox], _princess.position) || CGRectContainsPoint([hueyRess boundingBox], _princess.position))) {
     
+    BOOL daveWins = NO, hueyWins = NO;
+    
+    if (ccpDistance(daveRess.position, _princess.position) < 10 )
+        daveWins = YES;
+    else if (ccpDistance(hueyRess.position, _princess.position) < 10 )
+        hueyWins = YES;
+    
+    if(checkEnd && (daveWins || hueyWins)) {
+        
        checkEnd=NO;
        
        NSString* gameEndMessage;
        NSString* victory = @"The Day Is Yours!";
        NSString* defeat = @"Sorry, You Sad Drunk";
-       if(CGRectContainsPoint([daveRess boundingBox], _princess.position)) {
+       if(daveWins) {
            gameEndMessage = (_player == _dave) ? victory : defeat;
        }
        else {
@@ -273,7 +279,7 @@ bool playerCharacterSet;
         _princess.physicsBody.sensor = true;
     }
     
-    [self checkGameEnd];
+    if(_princess.zOrder > _stage.zOrder) [self checkGameEnd];
     [self checkGong];
     
     //dave authorities over beer bottle pickups

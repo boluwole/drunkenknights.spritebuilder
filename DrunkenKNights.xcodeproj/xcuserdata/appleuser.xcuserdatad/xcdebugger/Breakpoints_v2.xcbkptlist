@@ -314,12 +314,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/MainScene.m"
-            timestampString = "425362660.174617"
+            timestampString = "427002232.642"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "401"
-            endingLineNumber = "401"
-            landmarkName = "-touchBegan:withEvent:"
+            startingLineNumber = "445"
+            endingLineNumber = "445"
+            landmarkName = "+itemInfo:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -330,12 +330,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/MainScene.m"
-            timestampString = "425362660.174617"
+            timestampString = "427002232.642"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "417"
-            endingLineNumber = "417"
-            landmarkName = "-princessGoThru"
+            startingLineNumber = "461"
+            endingLineNumber = "461"
+            landmarkName = "+updateItems:name:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
