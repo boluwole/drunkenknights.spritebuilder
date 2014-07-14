@@ -174,10 +174,10 @@
     
     chosenRoomId = _sender.name;
     
-    int roomJoinPosition  = [GameVariables getNoOfRoomOccupants:chosenRoomId] + 1;
+    //int roomJoinPosition  = [GameVariables getNoOfRoomOccupants:chosenRoomId] + 1;
     //[GameVariables : roomJoinPosition ];
     
-    [GameVariables setRoomPosition: roomJoinPosition];
+    //[GameVariables setRoomPosition: roomJoinPosition];
     
     //CCLOG(@"roomPosition = %i", [GameVariables getRoomPosition]);
     

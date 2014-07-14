@@ -18,6 +18,29 @@ static NSString* roomJoinSuccess;
 static NSString* currentRoom;
 static int roomPosition=0;
 static NSString* currentScene;
+static NSString* playername;
+static NSString* decidePlayer;
+
++(void) setDPlayerName: (NSString*) inputName
+{
+    decidePlayer = inputName;
+}
+
++(NSString*) getDPlayerName
+{
+    return decidePlayer;
+}
+
+
++ (void) setPlayerName: (NSString*) inputName
+{
+    playername = inputName;
+}
+
++(NSString*) getPlayerName
+{
+    return playername;
+}
 
 +(void) setCurrentScene: (NSString*) sceneName {
     currentScene = sceneName;

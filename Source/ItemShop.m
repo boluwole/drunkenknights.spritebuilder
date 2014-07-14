@@ -32,7 +32,8 @@
 
 static bool ready = NO;
 static bool opponentReady = NO;
-
+static bool start = NO;
+static UIAlertView * waitAlert;
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
@@ -74,7 +75,17 @@ static bool opponentReady = NO;
     }
     else
     {
-        [_btnStartGame setVisible: NO];
+                [_btnStartGame setVisible: NO];
+    }
+    //send name of his own ot opponent
+    [NetworkManager sendNameToServer:[GameVariables getPlayerName]];
+    if(ready) {
+        [NetworkManager sendGameStart:[GameVariables getDPlayerName]];
+    }
+    
+    if(start) {
+        CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
+        [[CCDirector sharedDirector] replaceScene:mainScene];
     }
 }
 
@@ -211,25 +222,13 @@ static bool opponentReady = NO;
         
         if (noOfPlayers == 2)
         {
-            //[NetworkManager sendGameStart:[NSString stringWithFormat:@"%i", [GameVariables getRoomPosition]]];
             ready = YES;
-            
-            
-//            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Ready!"
-//                                                           message: @"Waiting for Opponent to Start..."
-//                                                          delegate: self
-//                                                 cancelButtonTitle:nil
-//                                                 otherButtonTitles:nil,nil];
-            //if(!opponentReady) [alert show];
-            
-            
-            //if(ready && opponentReady) {
-                //startgame
-                //[alert delete:alert];
-                //CCLOG(@"roomPosition = %i", [GameVariables getRoomPosition]);
-                CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
-                [[CCDirector sharedDirector] replaceScene:mainScene];
-            //}
+           waitAlert = [[UIAlertView alloc]initWithTitle: @"Hold your horses!"
+                                                           message: @"Waiting for the opponent to be ready...\n"
+                                                          delegate: self
+                                                 cancelButtonTitle:nil
+                                                 otherButtonTitles:nil,nil];
+            [waitAlert show];
 
         }
         else{
@@ -251,15 +250,29 @@ static bool opponentReady = NO;
 
 + (void) enterMainScene:(NSString*) info {
     
-    if(([info intValue] != [GameVariables getRoomPosition])) {
-        opponentReady = YES;
+    if([GameVariables getDPlayerName] != nil && ![info isEqualToString:[GameVariables getDPlayerName]] && ready){
+        start = YES;
+        [waitAlert dismissWithClickedButtonIndex:0 animated:YES];
     }
-    
-    if(ready && opponentReady) {
-        //startgame
-        CCLOG(@"roomPosition = %i", [GameVariables getRoomPosition]);
-        CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
-        [[CCDirector sharedDirector] replaceScene:mainScene];
+
+}
+                       
++ (void) checkOpponentName:(NSString*)msg
+{
+    NSComparisonResult result = [[GameVariables getPlayerName] compare:msg];
+    //NSLog(@"my name is %@", [GameVariables getPlayerName]);
+    //NSLog(@"opponent name is %@", msg);
+    if(![msg isEqualToString:[GameVariables getPlayerName]] && msg!= nil ){
+            
+        if(result == NSOrderedAscending){
+            [GameVariables setDPlayerName:@"_dave"];
+            NSLog(@"im dave");
+        }
+        else
+        {
+            [GameVariables setDPlayerName:@"_huey"];
+            NSLog(@"im huey");
+        }
     }
 }
 

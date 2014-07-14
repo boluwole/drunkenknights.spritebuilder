@@ -101,6 +101,7 @@
 + (void) updateOpponent :(CGPoint) msg;
 
 + (void) deActivateItem:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString*) player iIndex:(NSString*) index;
++ (void) updateOpponentName:(NSString*)msg;
 
 + (CCSprite*) returnDave;
 + (CCSprite*) returnHuey;

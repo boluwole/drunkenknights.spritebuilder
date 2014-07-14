@@ -32,6 +32,9 @@
 @property NSString* zorder_princess;
 @property NSString* falling_huey;
 
+//opponent name
+@property NSString* opponentname;
+
 //Item
 @property NSString* Item_info;
 @property NSString* item_name;

@@ -20,13 +20,16 @@
 
 + (void) sendGameStart:(NSString *)info;
 + (void) receiveGameStart:(NSString *)info;
-
++ (void) sendNameToServer:(NSString*)name;
 
 + (void) sendCGPointToServer:(CGPoint) msg;
 + (void) receiveCGPointFromServer:(CGPoint) msg;
 //Movement
 + (void) sendEveryPositionToServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP : (NSString*) fallingH;
 + (void) receiveEveryPositionFromServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP : (NSString*) fallingH;
+
+//receive opponent's name
++ (void) updateNameFromServer : (NSString*) name;
 
 
 //Item Pickup Kill

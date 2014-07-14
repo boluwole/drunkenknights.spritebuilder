@@ -66,6 +66,10 @@ static NFStoryBoardManager *nFStoryBoardManager;
     if([[GameVariables getCurrentScene] isEqual:@"ItemShop"]) {
         _game_start = [dataDict objectForKey:@"game_start"];
         [NetworkManager receiveGameStart:_game_start];
+        
+        //---opponent name
+        _opponentname = [dataDict objectForKey:@"opponent_name"];
+        [NetworkManager updateNameFromServer:_opponentname];
     }
     
     if([[GameVariables getCurrentScene] isEqual:@"MainScene"]) {
@@ -80,6 +84,8 @@ static NFStoryBoardManager *nFStoryBoardManager;
     [NetworkManager receiveEveryPositionFromServer:_huey_position poitionDave:_dave_position poitionPrincess:_princess_position :_zorder_huey :_zorder_dave :_zorder_princess :_falling_huey];
     
     
+    
+        
     //---Item
     _Item_info = [dataDict objectForKey:@"item_info"];
     [NetworkManager updateItemInfoFromServer:_Item_info];
@@ -115,7 +121,7 @@ static NFStoryBoardManager *nFStoryBoardManager;
 -(void)moveDave:(CGPoint) im{
     //    [self movePlayer:_dave];
     //NSLog(@"MOVEDAVE");
-    NSLog(@"=%@", NSStringFromCGPoint(im));
+    //NSLog(@"=%@", NSStringFromCGPoint(im));
     //NSLog(@"TESTETSETSE= %@", NSStringFromCGPoint(start));
     //[_dave.physicsBody applyImpulse: im];
 }

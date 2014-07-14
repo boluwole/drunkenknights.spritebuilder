@@ -17,5 +17,5 @@
 
 + (void) enterMainScene:(NSString*) info;
 - (void) loadItem: (int) itemIndex : (CCSprite*) loadableItem;
-
++ (void) checkOpponentName:(NSString*)msg;
 @end

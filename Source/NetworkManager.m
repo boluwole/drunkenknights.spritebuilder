@@ -25,6 +25,12 @@
     [ItemShop enterMainScene:info];
 }
 
++ (void) sendNameToServer:(NSString*)name
+{
+    NSDictionary *dict =[NSDictionary dictionaryWithObjectsAndKeys:name, @"opponent_name", nil];
+    [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
+}
+
 + (void) sendCGPointToServer:(CGPoint) msg {
     //CCLOG(@"\n\nSending %f, %f\n\n",msg.x,msg.y);
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:NSStringFromCGPoint(msg), @"impulse", nil];
@@ -37,6 +43,8 @@
     
    // if([MainScene returnDave] == nil) CCLOG(@"\n\n dave is nil\n\n");
     //if([MainScene returnHuey] == nil) CCLOG(@"\n\n huey is nil\n\n");
+    
+    
     if(msg.x == msg.x && msg.y == msg.y && [MainScene returnHuey] != nil && [MainScene returnDave] != nil)
     [MainScene updateOpponent:msg];
 }
@@ -57,7 +65,14 @@
 + (void) receiveEveryPositionFromServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP :(NSString*) fallingH
 {
     [MainScene updateEveryPosition:msgH positionDave:msgD positionPrincess:msgP :zH :zD :zP :fallingH];
-}  
+}
+
++ (void) updateNameFromServer : (NSString*) name
+{
+    [ItemShop checkOpponentName:name];
+}
+
+
 
 + (void) sendItemInfoMsgToServer:(NSString *)info
 {

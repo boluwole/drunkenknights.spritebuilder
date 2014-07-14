@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "RemoteRoomData.h"
-
 @interface GameVariables : NSObject
 
 //@property int roomPosition;
@@ -21,6 +20,10 @@
 +(NSMutableArray*) RoomList;
 +(NSMutableArray*) RoomInfoList;
 
++ (void) setPlayerName: (NSString*) inputName;
++ (NSString*) getPlayerName;
++(void) setDPlayerName: (NSString*) inputName;
++(NSString*) getDPlayerName;
 
 + (int) getRoomPosition;
 

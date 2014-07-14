@@ -39,6 +39,7 @@
     if(NETWORKED) {
         [[AppWarpHelper sharedAppWarpHelper] initializeAppWarp];
         [[AppWarpHelper sharedAppWarpHelper] connectToWarp : _playerName];
+        [GameVariables setPlayerName:_playerName];
     }
     
     //callback for login status

@@ -25,12 +25,11 @@ static NSMutableArray *activeBarrelLifetimes;
 static bool isFallingHuey;
 static int _drunkLevelDave;
 static int _drunkLevelHuey;
+bool playerCharacterSet;
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
 
-    
-    
     globalPhysicsNode = _physicsNode;
     _physicsNode.collisionDelegate = self;
     opponentActivatedItem = nil;
@@ -61,16 +60,14 @@ static int _drunkLevelHuey;
     _princess.scale *= 0.30;
     princessStart = _princess.position;
     
-    // Networking - Generate Dave & Huey
-    //CCLOG(@"roomPosition = %i", [GameVariables getRoomPosition]);
-    if ([GameVariables getRoomPosition] == 1) {
+    //decide plyaer is dave or huey based on itemshops update
+    if([[GameVariables getDPlayerName] isEqualToString:@"_dave"]){
         _player = _dave;
     }
-    else {
+    else{
         _player = _huey;
     }
     
-    [GameVariables setCurrentScene:@"MainScene"];
     
     daveRess = (CCSprite*)[CCBReader load:@"DaveRess"];
     hueyRess = (CCSprite*)[CCBReader load:@"HueyRess"];
@@ -207,12 +204,11 @@ static int _drunkLevelHuey;
     _huey.zOrder = _stage.zOrder + HUEY_Z;
     _princess.zOrder = _stage.zOrder + PRINCESS_Z;
     
-
     
-    //CCLOG(@"my name is %@\n\n",_player.name);
-    
+    [GameVariables setCurrentScene:@"MainScene"];
     //start game timer
     startTime = [NSDate date];
+
 }
 
 
@@ -428,7 +424,7 @@ static int _drunkLevelHuey;
 
 + (void)itemInfo:(NSString *) msg
 {
-    CCLOG(@"KILL = %@", msg);
+    //CCLOG(@"KILL = %@", msg);
     if ( [msg isEqualToString:@"KILL"] ) {
         //CCLOG(@"KILL = %@", msg);
         [globalPhysicsNode removeChild:currItem];
@@ -744,9 +740,27 @@ static int _drunkLevelHuey;
 
 + (void)updateOpponent:(CGPoint) msg
 {
-    //CCLOG(@"\n\nupdating: %f, %f\n\n",msg.x,msg.y);
     if (_player == _dave && msg.x == msg.x && msg.y == msg.y && _huey != nil) {//Server
         [MoveManager movePlayer:_huey :msg :_drunkLevelHuey];
+    }
+}
+
++ (void) updateOpponentName:(NSString*)msg
+{
+    NSComparisonResult result = [[GameVariables getPlayerName] compare:msg];
+    NSLog(@"my name is %@", [GameVariables getPlayerName]);
+    NSLog(@"opponent name is %@", msg);
+    if(![msg isEqualToString:[GameVariables getPlayerName]] ){
+        
+        if(result == NSOrderedAscending){
+            _player = _dave;
+            NSLog(@"im dave");
+        }
+        else
+        {
+            _player = _huey;
+            NSLog(@"im huey");
+        }
     }
 }
 
