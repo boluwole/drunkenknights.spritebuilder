@@ -20,6 +20,8 @@
         
         if(child.count > 0) {
             if(CGRectContainsPoint([dave boundingBox], beerNodes[i].position) && (*daveDrunkLevel) < DRUNK_METER_CAP) {
+                OALSimpleAudio *aud2=[OALSimpleAudio    sharedInstance];
+                [aud2 playEffect:@"Beer.wav"];
                 (*daveDrunkLevel)++;
                 CCNode* temp = (CCNode*)child[0];
                 [temp removeFromParent];
@@ -32,6 +34,8 @@
             }
             else if(CGRectContainsPoint([huey boundingBox], beerNodes[i].position) && (*hueyDrunkLevel) < DRUNK_METER_CAP) {
                 (*hueyDrunkLevel)++;
+                OALSimpleAudio *aud2=[OALSimpleAudio    sharedInstance];
+                [aud2 playEffect:@"Beer.wav"];
                 CCNode* temp = (CCNode*)child[0];
                 [temp removeFromParent];
                 
@@ -163,6 +167,9 @@
     activeBarrelLifetimes[index+1] = [NSNumber numberWithInt:life];
     
     CCLOG(@"\n\nthis barrel has %d lives left\n\n", [activeBarrelLifetimes[index+1] intValue]);
+    
+    OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+    [aud1 playEffect:@"Barrel_Hit.wav"];
     switch(life) {
         case 3:
             barrel.opacity = 1.0f;
@@ -207,13 +214,23 @@
         if(CGRectContainsPoint([allSlimes[i] boundingBox], dave.position)) {
             //CCLOG(@"\n\nSlime all up");
             dave.physicsBody.velocity = ccpMult(dave.physicsBody.velocity, Slime_MULTIPLIER);
+            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+            [aud1 playEffect:@"Vomit_slip.wav"];
+            [NetworkManager sendVomitSound:@"dave"];
+            
         }
         if(CGRectContainsPoint([allSlimes[i] boundingBox], huey.position)) {
             //CCLOG(@"\n\nSlime all up");
             huey.physicsBody.velocity = ccpMult(huey.physicsBody.velocity, Slime_MULTIPLIER);
+            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+            [aud1 playEffect:@"Vomit_slip.wav"];
+            [NetworkManager sendVomitSound:@"huey"];
         }
         if(CGRectContainsPoint([allSlimes[i] boundingBox], princess.position)) {
             princess.physicsBody.velocity = ccpMult(princess.physicsBody.velocity, Slime_MULTIPLIER);
+            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+            [aud1 playEffect:@"Vomit_slip.wav"];
+            [NetworkManager sendVomitSound:@"princess"];
         }
     }
 }

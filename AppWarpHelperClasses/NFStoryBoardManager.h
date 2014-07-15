@@ -48,7 +48,8 @@
 @property CGPoint deActivatedItem_position;
 @property NSString* deplayer_info;
 @property NSString* item_index;
-
+//sound stuff
+@property NSString* vomit_sound;
 
 //
 @property CGPoint New_impulse;
@@ -70,4 +71,5 @@
 -(void)updatePlayerDataToServerWithDataDict:(NSDictionary*)dataDict;
 -(void)showPausedView:(NSString*)messageString;
 -(void)removePausedView;
+
 @end

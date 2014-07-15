@@ -154,8 +154,15 @@
     
 }
 
+//send vomit slipping sound
 
-
-
++ (void) sendVomitSound:(NSString*) name
+{
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:name, @"vomit_sound", nil];
+    [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
+}
++ (void) updateVomitSound:(NSString*) name{
+    [MainScene playVomitSound:name];
+}
 
 @end
