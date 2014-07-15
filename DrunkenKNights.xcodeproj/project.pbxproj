@@ -8,27 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		0A3A08CC196CF2B6001D7D46 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3A08CB196CF2B6001D7D46 /* GLKit.framework */; };
-		0AA80F101974F0270090E213 /* Activate_Item.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80EFD1974F0270090E213 /* Activate_Item.wav */; };
-		0AA80F111974F0270090E213 /* Barrel_Hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80EFE1974F0270090E213 /* Barrel_Hit.wav */; };
-		0AA80F121974F0270090E213 /* Beer.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80EFF1974F0270090E213 /* Beer.wav */; };
-		0AA80F131974F0270090E213 /* Button_Press.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F001974F0270090E213 /* Button_Press.wav */; };
-		0AA80F141974F0270090E213 /* Dave_Huey_Collide.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F011974F0270090E213 /* Dave_Huey_Collide.wav */; };
-		0AA80F151974F0270090E213 /* Dave_Laugh.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F021974F0270090E213 /* Dave_Laugh.mp3 */; };
-		0AA80F161974F0270090E213 /* Evil Magician Random DIalogue.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F031974F0270090E213 /* Evil Magician Random DIalogue.mp3 */; };
-		0AA80F171974F0270090E213 /* Game_Music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F041974F0270090E213 /* Game_Music.mp3 */; };
-		0AA80F181974F0270090E213 /* Game_Over.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F051974F0270090E213 /* Game_Over.mp3 */; };
-		0AA80F191974F0270090E213 /* GhostStatue_PlayerPassThrough.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F061974F0270090E213 /* GhostStatue_PlayerPassThrough.wav */; };
-		0AA80F1A1974F0270090E213 /* Gong_Activate_Duration.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F071974F0270090E213 /* Gong_Activate_Duration.mp3 */; };
-		0AA80F1B1974F0270090E213 /* Huey_Laugh.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F081974F0270090E213 /* Huey_Laugh.mp3 */; };
-		0AA80F1C1974F0270090E213 /* Item_PickUp.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F091974F0270090E213 /* Item_PickUp.mp3 */; };
-		0AA80F1D1974F0270090E213 /* PassThroughGhost.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F0A1974F0270090E213 /* PassThroughGhost.wav */; };
-		0AA80F1E1974F0270090E213 /* Stage_Fall_Player.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F0B1974F0270090E213 /* Stage_Fall_Player.wav */; };
-		0AA80F1F1974F0270090E213 /* Stage_Fall_Princess.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F0C1974F0270090E213 /* Stage_Fall_Princess.wav */; };
-		0AA80F201974F0270090E213 /* StartGame.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F0D1974F0270090E213 /* StartGame.wav */; };
-		0AA80F211974F0270090E213 /* Vomit_slip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F0E1974F0270090E213 /* Vomit_slip.wav */; };
-		0AA80F221974F0270090E213 /* Water.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F0F1974F0270090E213 /* Water.wav */; };
-		0AA80F241974FEF50090E213 /* export.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F231974FEF50090E213 /* export.mp3 */; };
-		0AA80F261974FFF70090E213 /* gong_reactivate.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F251974FFF70090E213 /* gong_reactivate.wav */; };
+		0AA80F381975F4A50090E213 /* Activate_Item.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F281975F4A50090E213 /* Activate_Item.wav */; };
+		0AA80F391975F4A50090E213 /* Barrel_Hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F291975F4A50090E213 /* Barrel_Hit.wav */; };
+		0AA80F3A1975F4A50090E213 /* Beer.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F2A1975F4A50090E213 /* Beer.wav */; };
+		0AA80F3B1975F4A50090E213 /* Button_Press.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F2B1975F4A50090E213 /* Button_Press.wav */; };
+		0AA80F3C1975F4A50090E213 /* Dave_Huey_Collide.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F2C1975F4A50090E213 /* Dave_Huey_Collide.wav */; };
+		0AA80F3D1975F4A50090E213 /* Dave_Laugh.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F2D1975F4A50090E213 /* Dave_Laugh.mp3 */; };
+		0AA80F3E1975F4A50090E213 /* Evil Magician Random DIalogue.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F2E1975F4A50090E213 /* Evil Magician Random DIalogue.mp3 */; };
+		0AA80F3F1975F4A50090E213 /* export.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F2F1975F4A50090E213 /* export.mp3 */; };
+		0AA80F401975F4A50090E213 /* Game_Music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F301975F4A50090E213 /* Game_Music.mp3 */; };
+		0AA80F411975F4A50090E213 /* Game_Over.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F311975F4A50090E213 /* Game_Over.mp3 */; };
+		0AA80F421975F4A50090E213 /* GhostStatue_PlayerPassThrough.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F321975F4A50090E213 /* GhostStatue_PlayerPassThrough.wav */; };
+		0AA80F431975F4A50090E213 /* Gong_Activate_Duration.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F331975F4A50090E213 /* Gong_Activate_Duration.mp3 */; };
+		0AA80F441975F4A50090E213 /* gong_reactivate.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F341975F4A50090E213 /* gong_reactivate.wav */; };
+		0AA80F451975F4A50090E213 /* Huey_Laugh.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F351975F4A50090E213 /* Huey_Laugh.mp3 */; };
+		0AA80F461975F4A50090E213 /* Item_PickUp.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F361975F4A50090E213 /* Item_PickUp.mp3 */; };
+		0AA80F471975F4A50090E213 /* PassThroughGhost.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F371975F4A50090E213 /* PassThroughGhost.wav */; };
 		8517F45D194D4CD900AD4D85 /* SplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 8517F45C194D4CD900AD4D85 /* SplashScreen.m */; };
 		8517F461194D4CF000AD4D85 /* ItemShop.m in Sources */ = {isa = PBXBuildFile; fileRef = 8517F460194D4CF000AD4D85 /* ItemShop.m */; };
 		8517F464194FE2B500AD4D85 /* GameItemData.m in Sources */ = {isa = PBXBuildFile; fileRef = 8517F463194FE2B500AD4D85 /* GameItemData.m */; };
@@ -103,27 +98,22 @@
 
 /* Begin PBXFileReference section */
 		0A3A08CB196CF2B6001D7D46 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
-		0AA80EFD1974F0270090E213 /* Activate_Item.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Activate_Item.wav; sourceTree = "<group>"; };
-		0AA80EFE1974F0270090E213 /* Barrel_Hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Barrel_Hit.wav; sourceTree = "<group>"; };
-		0AA80EFF1974F0270090E213 /* Beer.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Beer.wav; sourceTree = "<group>"; };
-		0AA80F001974F0270090E213 /* Button_Press.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Button_Press.wav; sourceTree = "<group>"; };
-		0AA80F011974F0270090E213 /* Dave_Huey_Collide.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Dave_Huey_Collide.wav; sourceTree = "<group>"; };
-		0AA80F021974F0270090E213 /* Dave_Laugh.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Dave_Laugh.mp3; sourceTree = "<group>"; };
-		0AA80F031974F0270090E213 /* Evil Magician Random DIalogue.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Evil Magician Random DIalogue.mp3"; sourceTree = "<group>"; };
-		0AA80F041974F0270090E213 /* Game_Music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Game_Music.mp3; sourceTree = "<group>"; };
-		0AA80F051974F0270090E213 /* Game_Over.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Game_Over.mp3; sourceTree = "<group>"; };
-		0AA80F061974F0270090E213 /* GhostStatue_PlayerPassThrough.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GhostStatue_PlayerPassThrough.wav; sourceTree = "<group>"; };
-		0AA80F071974F0270090E213 /* Gong_Activate_Duration.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Gong_Activate_Duration.mp3; sourceTree = "<group>"; };
-		0AA80F081974F0270090E213 /* Huey_Laugh.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Huey_Laugh.mp3; sourceTree = "<group>"; };
-		0AA80F091974F0270090E213 /* Item_PickUp.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Item_PickUp.mp3; sourceTree = "<group>"; };
-		0AA80F0A1974F0270090E213 /* PassThroughGhost.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = PassThroughGhost.wav; sourceTree = "<group>"; };
-		0AA80F0B1974F0270090E213 /* Stage_Fall_Player.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Stage_Fall_Player.wav; sourceTree = "<group>"; };
-		0AA80F0C1974F0270090E213 /* Stage_Fall_Princess.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Stage_Fall_Princess.wav; sourceTree = "<group>"; };
-		0AA80F0D1974F0270090E213 /* StartGame.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = StartGame.wav; sourceTree = "<group>"; };
-		0AA80F0E1974F0270090E213 /* Vomit_slip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Vomit_slip.wav; sourceTree = "<group>"; };
-		0AA80F0F1974F0270090E213 /* Water.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Water.wav; sourceTree = "<group>"; };
-		0AA80F231974FEF50090E213 /* export.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = export.mp3; sourceTree = "<group>"; };
-		0AA80F251974FFF70090E213 /* gong_reactivate.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gong_reactivate.wav; sourceTree = "<group>"; };
+		0AA80F281975F4A50090E213 /* Activate_Item.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Activate_Item.wav; sourceTree = "<group>"; };
+		0AA80F291975F4A50090E213 /* Barrel_Hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Barrel_Hit.wav; sourceTree = "<group>"; };
+		0AA80F2A1975F4A50090E213 /* Beer.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Beer.wav; sourceTree = "<group>"; };
+		0AA80F2B1975F4A50090E213 /* Button_Press.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Button_Press.wav; sourceTree = "<group>"; };
+		0AA80F2C1975F4A50090E213 /* Dave_Huey_Collide.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Dave_Huey_Collide.wav; sourceTree = "<group>"; };
+		0AA80F2D1975F4A50090E213 /* Dave_Laugh.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Dave_Laugh.mp3; sourceTree = "<group>"; };
+		0AA80F2E1975F4A50090E213 /* Evil Magician Random DIalogue.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Evil Magician Random DIalogue.mp3"; sourceTree = "<group>"; };
+		0AA80F2F1975F4A50090E213 /* export.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = export.mp3; sourceTree = "<group>"; };
+		0AA80F301975F4A50090E213 /* Game_Music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Game_Music.mp3; sourceTree = "<group>"; };
+		0AA80F311975F4A50090E213 /* Game_Over.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Game_Over.mp3; sourceTree = "<group>"; };
+		0AA80F321975F4A50090E213 /* GhostStatue_PlayerPassThrough.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GhostStatue_PlayerPassThrough.wav; sourceTree = "<group>"; };
+		0AA80F331975F4A50090E213 /* Gong_Activate_Duration.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Gong_Activate_Duration.mp3; sourceTree = "<group>"; };
+		0AA80F341975F4A50090E213 /* gong_reactivate.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gong_reactivate.wav; sourceTree = "<group>"; };
+		0AA80F351975F4A50090E213 /* Huey_Laugh.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Huey_Laugh.mp3; sourceTree = "<group>"; };
+		0AA80F361975F4A50090E213 /* Item_PickUp.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Item_PickUp.mp3; sourceTree = "<group>"; };
+		0AA80F371975F4A50090E213 /* PassThroughGhost.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = PassThroughGhost.wav; sourceTree = "<group>"; };
 		8517F45B194D4CD900AD4D85 /* SplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SplashScreen.h; path = Source/SplashScreen.h; sourceTree = "<group>"; };
 		8517F45C194D4CD900AD4D85 /* SplashScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SplashScreen.m; path = Source/SplashScreen.m; sourceTree = "<group>"; };
 		8517F45F194D4CF000AD4D85 /* ItemShop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemShop.h; path = Source/ItemShop.h; sourceTree = "<group>"; };
@@ -231,33 +221,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0AA80EFC1974F0270090E213 /* Sounds for Gameplay 2 */ = {
+		0AA80F271975F4A50090E213 /* audio */ = {
 			isa = PBXGroup;
 			children = (
-				0AA80EFD1974F0270090E213 /* Activate_Item.wav */,
-				0AA80EFE1974F0270090E213 /* Barrel_Hit.wav */,
-				0AA80EFF1974F0270090E213 /* Beer.wav */,
-				0AA80F001974F0270090E213 /* Button_Press.wav */,
-				0AA80F231974FEF50090E213 /* export.mp3 */,
-				0AA80F011974F0270090E213 /* Dave_Huey_Collide.wav */,
-				0AA80F021974F0270090E213 /* Dave_Laugh.mp3 */,
-				0AA80F031974F0270090E213 /* Evil Magician Random DIalogue.mp3 */,
-				0AA80F041974F0270090E213 /* Game_Music.mp3 */,
-				0AA80F051974F0270090E213 /* Game_Over.mp3 */,
-				0AA80F061974F0270090E213 /* GhostStatue_PlayerPassThrough.wav */,
-				0AA80F251974FFF70090E213 /* gong_reactivate.wav */,
-				0AA80F071974F0270090E213 /* Gong_Activate_Duration.mp3 */,
-				0AA80F081974F0270090E213 /* Huey_Laugh.mp3 */,
-				0AA80F091974F0270090E213 /* Item_PickUp.mp3 */,
-				0AA80F0A1974F0270090E213 /* PassThroughGhost.wav */,
-				0AA80F0B1974F0270090E213 /* Stage_Fall_Player.wav */,
-				0AA80F0C1974F0270090E213 /* Stage_Fall_Princess.wav */,
-				0AA80F0D1974F0270090E213 /* StartGame.wav */,
-				0AA80F0E1974F0270090E213 /* Vomit_slip.wav */,
-				0AA80F0F1974F0270090E213 /* Water.wav */,
+				0AA80F281975F4A50090E213 /* Activate_Item.wav */,
+				0AA80F291975F4A50090E213 /* Barrel_Hit.wav */,
+				0AA80F2A1975F4A50090E213 /* Beer.wav */,
+				0AA80F2B1975F4A50090E213 /* Button_Press.wav */,
+				0AA80F2C1975F4A50090E213 /* Dave_Huey_Collide.wav */,
+				0AA80F2D1975F4A50090E213 /* Dave_Laugh.mp3 */,
+				0AA80F2E1975F4A50090E213 /* Evil Magician Random DIalogue.mp3 */,
+				0AA80F2F1975F4A50090E213 /* export.mp3 */,
+				0AA80F301975F4A50090E213 /* Game_Music.mp3 */,
+				0AA80F311975F4A50090E213 /* Game_Over.mp3 */,
+				0AA80F321975F4A50090E213 /* GhostStatue_PlayerPassThrough.wav */,
+				0AA80F331975F4A50090E213 /* Gong_Activate_Duration.mp3 */,
+				0AA80F341975F4A50090E213 /* gong_reactivate.wav */,
+				0AA80F351975F4A50090E213 /* Huey_Laugh.mp3 */,
+				0AA80F361975F4A50090E213 /* Item_PickUp.mp3 */,
+				0AA80F371975F4A50090E213 /* PassThroughGhost.wav */,
 			);
-			name = "Sounds for Gameplay 2";
-			path = "../../../../Sounds for Gameplay 2";
+			path = audio;
 			sourceTree = "<group>";
 		};
 		9222E2B918734FF800A246C7 /* libs */ = {
@@ -364,7 +348,7 @@
 		B77F1B4617B978D7009739AE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				0AA80EFC1974F0270090E213 /* Sounds for Gameplay 2 */,
+				0AA80F271975F4A50090E213 /* audio */,
 				B73789911807667A0076A88C /* Icons */,
 				B737893A180761570076A88C /* Published-iOS */,
 			);
@@ -516,42 +500,37 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AA80F191974F0270090E213 /* GhostStatue_PlayerPassThrough.wav in Resources */,
-				0AA80F1D1974F0270090E213 /* PassThroughGhost.wav in Resources */,
-				0AA80F111974F0270090E213 /* Barrel_Hit.wav in Resources */,
+				0AA80F391975F4A50090E213 /* Barrel_Hit.wav in Resources */,
 				B71F5919188484E7003F4D28 /* Settings.png in Resources */,
-				0AA80F1B1974F0270090E213 /* Huey_Laugh.mp3 in Resources */,
+				0AA80F401975F4A50090E213 /* Game_Music.mp3 in Resources */,
+				0AA80F3F1975F4A50090E213 /* export.mp3 in Resources */,
 				F594CD43194BCD2000FE0029 /* ManagerIncludes.h in Resources */,
+				0AA80F421975F4A50090E213 /* GhostStatue_PlayerPassThrough.wav in Resources */,
 				B7378978180762440076A88C /* Default@2x.png in Resources */,
-				0AA80F221974F0270090E213 /* Water.wav in Resources */,
-				0AA80F141974F0270090E213 /* Dave_Huey_Collide.wav in Resources */,
+				0AA80F3C1975F4A50090E213 /* Dave_Huey_Collide.wav in Resources */,
 				B71F5914188484E7003F4D28 /* iPad@2x.png in Resources */,
 				B71F5913188484E7003F4D28 /* iPad.png in Resources */,
 				B71F5912188484E7003F4D28 /* iPad-old@2x.png in Resources */,
-				0AA80F1F1974F0270090E213 /* Stage_Fall_Princess.wav in Resources */,
 				B71F5916188484E7003F4D28 /* iPhone-old@2x.png in Resources */,
-				0AA80F1A1974F0270090E213 /* Gong_Activate_Duration.mp3 in Resources */,
-				0AA80F131974F0270090E213 /* Button_Press.wav in Resources */,
-				0AA80F151974F0270090E213 /* Dave_Laugh.mp3 in Resources */,
-				0AA80F121974F0270090E213 /* Beer.wav in Resources */,
+				0AA80F461975F4A50090E213 /* Item_PickUp.mp3 in Resources */,
+				0AA80F471975F4A50090E213 /* PassThroughGhost.wav in Resources */,
+				0AA80F3B1975F4A50090E213 /* Button_Press.wav in Resources */,
+				0AA80F3D1975F4A50090E213 /* Dave_Laugh.mp3 in Resources */,
+				0AA80F3A1975F4A50090E213 /* Beer.wav in Resources */,
+				0AA80F441975F4A50090E213 /* gong_reactivate.wav in Resources */,
 				B737893B180761570076A88C /* Published-iOS in Resources */,
+				0AA80F431975F4A50090E213 /* Gong_Activate_Duration.mp3 in Resources */,
 				B71F591A188484E7003F4D28 /* Settings@2x.png in Resources */,
 				B7378976180762440076A88C /* Default-Landscape~ipad.png in Resources */,
-				0AA80F1E1974F0270090E213 /* Stage_Fall_Player.wav in Resources */,
-				0AA80F1C1974F0270090E213 /* Item_PickUp.mp3 in Resources */,
 				B71F5915188484E7003F4D28 /* iPhone-old.png in Resources */,
-				0AA80F181974F0270090E213 /* Game_Over.mp3 in Resources */,
+				0AA80F451975F4A50090E213 /* Huey_Laugh.mp3 in Resources */,
+				0AA80F411975F4A50090E213 /* Game_Over.mp3 in Resources */,
 				B71F5917188484E7003F4D28 /* iPhone.png in Resources */,
-				0AA80F241974FEF50090E213 /* export.mp3 in Resources */,
 				B7378975180762440076A88C /* Default-568h@2x.png in Resources */,
 				B71F5918188484E7003F4D28 /* iPhone@2x.png in Resources */,
-				0AA80F101974F0270090E213 /* Activate_Item.wav in Resources */,
-				0AA80F201974F0270090E213 /* StartGame.wav in Resources */,
-				0AA80F261974FFF70090E213 /* gong_reactivate.wav in Resources */,
-				0AA80F161974F0270090E213 /* Evil Magician Random DIalogue.mp3 in Resources */,
+				0AA80F381975F4A50090E213 /* Activate_Item.wav in Resources */,
+				0AA80F3E1975F4A50090E213 /* Evil Magician Random DIalogue.mp3 in Resources */,
 				B7378977180762440076A88C /* Default.png in Resources */,
-				0AA80F171974F0270090E213 /* Game_Music.mp3 in Resources */,
-				0AA80F211974F0270090E213 /* Vomit_slip.wav in Resources */,
 				B71F5911188484E7003F4D28 /* iPad-old.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
