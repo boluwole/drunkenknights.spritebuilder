@@ -10,7 +10,7 @@
 
 
 @implementation MainScene{
-  
+    
     
 }
 static CCPhysicsNode *globalPhysicsNode;
@@ -29,7 +29,7 @@ bool playerCharacterSet;
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
-
+    
     globalPhysicsNode = _physicsNode;
     _physicsNode.collisionDelegate = self;
     opponentActivatedItem = nil;
@@ -40,7 +40,7 @@ bool playerCharacterSet;
     
     checkEnd=YES;
     //load players & statue
-    _dave = (CCSprite*)[CCBReader load:@"Dave"];
+    _dave = (CCSprite*)[CCBReader load:@"_Dave"];
     [_physicsNode addChild:_dave];
     _dave.position = DAVE_START;
     _dave.scale *= 0.25;
@@ -86,7 +86,7 @@ bool playerCharacterSet;
     
     // tell this scene to accept touches
     self.userInteractionEnabled = TRUE;
-
+    
     //uiimage for stage falloff detection
     //intialize stage image for falloff detection
     CCRenderTexture *renderer =
@@ -101,13 +101,13 @@ bool playerCharacterSet;
     //initializations
     validMove = NO;
     validItemMove = NO;
-
+    
     for(int i = DAVE; i < HUEY; i++) {
         falling[i] = NO;
         reviveCounter[i] = 0;
     }
-
-
+    
+    
     
     //UI arrow indicator
     arrowNode = [[CCNode alloc] init];
@@ -125,7 +125,7 @@ bool playerCharacterSet;
     [arrowNode addChild:arrow];
     arrow.scale *= 1.5;
     arrow.opacity *= 0.5;
-
+    
     [self addChild:arrowNode];
     
     //UI drunk meter
@@ -137,11 +137,11 @@ bool playerCharacterSet;
     
     //always damp
     [self schedule:@selector(damping:) interval:0.02];
-
+    
     
     //item node
     currItem = [[CCNode alloc] init];
-  
+    
     for(int i = 0; i < 3; i++) {
         itemBox[i]=[CCBReader load: @"Box"];
         itemBox[i].scale *= 0.3;
@@ -208,45 +208,39 @@ bool playerCharacterSet;
     [GameVariables setCurrentScene:@"MainScene"];
     //start game timer
     startTime = [NSDate date];
-
+    
 }
 
 
 -(void)checkGameEnd{
     
-    BOOL daveWins = NO, hueyWins = NO;
     
-    if (ccpDistance(daveRess.position, _princess.position) < 10 )
-        daveWins = YES;
-    else if (ccpDistance(hueyRess.position, _princess.position) < 10 )
-        hueyWins = YES;
-    
-    if(checkEnd && (daveWins || hueyWins)) {
+    if(checkEnd && (CGRectContainsPoint([daveRess boundingBox], _princess.position) || CGRectContainsPoint([hueyRess boundingBox], _princess.position))) {
         
-       checkEnd=NO;
-       
-       NSString* gameEndMessage;
-       NSString* victory = @"The Day Is Yours!";
-       NSString* defeat = @"Sorry, You Sad Drunk";
-       if(daveWins) {
-           gameEndMessage = (_player == _dave) ? victory : defeat;
-       }
-       else {
-           gameEndMessage = (_player == _dave) ? defeat : victory;
-       }
-       
-       _dave.physicsBody.velocity = CGPointZero;
-       _huey.physicsBody.velocity = CGPointZero;
-       _princess.physicsBody.velocity = CGPointZero;
- 
-       
-       UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"GG Nubs!"
-                                                      message: gameEndMessage
-                                                     delegate: self
-                                            cancelButtonTitle:nil
-                                            otherButtonTitles:@"Return to Lobby",nil];
-       [alert show];
-   }
+        checkEnd=NO;
+        
+        NSString* gameEndMessage;
+        NSString* victory = @"The Day Is Yours!";
+        NSString* defeat = @"Sorry, You Sad Drunk";
+        if(CGRectContainsPoint([daveRess boundingBox], _princess.position)) {
+            gameEndMessage = (_player == _dave) ? victory : defeat;
+        }
+        else {
+            gameEndMessage = (_player == _dave) ? defeat : victory;
+        }
+        
+        _dave.physicsBody.velocity = CGPointZero;
+        _huey.physicsBody.velocity = CGPointZero;
+        _princess.physicsBody.velocity = CGPointZero;
+        
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"GG Nubs!"
+                                                       message: gameEndMessage
+                                                      delegate: self
+                                             cancelButtonTitle:nil
+                                             otherButtonTitles:@"Return to Lobby",nil];
+        [alert show];
+    }
     
 }
 
@@ -258,9 +252,9 @@ bool playerCharacterSet;
         _dave = nil;
         _princess = nil;
         _huey = nil;
-
         
-                
+        
+        
         //gameroom
         CCScene *gameRoomScene = [CCBReader loadAsScene:@"GameRoom"];
         [[CCDirector sharedDirector] replaceScene:gameRoomScene];    }
@@ -279,13 +273,13 @@ bool playerCharacterSet;
         _princess.physicsBody.sensor = true;
     }
     
-    if(_princess.zOrder > _stage.zOrder) [self checkGameEnd];
+    if (_princess.zOrder > _stage.zOrder)[self checkGameEnd];
     [self checkGong];
     
     //dave authorities over beer bottle pickups
     if(_player == _dave) {
         int beerPickedUp =
-                    [ItemManager checkBeerBottles:_dave :_huey :(&_drunkLevelDave) :(&_drunkLevelHuey) :beerNodes];
+        [ItemManager checkBeerBottles:_dave :_huey :(&_drunkLevelDave) :(&_drunkLevelHuey) :beerNodes];
         if(beerPickedUp >= 0) {
             beerNodesCounters[beerPickedUp] = 0;
         }
@@ -302,7 +296,7 @@ bool playerCharacterSet;
     else {
         drunkMeter.scaleX = (_drunkLevelHuey + 1);
     }
-
+    
     
     //drop item
     if(timeElapsed < -5) {
@@ -324,50 +318,50 @@ bool playerCharacterSet;
             currItem.rotation+=10;
             bool isFalling = (_player == _dave) ? falling[DAVE] : isFallingHuey;
             //item pickup
-                if(CGRectContainsPoint([_player boundingBox], currItem.position) && !isFalling) {
-                    if(itemsHeld < 3) {
-                        currItem.rotation = 0;
-                        [ItemManager itemEntersInventory:currItem];
-                        currItem.zOrder = itemBox[itemsHeld].zOrder - 1;
-                        [currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
-                        
-                        [_physicsNode removeChild:currItem];
-                        currItem.scale = 1.0;
-                        
-                        //Networking - Notice
-                        if(_player == _dave) {
-                            [NetworkManager sendItemInfoMsgToServer:@"KILL_HUEY_ITEM"];
-                        }
-                        else {
-                            [NetworkManager sendItemInfoMsgToServer:@"KILL_DAVE_ITEM"];
-                        }
-                        
-                        
-                        [itemBox[itemsHeld] addChild:currItem];
-                        
-                        itemsHeld++;
-                        //itemHasDroppedForThisPeriod = NO;
-                        currItem = nil;
-                        
+            if(CGRectContainsPoint([_player boundingBox], currItem.position) && !isFalling) {
+                if(itemsHeld < 3) {
+                    currItem.rotation = 0;
+                    [ItemManager itemEntersInventory:currItem];
+                    currItem.zOrder = itemBox[itemsHeld].zOrder - 1;
+                    [currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
+                    
+                    [_physicsNode removeChild:currItem];
+                    currItem.scale = 1.0;
+                    
+                    //Networking - Notice
+                    if(_player == _dave) {
+                        [NetworkManager sendItemInfoMsgToServer:@"KILL_HUEY_ITEM"];
                     }
+                    else {
+                        [NetworkManager sendItemInfoMsgToServer:@"KILL_DAVE_ITEM"];
+                    }
+                    
+                    
+                    [itemBox[itemsHeld] addChild:currItem];
+                    
+                    itemsHeld++;
+                    //itemHasDroppedForThisPeriod = NO;
+                    currItem = nil;
+                    
                 }
-
+            }
             
-                            
+            
+            
             
             if (_player == _dave) {
                 if((timeElapsed - currItemDropTime) <= ITEM_ALIVE_PERIOD) {
                     //CCLOG(@"kill\n");
                     
                     
-                        [_physicsNode removeChild:currItem];
-                        [NetworkManager sendItemInfoMsgToServer:@"KILL_HUEY_ITEM"];
-                        currItem = nil;
+                    [_physicsNode removeChild:currItem];
+                    [NetworkManager sendItemInfoMsgToServer:@"KILL_HUEY_ITEM"];
+                    currItem = nil;
                     
                     //itemHasDroppedForThisPeriod = NO;
                 }
             }
-
+            
             
             
         }
@@ -377,34 +371,34 @@ bool playerCharacterSet;
     }
     
     if(_player == _dave) {
-    //detect falloff
-    if([PhysicsManager detectFallOff:_dave.position :uiimage]) {
-        if(falling[DAVE] == NO) [self dropPlayer:_dave :DAVE];
-    }
-    if([PhysicsManager detectFallOff:_huey.position :uiimage]) {
-        if(falling[HUEY] == NO) [self dropPlayer:_huey :HUEY];
-    }
-    if([PhysicsManager detectFallOff:_princess.position :uiimage]) {
-        if(falling[PRINCESS] == NO) [self dropPlayer:_princess :PRINCESS];
+        //detect falloff
+        if([PhysicsManager detectFallOff:_dave.position :uiimage]) {
+            if(falling[DAVE] == NO) [self dropPlayer:_dave :DAVE];
+        }
+        if([PhysicsManager detectFallOff:_huey.position :uiimage]) {
+            if(falling[HUEY] == NO) [self dropPlayer:_huey :HUEY];
+        }
+        if([PhysicsManager detectFallOff:_princess.position :uiimage]) {
+            if(falling[PRINCESS] == NO) [self dropPlayer:_princess :PRINCESS];
+        }
+        
+        //zorder check against princess
+        if(falling[PRINCESS] == NO) {
+            if(falling[DAVE] == NO) {
+                if(_dave.position.y <= _princess.position.y) _dave.zOrder = _princess.zOrder+1;
+                else _dave.zOrder = _princess.zOrder-1;
+            }
+            if(falling[HUEY] == NO) {
+                if(_huey.position.y <= _princess.position.y) _huey.zOrder = _princess.zOrder+1;
+                else _huey.zOrder = _princess.zOrder-1;
+                
+            }
+        }
     }
     
-    //zorder check against princess
-    if(falling[PRINCESS] == NO) {
-        if(falling[DAVE] == NO) {
-            if(_dave.position.y <= _princess.position.y) _dave.zOrder = _princess.zOrder+1;
-            else _dave.zOrder = _princess.zOrder-1;
-        }
-        if(falling[HUEY] == NO) {
-            if(_huey.position.y <= _princess.position.y) _huey.zOrder = _princess.zOrder+1;
-            else _huey.zOrder = _princess.zOrder-1;
-
-        }
-    }
-    }
-
     //NSArray* allSlimes = activeSlimes.children;
     //CCLOG(@"\activeSlimes: %d\n",allSlimes.count);
-     //Activated Item - Opponent
+    //Activated Item - Opponent
     if (opponentActivatedItem != nil) {
         [self activateItemAbilities:opponentActivatedItem];
         opponentActivatedItem = nil;
@@ -413,7 +407,7 @@ bool playerCharacterSet;
     //Slime check
     if (_player == _dave) {
         [ItemManager SlimeCheck:activeSlimes :activeSlimeLifetimes :timeElapsed :_dave :_huey :_princess];
-
+        
     }
     
     //NetWorking
@@ -422,7 +416,7 @@ bool playerCharacterSet;
         [NetworkManager sendEveryPositionToServer:_huey.position poitionDave:_dave.position poitionPrincess:_princess.position
                                                  :[NSString stringWithFormat:@"%i",_huey.zOrder] :[NSString stringWithFormat:@"%i",_dave.zOrder] :[NSString stringWithFormat:@"%i",_princess.zOrder]
                                                  :[NSString stringWithFormat:@"%i",falling[HUEY]]];
-         
+        
     }
     
     
@@ -524,7 +518,7 @@ bool playerCharacterSet;
 - (void)reviveDave:(CCTime)delta {
     
     reviveCounter[DAVE]++;
-
+    
     if ( reviveCounter[DAVE] >= PLAYER_REVIVE_TIME)
     {
         falling[DAVE] = NO;
@@ -604,9 +598,9 @@ bool playerCharacterSet;
         }
         
         [self schedule:@selector(princessMist:) interval:1.0f];
-
+        
     }
-
+    
     
 }
 
@@ -702,7 +696,7 @@ bool playerCharacterSet;
         launchDirection = [MoveManager calculateMoveVector:start :end];
         
         float len = ccpLength(launchDirection) / ARROW_DOTS;
-
+        
         CGPoint arrowDirection = (ccpNormalize(launchDirection));
         
         NSArray *arrowChildren = arrowNode.children;
@@ -729,7 +723,7 @@ bool playerCharacterSet;
 - (void)releaseTouch {
     
     if(validMove) {
-
+        
         if (_player == _dave) {//Server
             [MoveManager movePlayer:_dave :launchDirection :_drunkLevelDave];
         }
@@ -800,7 +794,7 @@ bool playerCharacterSet;
     
     CGPoint touchLocation = [touch locationInNode:self];
     if(validItemMove && (![PhysicsManager detectFallOff:touchLocation :uiimage])) {
-       //valid use of item
+        //valid use of item
         
         itemsHeld = [ItemManager useItem:(itemBox) :activatedItemIndex :itemsHeld];
         [activatedItem.parent removeChild:activatedItem];
@@ -816,9 +810,9 @@ bool playerCharacterSet;
         }
         else {
             [NetworkManager sendActivatedToServer:activatedItem.name iPosition:activatedItem.position player:@"huey"];
-
+            
         }
-
+        
     }
     else if(validItemMove) {
         [ItemManager itemEntersInventory:activatedItem];
@@ -853,22 +847,29 @@ bool playerCharacterSet;
             opponentActivatedItem.zOrder = _player.zOrder - 1;
         }
     }
-        
+    
     
 }
 
 + (void) deActivateItem:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString*) player iIndex:(NSString*) index
 {
     if (_player == _huey && [itemName isEqual:@"Slime" ]) {
-        NSArray* allSlimes = activeSlimes.children;
-        //CCLOG(@"\nallSlimes: %d\n",allSlimes.count);
-        [activeSlimes removeChild:allSlimes[index.intValue]];
-        [activeSlimeLifetimes removeObject:[activeSlimeLifetimes objectAtIndex:index.intValue]];
+        if (index.intValue >= 0){
+            
+            NSArray* allSlimes = activeSlimes.children;
+            //CCLOG(@"\nallSlimes: %d\n",allSlimes.count);
+            if(allSlimes.count > 0) {
+            [activeSlimes removeChild:allSlimes[index.intValue]];
+            [activeSlimeLifetimes removeObject:[activeSlimeLifetimes objectAtIndex:index.intValue]];
+            }
+        }
     }
     else if(_player == _huey && [itemName isEqual:@"Barrel"]) {
         
-        //life time is stored in position x
-        [ItemManager barrelUpdate:activeBarrelLifetimes :[index intValue] :itemPosition.x];
+        if (index.intValue >= 0 && activeBarrelLifetimes.count > 0){
+            //life time is stored in position x
+            [ItemManager barrelUpdate:activeBarrelLifetimes :[index intValue] :itemPosition.x];
+        }
     }
     else if ( [itemName isEqual:@"Ghost"] ) {
         if(_player != _huey) {
@@ -880,10 +881,12 @@ bool playerCharacterSet;
         if([index intValue] >= 0) {
             beerNodesCounters[[index intValue]] = 0;
             NSArray* child = beerNodes[[index intValue]].children;
+            if(child.count > 0) {
             CCNode* temp = (CCNode*)child[0];
             [temp removeFromParent];
             if ( ![player isEqual:@"DAVE"] ) {
                 _drunkLevelHuey = [player intValue];
+            }
             }
         }
     }
@@ -904,24 +907,24 @@ bool playerCharacterSet;
         [itemBox[activatedItemIndex] addChild:activatedItem];
     }
     validItemMove = NO;
-
+    
 }
 
 -(void) checkGong{
     
     if((CGRectContainsPoint([gong boundingBox] , _dave.position) || CGRectContainsPoint([gong boundingBox] , _huey.position))  && gongAccess){
-
+        
         if(gongColorChange){
             [gong setColor:[CCColor colorWithRed:0.5 green:0.8 blue:0.9 alpha:1.0]];
             gongColorChange=NO;
         }
-            CGPoint daveRes = daveRess.position;
-            daveRess.position = hueyRess.position;
-            hueyRess.position = daveRes;
-            gongAccess = NO ;
-            gongCounter = 0 ;
+        CGPoint daveRes = daveRess.position;
+        daveRess.position = hueyRess.position;
+        hueyRess.position = daveRes;
+        gongAccess = NO ;
+        gongCounter = 0 ;
         
-            [self schedule:@selector(reactivateGong:) interval:1.0f];
+        [self schedule:@selector(reactivateGong:) interval:1.0f];
         
     }
 }
@@ -947,21 +950,21 @@ bool playerCharacterSet;
 
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair barrel:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
     
-   if(_player == _dave) {
-    
-    float energy = [pair totalKineticEnergy];
-    
-    // if energy is large enough, remove the seal
-    if (energy > 20000.f) {
-        [[_physicsNode space] addPostStepBlock:^{
-            //[self sealRemoved:nodeA];
-            
-            [ItemManager barrelCheck:nodeA :activeBarrelLifetimes];
-            
-            //[nodeA setColor:[CCColor colorWithWhite:0.5 alpha:1.0]];
-            //CCLOG(@"\n\n\nbarrel hit\n\n\n");
-        } key:nodeA];
-    }
+    if(_player == _dave) {
+        
+        float energy = [pair totalKineticEnergy];
+        
+        // if energy is large enough, remove the seal
+        if (energy > 20000.f) {
+            [[_physicsNode space] addPostStepBlock:^{
+                //[self sealRemoved:nodeA];
+                
+                [ItemManager barrelCheck:nodeA :activeBarrelLifetimes];
+                
+                //[nodeA setColor:[CCColor colorWithWhite:0.5 alpha:1.0]];
+                //CCLOG(@"\n\n\nbarrel hit\n\n\n");
+            } key:nodeA];
+        }
         
     }
 }
@@ -977,7 +980,7 @@ bool playerCharacterSet;
     }
     else if([item.name  isEqual: @"Slime"]) {
         [item removeFromParent];
-
+        
         item.physicsBody.collisionMask = @[];
         //CCLOG(@"opponenetActiveted in Abilities = %@", item.name);
         [activeSlimes addChild:item];
