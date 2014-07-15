@@ -26,10 +26,13 @@ static bool isFallingHuey;
 static int _drunkLevelDave;
 static int _drunkLevelHuey;
 bool playerCharacterSet;
+bool ghostOn;
+OALSimpleAudio *aud;
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
-    
+    aud=[OALSimpleAudio sharedInstance];
+    [aud playEffect:@"StartGame.wav"];
     globalPhysicsNode = _physicsNode;
     _physicsNode.collisionDelegate = self;
     opponentActivatedItem = nil;
@@ -218,7 +221,7 @@ bool playerCharacterSet;
     if(checkEnd && (CGRectContainsPoint([daveRess boundingBox], _princess.position) || CGRectContainsPoint([hueyRess boundingBox], _princess.position))) {
         
         checkEnd=NO;
-        
+        [aud playEffect:@"Game_Over.mp3"];
         NSString* gameEndMessage;
         NSString* victory = @"The Day Is Yours!";
         NSString* defeat = @"Sorry, You Sad Drunk";
@@ -260,12 +263,25 @@ bool playerCharacterSet;
         [[CCDirector sharedDirector] replaceScene:gameRoomScene];    }
 }
 
-
+-(void)checkGhostIntersection{
+    
+    if(ghostOn){
+        if(CGRectContainsPoint([_princess boundingBox] , _dave.position))
+            [aud playEffect:@"PassThroughGhost.wav"];
+        if(CGRectContainsPoint([_princess boundingBox] , _huey.position))
+            [aud playEffect:@"PassThroughGhost.wav"];
+        ghostOn=NO;
+    }
+    
+    
+}
 
 - (void)update:(CCTime)delta {
     
     //items
     timeElapsed = [startTime timeIntervalSinceNow];
+    
+    [self checkGhostIntersection];
     
     if(_player == _huey) {
         _dave.physicsBody.sensor = true;
@@ -511,12 +527,14 @@ bool playerCharacterSet;
     
     switch(playerNum) {
         case DAVE:
-            [self schedule:@selector(reviveDave:) interval:1.0f];
+            [aud playEffect:@"Stage_Fall_Player.wav"];            [self schedule:@selector(reviveDave:) interval:1.0f];
             break;
         case HUEY:
+            [aud playEffect:@"Stage_Fall_Player.wav"];
             [self schedule:@selector(reviveHuey:) interval:1.0f];
             break;
         case PRINCESS:
+            [aud playEffect:@"Stage_Fall_Princess.wav"];
             [self schedule:@selector(revivePrincess:) interval:1.0f];
             break;
     }
@@ -538,6 +556,7 @@ bool playerCharacterSet;
         _dave.physicsBody.velocity = ccp(0,0);
         _drunkLevelDave = 0;
         [self unschedule:@selector(reviveDave:)];
+        [aud playEffect:@"Dave_Laugh.mp3"];
     }
     
 }
@@ -563,6 +582,7 @@ bool playerCharacterSet;
                                          playerInfo:[NSString stringWithFormat:@"%i", _drunkLevelHuey]
                                              iIndex:[NSString stringWithFormat:@"%i", _drunkLevelHuey]];
         [self unschedule:@selector(reviveHuey:)];
+        [aud playEffect:@"Huey_Laugh.mp3"];
     }
     
 }
@@ -845,6 +865,7 @@ bool playerCharacterSet;
         if([itemName isEqual:@"Ghost"]) {
             _princess.opacity=0.3;
             _princess.physicsBody.collisionMask=@[];
+            ghostOn=YES;
         }
         else {
             opponentActivatedItem = [CCBReader load:itemName];
@@ -883,12 +904,17 @@ bool playerCharacterSet;
         }
     }
     else if ( [itemName isEqual:@"Ghost"] ) {
+        ghostOn=NO;
         if(_player != _huey) {
             _princess.physicsBody.collisionMask = NULL;
         }
         _princess.opacity = 1.0f;
+        
     }
     else if ( _player == _huey && [itemName isEqual:@"Beer"] ){
+      
+        OALSimpleAudio *aud2=[OALSimpleAudio    sharedInstance];
+        [aud2 playEffect:@"Beer.wav"];
         if([index intValue] >= 0) {
             beerNodesCounters[[index intValue]] = 0;
             NSArray* child = beerNodes[[index intValue]].children;
@@ -904,6 +930,18 @@ bool playerCharacterSet;
     else if( _player == _huey && [itemName isEqual:@"DrunkLevel"] ){
         _drunkLevelHuey = [player intValue];
     }
+}
+
++ (void) playVomitSound:(NSString *)name{
+    
+    if (_player == _huey && ([name isEqualToString:@"huey"] ||[name isEqualToString:@"dave"] || [name isEqualToString:@"princess"])) {
+        [aud playEffect:@"Vomit_slip.wav"];
+        [NetworkManager sendVomitSound:@"blank"];
+        OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+        [aud1 playEffect:@"Vomit_slip.wav"];
+    }
+    
+    
 }
 
 
@@ -925,6 +963,8 @@ bool playerCharacterSet;
     
     if((CGRectContainsPoint([gong boundingBox] , _dave.position) || CGRectContainsPoint([gong boundingBox] , _huey.position))  && gongAccess){
         
+        
+        [aud playEffect:@"export.mp3"];
         if(gongColorChange){
             [gong setColor:[CCColor colorWithRed:0.5 green:0.8 blue:0.9 alpha:1.0]];
             gongColorChange=NO;
@@ -945,12 +985,14 @@ bool playerCharacterSet;
     gongCounter++;
     
     if(gongCounter == GONG_DURATION) {
+       [aud playEffect:@"gong_reactivate.wav"];
         CGPoint daveRes = daveRess.position;
         daveRess.position = hueyRess.position;
         hueyRess.position = daveRes;
     }
     
     if(gongCounter == GONG_COOLDOWN) {
+        [aud playEffect:@"gong_reactivate.wav"];
         gongColorChange=YES;
         gongAccess = YES;
         [gong setColor:[CCColor colorWithRed:0.5 green:(1/(0.80f)) blue:(1/(0.90f)) alpha:1.0]];
@@ -999,7 +1041,7 @@ bool playerCharacterSet;
     }
     
     else if([item.name isEqual:@"Ghost"]){
-        
+        ghostOn=YES;
         [item removeFromParent];
         if (_player == _huey) {
             item.physicsBody.collisionMask = @[];

@@ -114,6 +114,10 @@ static NFStoryBoardManager *nFStoryBoardManager;
     _New_impulse = CGPointFromString([dataDict objectForKey:@"impulse"]);
     // NSLog(@"Testtt %@", NSStringFromCGPoint( _New_impulse));
     [NetworkManager receiveCGPointFromServer:_New_impulse];
+        
+    //sound stuff
+    _vomit_sound = [dataDict objectForKey:@"vomit_sound"];
+    [NetworkManager updateVomitSound:_vomit_sound];
     }
     
 }

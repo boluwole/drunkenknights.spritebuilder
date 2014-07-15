@@ -335,7 +335,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "468"
             endingLineNumber = "468"
-            landmarkName = "+updateItems:name:"
+            landmarkName = "+itemInfo:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -575,7 +575,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "276"
             endingLineNumber = "276"
-            landmarkName = "-update:"
+            landmarkName = "-checkGhostIntersection"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

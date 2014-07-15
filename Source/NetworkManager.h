@@ -52,7 +52,9 @@
 
 //+ (void) sendItemSlimeKillMsgToServer:(NSString *)index;
 //+ (void) killActivateSlime: (NSString *)SlimeIndex;
-
+//vomit sound
++ (void) sendVomitSound:(NSString*) name;
++ (void) updateVomitSound:(NSString*) name;
 
 
 

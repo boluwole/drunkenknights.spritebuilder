@@ -61,7 +61,12 @@
 
 - (CCScene*) startScene
 {
-    if(NETWORKED) return [CCBReader loadAsScene:@"SplashScreen"];
+    if(NETWORKED){
+        OALSimpleAudio *gameMusic= [OALSimpleAudio sharedInstance];
+        [gameMusic playEffect:@"Game_Music.mp3" loop:TRUE];
+        return [CCBReader loadAsScene:@"SplashScreen"];
+        
+    }
     else return [CCBReader loadAsScene:@"ItemShop"];
 }
 
