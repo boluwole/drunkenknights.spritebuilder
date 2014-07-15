@@ -14,6 +14,9 @@ static CCSprite *_player;
 #define HUEY 1
 #define PRINCESS 2
 
+#define PLAYER_H 250
+#define PLAYER_W 150
+
 #define DAVE_START ccp(105,160)
 #define HUEY_START ccp(465,160)
 #define PRINCESS_START ccp(285,160)

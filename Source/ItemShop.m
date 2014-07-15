@@ -31,7 +31,7 @@
 }
 
 static bool ready = NO;
-static bool opponentReady = NO;
+//static bool opponentReady = NO;
 static bool start = NO;
 static UIAlertView * waitAlert;
 

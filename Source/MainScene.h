@@ -19,7 +19,7 @@
     
     CCPhysicsNode *_physicsNode;
     CCPhysicsNode *_backPhysicsNode;
-
+    
     CCSprite *_stage;
     
     //UI

@@ -47,7 +47,7 @@ bool playerCharacterSet;
     daveStart = _dave.position;
     _drunkLevelDave = 0;
     
-    _huey = (CCSprite*)[CCBReader load:@"Huey"];
+    _huey = (CCSprite*)[CCBReader load:@"_Huey"];
     [_physicsNode addChild:_huey];
     _huey.position = HUEY_START;
     _huey.scale *= 0.25;
@@ -271,6 +271,13 @@ bool playerCharacterSet;
         _dave.physicsBody.sensor = true;
         _huey.physicsBody.sensor = true;
         _princess.physicsBody.sensor = true;
+    }
+    
+    if(ccpLengthSQ(_player.physicsBody.velocity) > 100) {
+        [_player.animationManager runAnimationsForSequenceNamed:@"Walk"];
+    }
+    else {
+        [_dave.animationManager runAnimationsForSequenceNamed:@"Idle"];
     }
     
     if (_princess.zOrder > _stage.zOrder)[self checkGameEnd];
@@ -637,7 +644,11 @@ bool playerCharacterSet;
     
     //CCLOG(@"touch began");
     
-    CGRect playerTouchBounds = CGRectMake([_player boundingBox].origin.x, [_player boundingBox].origin.y, [_player boundingBox].size.width*2.5, [_player boundingBox].size.height*2.5);
+    float w = _player.boundingBox.size.width;
+    float h = _player.boundingBox.size.height;
+    CGRect playerTouchBounds = CGRectMake([_player boundingBox].origin.x-w, [_player boundingBox].origin.y-h, w*2, h*2);
+    //CGRect playerTouchBounds = CGRectMake(_player.position.x-200,_player.position.y-200,400,400);
+
     
     // start catapult dragging when a touch inside of the catapult arm occurs
     if (CGRectContainsPoint(playerTouchBounds, touchLocation))
