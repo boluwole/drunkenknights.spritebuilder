@@ -289,13 +289,15 @@ OALSimpleAudio *aud2;
         _huey.physicsBody.sensor = true;
         _princess.physicsBody.sensor = true;
     }
-    /*
-    if(ccpLengthSQ(_player.physicsBody.velocity) > 100) {
-        [_player.animationManager runAnimationsForSequenceNamed:@"Walk"];
+    
+    if(ccpLengthSQ(_player.physicsBody.velocity) > 25) {
+        if(![[_player.animationManager runningSequenceName] isEqual:@"Walk"])
+                [_player.animationManager runAnimationsForSequenceNamed:@"Walk"];
     }
     else {
-        [_dave.animationManager runAnimationsForSequenceNamed:@"Idle"];
-    }*/
+        if(![[_player.animationManager runningSequenceName] isEqual:@"Idle"])
+                    [_dave.animationManager runAnimationsForSequenceNamed:@"Idle"];
+    }
     
     if (_princess.zOrder > _stage.zOrder)[self checkGameEnd];
     [self checkGong];
@@ -713,16 +715,22 @@ OALSimpleAudio *aud2;
         start = _player.position;
         arrowNode.position = start;
         
-        //update facing direction
-        if (_player == _dave) {
-            if((start.x - end.x) < 0) { if(_player.flipX == NO) _player.flipX = YES; }
-            else { if(_player.flipX == YES) _player.flipX = NO; }
-        }
-        else {
-            if((end.x - start.x) < 0) { if(_player.flipX == NO) _player.flipX = YES; }
-            else { if(_player.flipX == YES) _player.flipX = NO; }
-        }
-        
+//        //update facing direction
+//        if (_player == _dave) {
+//            if((start.x - end.x) < 0) { if(_player.scaleX > 0) _player.scaleX*=-1; }
+//            else { if(_player.scaleX < 0) _player.scaleX*=-1; }
+//            
+//            //if((start.x - end.x) < 0) { if(_player.flipX == NO) _player.flipX = YES; }
+//            //else { if(_player.flipX == YES) _player.flipX = NO; }
+//        }
+//        else {
+//            if((start.x - end.x) > 0) { if(_player.scaleX > 0) _player.scaleX*=-1; }
+//            else { if(_player.scaleX < 0) _player.scaleX*=-1; }
+//            
+//            //if((end.x - start.x) < 0) { if(_player.flipX == NO) _player.flipX = YES; }
+//            //else { if(_player.flipX == YES) _player.flipX = NO; }
+//        }
+       
         
         //place arrow
         launchDirection = [MoveManager calculateMoveVector:start :end];
