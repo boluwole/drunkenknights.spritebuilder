@@ -288,6 +288,15 @@ OALSimpleAudio *aud;
         _huey.physicsBody.sensor = true;
         _princess.physicsBody.sensor = true;
     }
+<<<<<<< HEAD
+    
+//    if(ccpLengthSQ(_player.physicsBody.velocity) > 100) {
+//        [_player.animationManager runAnimationsForSequenceNamed:@"Walk"];
+//    }
+//    else {
+//        [_dave.animationManager runAnimationsForSequenceNamed:@"Idle"];
+//    }
+=======
     /*
     if(ccpLengthSQ(_player.physicsBody.velocity) > 100) {
         [_player.animationManager runAnimationsForSequenceNamed:@"Walk"];
@@ -295,6 +304,7 @@ OALSimpleAudio *aud;
     else {
         [_dave.animationManager runAnimationsForSequenceNamed:@"Idle"];
     }*/
+>>>>>>> 31a2dd82888e7779c4d3f4c0035e8219b8f091e3
     
     if (_princess.zOrder > _stage.zOrder)[self checkGameEnd];
     [self checkGong];
