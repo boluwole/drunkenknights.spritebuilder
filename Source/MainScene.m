@@ -288,13 +288,13 @@ OALSimpleAudio *aud;
         _huey.physicsBody.sensor = true;
         _princess.physicsBody.sensor = true;
     }
-    
+    /*
     if(ccpLengthSQ(_player.physicsBody.velocity) > 100) {
         [_player.animationManager runAnimationsForSequenceNamed:@"Walk"];
     }
     else {
         [_dave.animationManager runAnimationsForSequenceNamed:@"Idle"];
-    }
+    }*/
     
     if (_princess.zOrder > _stage.zOrder)[self checkGameEnd];
     [self checkGong];
