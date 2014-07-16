@@ -28,6 +28,7 @@ static int _drunkLevelHuey;
 bool playerCharacterSet;
 bool ghostOn;
 OALSimpleAudio *aud;
+OALSimpleAudio *aud2;
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
@@ -964,7 +965,7 @@ OALSimpleAudio *aud;
     if((CGRectContainsPoint([gong boundingBox] , _dave.position) || CGRectContainsPoint([gong boundingBox] , _huey.position))  && gongAccess){
         
         
-        [aud playEffect:@"export.mp3"];
+        [aud playEffect:@"Gong_Activate_Duration.mp3"];
         if(gongColorChange){
             [gong setColor:[CCColor colorWithRed:0.5 green:0.8 blue:0.9 alpha:1.0]];
             gongColorChange=NO;

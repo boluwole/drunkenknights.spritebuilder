@@ -60,6 +60,8 @@
     
     //randomly choose a type of item to drop
     CCNode* item;
+    OALSimpleAudio *itemsSound=[OALSimpleAudio sharedInstance];
+    [itemsSound playEffect:@"Item_PickUp.mp3"];
     int randomNum = rand() % 3;
     switch(randomNum) {
         case BARREL:
