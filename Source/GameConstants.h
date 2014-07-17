@@ -7,15 +7,15 @@ static CCSprite *_player;
 //static int roomPosition;
 
 
-#define ROOM_REFRESH 2
+#define ROOM_REFRESH (0.1)
 #define PI (3.14159265359)
 
 #define DAVE 0
 #define HUEY 1
 #define PRINCESS 2
 
-#define PLAYER_H 250
-#define PLAYER_W 150
+#define PLAYER_H (250)
+#define PLAYER_W (150)
 
 #define DAVE_START ccp(105,160)
 #define HUEY_START ccp(465,160)

@@ -47,11 +47,11 @@
 -(void)onUnSubscribeRoomDone:(RoomEvent*)roomEvent{
     if (roomEvent.result == SUCCESS)
     {
-        
+          NSLog(@"onUnSubscribeRoomDone  SUCCESS");
     }
     else
     {
-        
+        NSLog(@"onUnSubscribeRoomDone  Failed");
     }
 }
 -(void)onJoinRoomDone:(RoomEvent*)roomEvent
@@ -77,7 +77,7 @@
 }
 -(void)onLeaveRoomDone:(RoomEvent*)roomEvent{
     if (roomEvent.result == SUCCESS) {
-        //[[WarpClient getInstance]unsubscribeRoom:roomEvent.roomData.roomId];
+        [[WarpClient getInstance]unsubscribeRoom:roomEvent.roomData.roomId];
     }
     else {
     }
