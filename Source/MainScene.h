@@ -102,7 +102,7 @@
 
 + (void) deActivateItem:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString*) player iIndex:(NSString*) index;
 + (void) updateOpponentName:(NSString*)msg;
-+ (void) playVomitSound:(NSString*) name;
++ (void) playSound:(NSString*) name;
 
 + (CCSprite*) returnDave;
 + (CCSprite*) returnHuey;

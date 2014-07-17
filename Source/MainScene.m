@@ -256,8 +256,7 @@ OALSimpleAudio *aud2;
         _dave = nil;
         _princess = nil;
         _huey = nil;
-        
-        
+        _player = nil;
         
         //gameroom
         CCScene *gameRoomScene = [CCBReader loadAsScene:@"GameRoom"];
@@ -531,14 +530,17 @@ OALSimpleAudio *aud2;
     switch(playerNum) {
         case DAVE:
             [aud playEffect:@"Stage_Fall_Player.wav"];            [self schedule:@selector(reviveDave:) interval:1.0f];
+            [NetworkManager sendSound:(@"dave_drop")];
             break;
         case HUEY:
             [aud playEffect:@"Stage_Fall_Player.wav"];
             [self schedule:@selector(reviveHuey:) interval:1.0f];
+            [NetworkManager sendSound:(@"huey_drop")];
             break;
         case PRINCESS:
             [aud playEffect:@"Stage_Fall_Princess.wav"];
             [self schedule:@selector(revivePrincess:) interval:1.0f];
+            [NetworkManager sendSound:(@"princess_drop")];
             break;
     }
 }
@@ -559,6 +561,7 @@ OALSimpleAudio *aud2;
         _dave.physicsBody.velocity = ccp(0,0);
         _drunkLevelDave = 0;
         [self unschedule:@selector(reviveDave:)];
+        [NetworkManager sendSound:@"dave_revive"];
         [aud playEffect:@"Dave_Laugh.mp3"];
     }
     
@@ -585,6 +588,7 @@ OALSimpleAudio *aud2;
                                          playerInfo:[NSString stringWithFormat:@"%i", _drunkLevelHuey]
                                              iIndex:[NSString stringWithFormat:@"%i", _drunkLevelHuey]];
         [self unschedule:@selector(reviveHuey:)];
+        [NetworkManager sendSound:@"huey_revive"];
         [aud playEffect:@"Huey_Laugh.mp3"];
     }
     
@@ -941,13 +945,49 @@ OALSimpleAudio *aud2;
     }
 }
 
-+ (void) playVomitSound:(NSString *)name{
-    
-    if (_player == _huey && ([name isEqualToString:@"huey"] ||[name isEqualToString:@"dave"] || [name isEqualToString:@"princess"])) {
-        [aud playEffect:@"Vomit_slip.wav"];
-        [NetworkManager sendVomitSound:@"blank"];
-        OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
-        [aud1 playEffect:@"Vomit_slip.wav"];
++ (void) playSound:(NSString *)name{
+    if(_player == _huey){
+        if([name isEqualToString:@"item_drop"]){
+            [aud playEffect:@"Item_PickUp.wav"];
+            [NetworkManager sendSound:@"blank"];
+            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+            [aud1 playEffect:@"Item_PickUp.wav"];
+        }
+        
+        if([name isEqualToString:@"dave_drop"] || [name isEqualToString:@"huey_drop"]){
+            [aud playEffect:@"Stage_Fall_Player.wav"];
+            [NetworkManager sendSound:@"blank"];
+            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+            [aud1 playEffect:@"Stage_Fall_Player.wav"];
+        }
+        
+        if([name isEqualToString:@"princess_drop"]){
+            [aud playEffect:@"Stage_Fall_Princess.wav"];
+            [NetworkManager sendSound:@"blank"];
+            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+            [aud1 playEffect:@"Stage_Fall_Princess.wav"];
+        }
+        
+        if([name isEqualToString:@"huey_vomit"] ||[name isEqualToString:@"dave_vomit"] || [name isEqualToString:@"princess_vomit"]){
+            [aud playEffect:@"Vomit_slip.wav"];
+            [NetworkManager sendSound:@"blank"];
+            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+            [aud1 playEffect:@"Vomit_slip.wav"];
+        }
+        
+        if([name isEqualToString:@"dave_revive"]){
+            [aud playEffect:@"Dave_Laugh.wav"];
+            [NetworkManager sendSound:@"blank"];
+            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+            [aud1 playEffect:@"Dave_Laugh.wav"];
+        }
+        
+        if([name isEqualToString:@"huey_revive"]){
+            [aud playEffect:@"Huey_Laugh.wav"];
+            [NetworkManager sendSound:@"blank"];
+            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+            [aud1 playEffect:@"Huey_Laugh.wav"];
+        }
     }
     
     
