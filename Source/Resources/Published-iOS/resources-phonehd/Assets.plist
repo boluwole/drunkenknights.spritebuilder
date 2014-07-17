@@ -163,7 +163,7 @@
 		<key>Assets/_Shoulder_Pad.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1938, 327}, {113, 85}}</string>
+			<string>{{1935, 1164}, {113, 85}}</string>
 			<key>offset</key>
 			<string>{1, -1}</string>
 			<key>rotated</key>
@@ -202,7 +202,7 @@
 		<key>Assets/arrowBody.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1935, 482}, {50, 50}}</string>
+			<string>{{1677, 505}, {50, 50}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -215,7 +215,7 @@
 		<key>Assets/arrowHead.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1987, 503}, {50, 50}}</string>
+			<string>{{1677, 453}, {50, 50}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -228,7 +228,7 @@
 		<key>Assets/arrowLeft.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1999, 442}, {38, 59}}</string>
+			<string>{{1677, 557}, {38, 59}}</string>
 			<key>offset</key>
 			<string>{1, 0}</string>
 			<key>rotated</key>
@@ -241,7 +241,7 @@
 		<key>Assets/arrowRight.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1938, 442}, {38, 59}}</string>
+			<string>{{1677, 618}, {38, 59}}</string>
 			<key>offset</key>
 			<string>{-1, 0}</string>
 			<key>rotated</key>
@@ -358,7 +358,7 @@
 		<key>Assets/shadow-knight.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1938, 190}, {93, 135}}</string>
+			<string>{{1938, 1027}, {93, 135}}</string>
 			<key>offset</key>
 			<string>{0, 1}</string>
 			<key>rotated</key>
