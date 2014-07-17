@@ -40,6 +40,8 @@ static UIAlertView * waitAlert;
     
     [GameVariables setCurrentScene:@"ItemShop"];
     
+    ready = NO;
+    start = NO;
     _currentItem = 0;
     
     //load first game item

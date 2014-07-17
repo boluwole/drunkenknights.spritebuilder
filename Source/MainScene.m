@@ -256,8 +256,7 @@ OALSimpleAudio *aud2;
         _dave = nil;
         _princess = nil;
         _huey = nil;
-        
-        
+        _player = nil;
         
         //gameroom
         CCScene *gameRoomScene = [CCBReader loadAsScene:@"GameRoom"];
