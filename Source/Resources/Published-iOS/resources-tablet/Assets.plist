@@ -150,7 +150,7 @@
 		<key>Assets/_Shoulder_Pad.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1938, 190}, {113, 85}}</string>
+			<string>{{1938, 327}, {113, 85}}</string>
 			<key>offset</key>
 			<string>{1, -1}</string>
 			<key>rotated</key>
@@ -189,7 +189,7 @@
 		<key>Assets/arrowBody.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1938, 345}, {50, 50}}</string>
+			<string>{{1935, 482}, {50, 50}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -202,7 +202,7 @@
 		<key>Assets/arrowHead.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1990, 366}, {50, 50}}</string>
+			<string>{{1987, 503}, {50, 50}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -215,7 +215,7 @@
 		<key>Assets/arrowLeft.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1999, 305}, {38, 59}}</string>
+			<string>{{1999, 442}, {38, 59}}</string>
 			<key>offset</key>
 			<string>{1, 0}</string>
 			<key>rotated</key>
@@ -228,7 +228,7 @@
 		<key>Assets/arrowRight.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1938, 305}, {38, 59}}</string>
+			<string>{{1938, 442}, {38, 59}}</string>
 			<key>offset</key>
 			<string>{-1, 0}</string>
 			<key>rotated</key>
@@ -315,6 +315,19 @@
 			<string>{{4, 13}, {231, 219}}</string>
 			<key>sourceSize</key>
 			<string>{240, 240}</string>
+		</dict>
+		<key>Assets/shadow-knight.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1938, 190}, {93, 135}}</string>
+			<key>offset</key>
+			<string>{0, 1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{29, 6}, {93, 135}}</string>
+			<key>sourceSize</key>
+			<string>{150, 150}</string>
 		</dict>
 		<key>Assets/shadow.png</key>
 		<dict>

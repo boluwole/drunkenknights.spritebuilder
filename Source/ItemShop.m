@@ -17,6 +17,7 @@
     CCSprite* _itemImage;
     CCLabelTTF* _itemName;
     CCLabelTTF* _itemDescription;
+    CCLabelTTF* _playerText;
     int _currentItem;
     int _item1Index;
     int _item2Index;
@@ -24,8 +25,10 @@
     CCSprite* animatedItem;
     CCSprite* _item1;
     CCSprite* _item2;
+    CCSprite* _playr;
     
     BOOL buyItem;
+    BOOL spriteAdded;
     
     
 }
@@ -39,7 +42,9 @@ static UIAlertView * waitAlert;
 - (void)didLoadFromCCB {
     
     [GameVariables setCurrentScene:@"ItemShop"];
+    [GameVariables setDPlayerName:nil];
     
+    spriteAdded = NO;
     ready = NO;
     start = NO;
     _currentItem = 0;
@@ -77,7 +82,7 @@ static UIAlertView * waitAlert;
     }
     else
     {
-                [_btnStartGame setVisible: NO];
+        [_btnStartGame setVisible: NO];
     }
     //send name of his own ot opponent
     [NetworkManager sendNameToServer:[GameVariables getPlayerName]];
@@ -89,8 +94,42 @@ static UIAlertView * waitAlert;
         CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
         [[CCDirector sharedDirector] replaceScene:mainScene];
     }
+    
+    if (!spriteAdded){
+        if([[GameVariables getDPlayerName] isEqualToString:@"_dave"]){
+            [self addUser:@"Dave"];
+            spriteAdded = YES;
+        }
+        else if ([[GameVariables getDPlayerName] isEqualToString:@"_huey"]){
+            [self addUser:@"Huey"];
+            spriteAdded = YES;
+        }
+    }
 }
 
+-(void) addUser:(NSString*) user
+{
+    CCSprite* plyr ;
+    
+    if ([user isEqualToString: @"Dave"])
+    {
+        plyr = (CCSprite*)[CCBReader load:@"_Dave"];
+        
+        [_playr setSpriteFrame:[CCSpriteFrame frameWithImageNamed: @"Assets/barrel.png"]];
+        _playerText.string = @"You're Dave!";
+    }
+    else
+    {
+        plyr = (CCSprite*)[CCBReader load:@"_Huey"];
+        _playerText.string = @"You're Huey!";
+    }
+    
+    plyr.scale *= 0.25;
+    plyr.position = _playr.position;
+    [self addChild:plyr];
+    [self removeChild:_playr];
+    
+}
 
 
 //TOUCH STUFF
@@ -197,7 +236,7 @@ static UIAlertView * waitAlert;
 
 
 - (void)startGame {
-
+    
     //steps
     //check that there are two people in room
     //first remove all rooms
@@ -225,13 +264,13 @@ static UIAlertView * waitAlert;
         if (noOfPlayers == 2)
         {
             ready = YES;
-           waitAlert = [[UIAlertView alloc]initWithTitle: @"Hold your horses!"
-                                                           message: @"Waiting for the opponent to be ready...\n"
-                                                          delegate: self
-                                                 cancelButtonTitle:nil
-                                                 otherButtonTitles:nil,nil];
+            waitAlert = [[UIAlertView alloc]initWithTitle: @"Hold your horses!"
+                                                  message: @"Waiting for the opponent to be ready...\n"
+                                                 delegate: self
+                                        cancelButtonTitle:@"Wait"
+                                        otherButtonTitles:@"Game room",nil];
             [waitAlert show];
-
+            
         }
         else{
             //ask to wait or leave to game room
@@ -256,21 +295,21 @@ static UIAlertView * waitAlert;
         start = YES;
         [waitAlert dismissWithClickedButtonIndex:0 animated:YES];
     }
-
+    
 }
-                       
+
 + (void) checkOpponentName:(NSString*)msg
 {
     NSComparisonResult result = [[GameVariables getPlayerName] compare:msg];
-    //NSLog(@"my name is %@", [GameVariables getPlayerName]);
-    //NSLog(@"opponent name is %@", msg);
+    NSLog(@"my name is %@", [GameVariables getPlayerName]);
+    NSLog(@"opponent name is %@", msg);
     if(![msg isEqualToString:[GameVariables getPlayerName]] && msg!= nil ){
-            
+        
         if(result == NSOrderedAscending){
             [GameVariables setDPlayerName:@"_dave"];
             NSLog(@"im dave");
         }
-        else
+        else if(result == NSOrderedDescending)
         {
             [GameVariables setDPlayerName:@"_huey"];
             NSLog(@"im huey");
@@ -286,6 +325,9 @@ static UIAlertView * waitAlert;
     
     if (buttonIndex == 1){
         //gameroom
+        
+        //[[WarpClient getInstance] leaveRoom: [GameVariables getCurrentRoom]];
+        //[GameVariables setDPlayerName:nil];
         CCScene *gameRoomScene = [CCBReader loadAsScene:@"GameRoom"];
         [[CCDirector sharedDirector] replaceScene:gameRoomScene];
     }
@@ -305,11 +347,11 @@ static UIAlertView * waitAlert;
     
     NSArray* itemArray = [GameItem getGameItems] ;
     NSInteger itemCacheCount = [itemArray count];
-     if (_currentItem < itemCacheCount - 1)
-     {
-         _currentItem++;
-         [self loadItem: _currentItem : _itemImage];
-     }
+    if (_currentItem < itemCacheCount - 1)
+    {
+        _currentItem++;
+        [self loadItem: _currentItem : _itemImage];
+    }
 }
 
 @end

@@ -85,7 +85,7 @@
 		<key>Assets/_Arm_Near.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{3865, 933}, {230, 446}}</string>
+			<string>{{3865, 985}, {230, 446}}</string>
 			<key>offset</key>
 			<string>{11, -2}</string>
 			<key>rotated</key>
@@ -124,7 +124,7 @@
 		<key>Assets/_Legs_Far.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{3865, 1381}, {254, 230}}</string>
+			<string>{{3865, 1433}, {254, 230}}</string>
 			<key>offset</key>
 			<string>{-9, 0}</string>
 			<key>rotated</key>
@@ -150,7 +150,7 @@
 		<key>Assets/_Shoulder_Pad.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{3873, 379}, {228, 172}}</string>
+			<string>{{3873, 653}, {228, 172}}</string>
 			<key>offset</key>
 			<string>{2, -2}</string>
 			<key>rotated</key>
@@ -189,7 +189,7 @@
 		<key>Assets/arrowBody.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{3994, 609}, {100, 100}}</string>
+			<string>{{3994, 883}, {100, 100}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -202,7 +202,7 @@
 		<key>Assets/arrowHead.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{3994, 711}, {100, 100}}</string>
+			<string>{{3986, 1689}, {100, 100}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -215,7 +215,7 @@
 		<key>Assets/arrowLeft.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{3873, 688}, {77, 119}}</string>
+			<string>{{3865, 1689}, {77, 119}}</string>
 			<key>offset</key>
 			<string>{1, 0}</string>
 			<key>rotated</key>
@@ -228,7 +228,7 @@
 		<key>Assets/arrowRight.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{3873, 609}, {77, 119}}</string>
+			<string>{{3873, 883}, {77, 119}}</string>
 			<key>offset</key>
 			<string>{-1, 0}</string>
 			<key>rotated</key>
@@ -315,6 +315,19 @@
 			<string>{{7, 25}, {464, 440}}</string>
 			<key>sourceSize</key>
 			<string>{480, 480}</string>
+		</dict>
+		<key>Assets/shadow-knight.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{3873, 379}, {188, 272}}</string>
+			<key>offset</key>
+			<string>{1, 3}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{57, 11}, {188, 272}}</string>
+			<key>sourceSize</key>
+			<string>{300, 300}</string>
 		</dict>
 		<key>Assets/shadow.png</key>
 		<dict>
