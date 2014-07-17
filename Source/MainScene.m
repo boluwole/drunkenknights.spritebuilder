@@ -25,6 +25,7 @@ static NSMutableArray *activeBarrelLifetimes;
 static bool isFallingHuey;
 static int _drunkLevelDave;
 static int _drunkLevelHuey;
+
 bool playerCharacterSet;
 bool ghostOn;
 OALSimpleAudio *aud;
@@ -32,6 +33,12 @@ OALSimpleAudio *aud2;
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
+    magicianCounter=0;
+    startRotation=YES;
+    wheelStartCounter   =0;
+    [self schedule:@selector(rotateWheel:) interval:0.01f];
+    [self schedule:@selector(playTing:) interval:1.0f];
+
     aud=[OALSimpleAudio sharedInstance];
     [aud playEffect:@"StartGame.wav"];
     globalPhysicsNode = _physicsNode;
@@ -81,6 +88,18 @@ OALSimpleAudio *aud2;
     hueyRess.position= HUEY_RESS;
     daveRess.scale *= 0.4;
     hueyRess.scale *= 0.4;
+    
+    arrow_down=(CCSprite*)[CCBReader load:@"Arrow_down"];
+    arrow_down.position =  ARROW_POSN;
+    arrow_down.scale *= 0.05;
+    [_physicsNode addChild: arrow_down];
+    
+    _cd_wheel=(CCSprite*)[CCBReader load:@"wheel_cooldown"];
+    _cd_wheel.position = CD_WHEEL_POSITION;
+    _cd_wheel.scale *= 0.4;
+    arrow_down.zOrder=_cd_wheel.zOrder+1;
+    [_physicsNode addChild:_cd_wheel];
+    
     
     gong=(CCSprite*)[CCBReader load: @"Gongs"];
     [_physicsNode addChild: gong];
@@ -277,6 +296,10 @@ OALSimpleAudio *aud2;
     
 }
 
+
+
+
+
 - (void)update:(CCTime)delta {
     
     //items
@@ -325,7 +348,7 @@ OALSimpleAudio *aud2;
     
     
     //drop item
-    if(timeElapsed < -5) {
+    if(timeElapsed < -12) {
         if (_player == _dave) {
             if(((int)timeElapsed % ITEM_DROP_PERIOD) == 0) {
                 if(itemHasDroppedForThisPeriod == NO) {
@@ -335,6 +358,7 @@ OALSimpleAudio *aud2;
                     currItemDropTime = timeElapsed;
                     //Networking - Send info
                     [NetworkManager sendItemToServer:currItem.name iPosition:currItem.position];
+                    [NetworkManager sendSound:@"item_drop"];
                 }
             }
         }
@@ -471,6 +495,34 @@ OALSimpleAudio *aud2;
         }
     }
 }
+
+-(void) rotateWheel: (CCTime)delta{
+    
+    
+    if(startRotation){
+        int k=ITEM_DROP_PERIOD;
+        float ti=(360.0f/k)/100;
+        _cd_wheel.rotation+=ti;
+    
+
+    }
+}
+
+
+-(void) playTing: (CCTime)delta{
+    magicianCounter++;
+    wheelStartCounter++;
+    if(wheelStartCounter  >=  9 && wheelStartCounter   <= 11)
+        [aud playEffect:@"item_ping.wav"];
+    if(wheelStartCounter >= ITEM_DROP_PERIOD)
+        wheelStartCounter = 0;
+    if(magicianCounter>=35){
+        magicianCounter=0;
+        [aud playEffect:@"Evil Magician Random DIalogue.mp3"];
+    }
+    
+}
+
 
 + (void)updateItems:(CGPoint) msg name: (NSString*) name
 {
@@ -949,10 +1001,10 @@ OALSimpleAudio *aud2;
 + (void) playSound:(NSString *)name{
     if(_player == _huey){
         if([name isEqualToString:@"item_drop"]){
-            [aud playEffect:@"Item_PickUp.wav"];
+            [aud playEffect:@"Item_PickUp.mp3"];
             [NetworkManager sendSound:@"blank"];
             OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
-            [aud1 playEffect:@"Item_PickUp.wav"];
+            [aud1 playEffect:@"Item_PickUp.mp3"];
         }
         
         if([name isEqualToString:@"dave_drop"] || [name isEqualToString:@"huey_drop"]){
@@ -977,17 +1029,17 @@ OALSimpleAudio *aud2;
         }
         
         if([name isEqualToString:@"dave_revive"]){
-            [aud playEffect:@"Dave_Laugh.wav"];
+            [aud playEffect:@"Dave_Laugh.mp3"];
             [NetworkManager sendSound:@"blank"];
             OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
-            [aud1 playEffect:@"Dave_Laugh.wav"];
+            [aud1 playEffect:@"Dave_Laugh.mp3"];
         }
         
         if([name isEqualToString:@"huey_revive"]){
-            [aud playEffect:@"Huey_Laugh.wav"];
+            [aud playEffect:@"Huey_Laugh.mp3"];
             [NetworkManager sendSound:@"blank"];
             OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
-            [aud1 playEffect:@"Huey_Laugh.wav"];
+            [aud1 playEffect:@"Huey_Laugh.mp3"];
         }
     }
     

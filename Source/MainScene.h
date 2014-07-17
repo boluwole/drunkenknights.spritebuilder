@@ -21,7 +21,11 @@
     CCPhysicsNode *_backPhysicsNode;
     
     CCSprite *_stage;
-    
+    CCNode *_cd_wheel;
+    CCNode *arrow_down;
+    int wheelStartCounter;
+    bool startRotation;
+    int magicianCounter;
     //UI
     CCNode *itemBox[3];
     

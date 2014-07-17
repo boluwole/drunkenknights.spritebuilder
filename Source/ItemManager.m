@@ -61,7 +61,6 @@
     //randomly choose a type of item to drop
     CCNode* item;
     OALSimpleAudio *itemsSound=[OALSimpleAudio sharedInstance];
-    [NetworkManager sendSound:@"item_drop"];
     [itemsSound playEffect:@"Item_PickUp.mp3"];
     int randomNum = rand() % 3;
     switch(randomNum) {

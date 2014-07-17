@@ -29,6 +29,7 @@
 		0AA80F51197604FA0090E213 /* StartGame.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F4C197604FA0090E213 /* StartGame.wav */; };
 		0AA80F52197604FA0090E213 /* Vomit_slip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F4D197604FA0090E213 /* Vomit_slip.wav */; };
 		0AA80F53197604FA0090E213 /* Water.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AA80F4E197604FA0090E213 /* Water.wav */; };
+		0ABBE254197782B400A8A4C4 /* item_ping.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0ABBE253197782B400A8A4C4 /* item_ping.wav */; };
 		8517F45D194D4CD900AD4D85 /* SplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 8517F45C194D4CD900AD4D85 /* SplashScreen.m */; };
 		8517F461194D4CF000AD4D85 /* ItemShop.m in Sources */ = {isa = PBXBuildFile; fileRef = 8517F460194D4CF000AD4D85 /* ItemShop.m */; };
 		8517F464194FE2B500AD4D85 /* GameItemData.m in Sources */ = {isa = PBXBuildFile; fileRef = 8517F463194FE2B500AD4D85 /* GameItemData.m */; };
@@ -124,6 +125,7 @@
 		0AA80F4C197604FA0090E213 /* StartGame.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = StartGame.wav; sourceTree = "<group>"; };
 		0AA80F4D197604FA0090E213 /* Vomit_slip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Vomit_slip.wav; sourceTree = "<group>"; };
 		0AA80F4E197604FA0090E213 /* Water.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Water.wav; sourceTree = "<group>"; };
+		0ABBE253197782B400A8A4C4 /* item_ping.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = item_ping.wav; sourceTree = "<group>"; };
 		8517F45B194D4CD900AD4D85 /* SplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SplashScreen.h; path = Source/SplashScreen.h; sourceTree = "<group>"; };
 		8517F45C194D4CD900AD4D85 /* SplashScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SplashScreen.m; path = Source/SplashScreen.m; sourceTree = "<group>"; };
 		8517F45F194D4CF000AD4D85 /* ItemShop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemShop.h; path = Source/ItemShop.h; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				0AA80F341975F4A50090E213 /* gong_reactivate.wav */,
 				0AA80F351975F4A50090E213 /* Huey_Laugh.mp3 */,
 				0AA80F361975F4A50090E213 /* Item_PickUp.mp3 */,
+				0ABBE253197782B400A8A4C4 /* item_ping.wav */,
 				0AA80F371975F4A50090E213 /* PassThroughGhost.wav */,
 				0AA80F4A197604FA0090E213 /* Stage_Fall_Player.wav */,
 				0AA80F4B197604FA0090E213 /* Stage_Fall_Princess.wav */,
@@ -518,6 +521,7 @@
 				0AA80F391975F4A50090E213 /* Barrel_Hit.wav in Resources */,
 				B71F5919188484E7003F4D28 /* Settings.png in Resources */,
 				0AA80F401975F4A50090E213 /* Game_Music.mp3 in Resources */,
+				0ABBE254197782B400A8A4C4 /* item_ping.wav in Resources */,
 				0AA80F3F1975F4A50090E213 /* export.mp3 in Resources */,
 				F594CD43194BCD2000FE0029 /* ManagerIncludes.h in Resources */,
 				0AA80F421975F4A50090E213 /* GhostStatue_PlayerPassThrough.wav in Resources */,

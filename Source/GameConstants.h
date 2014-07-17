@@ -30,7 +30,7 @@ static CCSprite *_player;
 #define STATUE_REVIVE_TIME (2.0f)
 
 //items
-#define ITEM_DROP_PERIOD (5)
+#define ITEM_DROP_PERIOD (12)
 #define ITEM_ALIVE_PERIOD (-4)
 #define INVENTORY_DISTANCE (40)
 #define INVENTORY_POSITION (30)
@@ -60,8 +60,12 @@ static CCSprite *_player;
 #define GONG_COOLDOWN (30)
 
 
+//Wheel
+#define CD_WHEEL_POSITION ccp(510,50)
+#define ARROW_POSN ccp(510,75)
+
 //Portal
-#define PORTAL_POSITION_MAIN ccp(300,30);
+#define PORTAL_POSITION_MAIN ccp(300,30)
 
 //networking
 #define NETWORKED YES
