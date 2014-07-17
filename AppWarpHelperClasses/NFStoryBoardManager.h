@@ -49,7 +49,7 @@
 @property NSString* deplayer_info;
 @property NSString* item_index;
 //sound stuff
-@property NSString* vomit_sound;
+@property NSString* sounds;
 
 //
 @property CGPoint New_impulse;

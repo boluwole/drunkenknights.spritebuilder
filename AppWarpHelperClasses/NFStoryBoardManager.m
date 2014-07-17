@@ -116,8 +116,8 @@ static NFStoryBoardManager *nFStoryBoardManager;
     [NetworkManager receiveCGPointFromServer:_New_impulse];
         
     //sound stuff
-    _vomit_sound = [dataDict objectForKey:@"vomit_sound"];
-    [NetworkManager updateVomitSound:_vomit_sound];
+    _sounds = [dataDict objectForKey:@"sounds"];
+    [NetworkManager updateMainSceneSound:_sounds];
     }
     
 }
