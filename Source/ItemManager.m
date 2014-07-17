@@ -61,6 +61,7 @@
     //randomly choose a type of item to drop
     CCNode* item;
     OALSimpleAudio *itemsSound=[OALSimpleAudio sharedInstance];
+    [NetworkManager sendSound:@"item_drop"];
     [itemsSound playEffect:@"Item_PickUp.mp3"];
     int randomNum = rand() % 3;
     switch(randomNum) {
@@ -218,7 +219,7 @@
             dave.physicsBody.velocity = ccpMult(dave.physicsBody.velocity, Slime_MULTIPLIER);
             OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
             [aud1 playEffect:@"Vomit_slip.wav"];
-            [NetworkManager sendVomitSound:@"dave"];
+            [NetworkManager sendSound:@"dave_vomit"];
             
         }
         if(CGRectContainsPoint([allSlimes[i] boundingBox], huey.position)) {
@@ -226,13 +227,13 @@
             huey.physicsBody.velocity = ccpMult(huey.physicsBody.velocity, Slime_MULTIPLIER);
             OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
             [aud1 playEffect:@"Vomit_slip.wav"];
-            [NetworkManager sendVomitSound:@"huey"];
+            [NetworkManager sendSound:@"huey_vomit"];
         }
         if(CGRectContainsPoint([allSlimes[i] boundingBox], princess.position)) {
             princess.physicsBody.velocity = ccpMult(princess.physicsBody.velocity, Slime_MULTIPLIER);
             OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
             [aud1 playEffect:@"Vomit_slip.wav"];
-            [NetworkManager sendVomitSound:@"princess"];
+            [NetworkManager sendSound:@"princess_vomit"];
         }
     }
 }
