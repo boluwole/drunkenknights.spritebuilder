@@ -25,12 +25,20 @@ static NSMutableArray *activeBarrelLifetimes;
 static bool isFallingHuey;
 static int _drunkLevelDave;
 static int _drunkLevelHuey;
+
 bool playerCharacterSet;
 bool ghostOn;
 OALSimpleAudio *aud;
+OALSimpleAudio *aud2;
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
+    magicianCounter=0;
+    startRotation=YES;
+    wheelStartCounter   =0;
+    [self schedule:@selector(rotateWheel:) interval:0.01f];
+    [self schedule:@selector(playTing:) interval:1.0f];
+
     aud=[OALSimpleAudio sharedInstance];
     [aud playEffect:@"StartGame.wav"];
     globalPhysicsNode = _physicsNode;
@@ -78,13 +86,29 @@ OALSimpleAudio *aud;
     [_physicsNode addChild: hueyRess];
     daveRess.position= DAVE_RESS;
     hueyRess.position= HUEY_RESS;
-    daveRess.scale *= 0.4;
-    hueyRess.scale *= 0.4;
+    //daveRess.scale *= 0.4;
+    //hueyRess.scale *= 0.4;
+    
+    arrow_down=(CCSprite*)[CCBReader load:@"Arrow_down"];
+    arrow_down.position =  ARROW_POSN;
+    arrow_down.scale *= 0.05;
+    [_physicsNode addChild: arrow_down];
+    
+    _cd_wheel=(CCSprite*)[CCBReader load:@"wheel_cooldown"];
+    _cd_wheel.position = CD_WHEEL_POSITION;
+    _cd_wheel.scale *= 0.4;
+    arrow_down.zOrder=_cd_wheel.zOrder+1;
+    [_physicsNode addChild:_cd_wheel];
+    
     
     gong=(CCSprite*)[CCBReader load: @"Gongs"];
     [_physicsNode addChild: gong];
     gong.position= GONG_POSITION;
-    gong.scale *= 0.3;
+<<<<<<< HEAD
+    
+=======
+    //gong.scale *= 0.3;
+>>>>>>> 05f80dfa47e3d9b87546167b0adcd5e9d4d9423a
     
     
     // tell this scene to accept touches
@@ -177,10 +201,8 @@ OALSimpleAudio *aud;
     
     //beer bottles
     for(int i = 0; i < NUM_BEER_NODES; i++) {
-        CCNode* beerBottle = [CCBReader load:@"Barrel"];
-        beerBottle.scale *= 0.3;
-        beerBottle.scaleX *= 0.2;
-        beerBottle.rotation -= 25;
+        CCNode* beerBottle = [CCBReader load:@"Beer"];
+        beerBottle.scale = 0.3;
         beerNodes[i] = [[CCNode alloc] init];
         beerNodes[i].position = ccpAdd(princessStart, ccp(-120 + i*80,-60));
         [beerNodes[i] addChild:beerBottle];
@@ -255,8 +277,7 @@ OALSimpleAudio *aud;
         _dave = nil;
         _princess = nil;
         _huey = nil;
-        
-        
+        _player = nil;
         
         //gameroom
         CCScene *gameRoomScene = [CCBReader loadAsScene:@"GameRoom"];
@@ -276,6 +297,10 @@ OALSimpleAudio *aud;
     
 }
 
+
+
+
+
 - (void)update:(CCTime)delta {
     
     //items
@@ -288,23 +313,15 @@ OALSimpleAudio *aud;
         _huey.physicsBody.sensor = true;
         _princess.physicsBody.sensor = true;
     }
-<<<<<<< HEAD
     
-//    if(ccpLengthSQ(_player.physicsBody.velocity) > 100) {
-//        [_player.animationManager runAnimationsForSequenceNamed:@"Walk"];
-//    }
-//    else {
-//        [_dave.animationManager runAnimationsForSequenceNamed:@"Idle"];
-//    }
-=======
-    /*
-    if(ccpLengthSQ(_player.physicsBody.velocity) > 100) {
-        [_player.animationManager runAnimationsForSequenceNamed:@"Walk"];
+    if(ccpLengthSQ(_player.physicsBody.velocity) > 25) {
+        if(![[_player.animationManager runningSequenceName] isEqual:@"Walk"])
+                [_player.animationManager runAnimationsForSequenceNamed:@"Walk"];
     }
     else {
-        [_dave.animationManager runAnimationsForSequenceNamed:@"Idle"];
-    }*/
->>>>>>> 31a2dd82888e7779c4d3f4c0035e8219b8f091e3
+        if(![[_player.animationManager runningSequenceName] isEqual:@"Idle"])
+                    [_dave.animationManager runAnimationsForSequenceNamed:@"Idle"];
+    }
     
     if (_princess.zOrder > _stage.zOrder)[self checkGameEnd];
     [self checkGong];
@@ -332,7 +349,7 @@ OALSimpleAudio *aud;
     
     
     //drop item
-    if(timeElapsed < -5) {
+    if(timeElapsed < -12) {
         if (_player == _dave) {
             if(((int)timeElapsed % ITEM_DROP_PERIOD) == 0) {
                 if(itemHasDroppedForThisPeriod == NO) {
@@ -342,6 +359,7 @@ OALSimpleAudio *aud;
                     currItemDropTime = timeElapsed;
                     //Networking - Send info
                     [NetworkManager sendItemToServer:currItem.name iPosition:currItem.position];
+                    [NetworkManager sendSound:@"item_drop"];
                 }
             }
         }
@@ -479,6 +497,34 @@ OALSimpleAudio *aud;
     }
 }
 
+-(void) rotateWheel: (CCTime)delta{
+    
+    
+    if(startRotation){
+        int k=ITEM_DROP_PERIOD;
+        float ti=(360.0f/k)/100;
+        _cd_wheel.rotation+=ti;
+    
+
+    }
+}
+
+
+-(void) playTing: (CCTime)delta{
+    magicianCounter++;
+    wheelStartCounter++;
+    if(wheelStartCounter  >=  9 && wheelStartCounter   <= 11)
+        [aud playEffect:@"item_ping.wav"];
+    if(wheelStartCounter >= ITEM_DROP_PERIOD)
+        wheelStartCounter = 0;
+    if(magicianCounter>=35){
+        magicianCounter=0;
+        [aud playEffect:@"Evil Magician Random DIalogue.mp3"];
+    }
+    
+}
+
+
 + (void)updateItems:(CGPoint) msg name: (NSString*) name
 {
     if(_player == _huey) {
@@ -499,12 +545,16 @@ OALSimpleAudio *aud;
         if(beerNodesCounters[i] < BEER_BOTTLE_RESPAWN_TIME) {
             beerNodesCounters[i]++;
             
+            NSArray* child = beerNodes[i].children;
+            CCNode* temp = (CCNode*)child[0];
+            float rot = (360.0f/BEER_BOTTLE_RESPAWN_TIME);
+            if(temp != nil) temp.rotation += rot;
+            
             //time to respawn
             if(beerNodesCounters[i] == BEER_BOTTLE_RESPAWN_TIME) {
-                CCNode* beerBottle = [CCBReader load:@"Barrel"];
-                beerBottle.scale *= 0.3;
-                beerBottle.scaleX *= 0.2;
-                beerBottle.rotation -= 25;
+                [beerNodes[i] removeAllChildrenWithCleanup:YES];
+                CCNode* beerBottle = [CCBReader load:@"Beer"];
+                beerBottle.scale = 0.3;
                 [beerNodes[i] addChild:beerBottle];
                 beerBottle.physicsBody.sensor = true;
             }
@@ -538,14 +588,17 @@ OALSimpleAudio *aud;
     switch(playerNum) {
         case DAVE:
             [aud playEffect:@"Stage_Fall_Player.wav"];            [self schedule:@selector(reviveDave:) interval:1.0f];
+            [NetworkManager sendSound:(@"dave_drop")];
             break;
         case HUEY:
             [aud playEffect:@"Stage_Fall_Player.wav"];
             [self schedule:@selector(reviveHuey:) interval:1.0f];
+            [NetworkManager sendSound:(@"huey_drop")];
             break;
         case PRINCESS:
             [aud playEffect:@"Stage_Fall_Princess.wav"];
             [self schedule:@selector(revivePrincess:) interval:1.0f];
+            [NetworkManager sendSound:(@"princess_drop")];
             break;
     }
 }
@@ -566,6 +619,7 @@ OALSimpleAudio *aud;
         _dave.physicsBody.velocity = ccp(0,0);
         _drunkLevelDave = 0;
         [self unschedule:@selector(reviveDave:)];
+        [NetworkManager sendSound:@"dave_revive"];
         [aud playEffect:@"Dave_Laugh.mp3"];
     }
     
@@ -592,6 +646,7 @@ OALSimpleAudio *aud;
                                          playerInfo:[NSString stringWithFormat:@"%i", _drunkLevelHuey]
                                              iIndex:[NSString stringWithFormat:@"%i", _drunkLevelHuey]];
         [self unschedule:@selector(reviveHuey:)];
+        [NetworkManager sendSound:@"huey_revive"];
         [aud playEffect:@"Huey_Laugh.mp3"];
     }
     
@@ -722,16 +777,22 @@ OALSimpleAudio *aud;
         start = _player.position;
         arrowNode.position = start;
         
-        //update facing direction
-        if (_player == _dave) {
-            if((start.x - end.x) < 0) { if(_player.flipX == NO) _player.flipX = YES; }
-            else { if(_player.flipX == YES) _player.flipX = NO; }
-        }
-        else {
-            if((end.x - start.x) < 0) { if(_player.flipX == NO) _player.flipX = YES; }
-            else { if(_player.flipX == YES) _player.flipX = NO; }
-        }
-        
+//        //update facing direction
+//        if (_player == _dave) {
+//            if((start.x - end.x) < 0) { if(_player.scaleX > 0) _player.scaleX*=-1; }
+//            else { if(_player.scaleX < 0) _player.scaleX*=-1; }
+//            
+//            //if((start.x - end.x) < 0) { if(_player.flipX == NO) _player.flipX = YES; }
+//            //else { if(_player.flipX == YES) _player.flipX = NO; }
+//        }
+//        else {
+//            if((start.x - end.x) > 0) { if(_player.scaleX > 0) _player.scaleX*=-1; }
+//            else { if(_player.scaleX < 0) _player.scaleX*=-1; }
+//            
+//            //if((end.x - start.x) < 0) { if(_player.flipX == NO) _player.flipX = YES; }
+//            //else { if(_player.flipX == YES) _player.flipX = NO; }
+//        }
+       
         
         //place arrow
         launchDirection = [MoveManager calculateMoveVector:start :end];
@@ -930,7 +991,12 @@ OALSimpleAudio *aud;
             NSArray* child = beerNodes[[index intValue]].children;
             if(child.count > 0) {
             CCNode* temp = (CCNode*)child[0];
-            [temp removeFromParent];
+            [temp removeFromParentAndCleanup:YES];
+            temp = [CCBReader load:@"BeerWheel"];
+            temp.opacity = 0.8;
+            temp.scale = 0.2;
+            [beerNodes[[index intValue]] addChild:temp];
+
             if ( ![player isEqual:@"DAVE"] ) {
                 _drunkLevelHuey = [player intValue];
             }
@@ -942,13 +1008,49 @@ OALSimpleAudio *aud;
     }
 }
 
-+ (void) playVomitSound:(NSString *)name{
-    
-    if (_player == _huey && ([name isEqualToString:@"huey"] ||[name isEqualToString:@"dave"] || [name isEqualToString:@"princess"])) {
-        [aud playEffect:@"Vomit_slip.wav"];
-        [NetworkManager sendVomitSound:@"blank"];
-        OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
-        [aud1 playEffect:@"Vomit_slip.wav"];
++ (void) playSound:(NSString *)name{
+    if(_player == _huey){
+        if([name isEqualToString:@"item_drop"]){
+            [aud playEffect:@"Item_PickUp.mp3"];
+            [NetworkManager sendSound:@"blank"];
+            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+            [aud1 playEffect:@"Item_PickUp.mp3"];
+        }
+        
+        if([name isEqualToString:@"dave_drop"] || [name isEqualToString:@"huey_drop"]){
+            [aud playEffect:@"Stage_Fall_Player.wav"];
+            [NetworkManager sendSound:@"blank"];
+            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+            [aud1 playEffect:@"Stage_Fall_Player.wav"];
+        }
+        
+        if([name isEqualToString:@"princess_drop"]){
+            [aud playEffect:@"Stage_Fall_Princess.wav"];
+            [NetworkManager sendSound:@"blank"];
+            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+            [aud1 playEffect:@"Stage_Fall_Princess.wav"];
+        }
+        
+        if([name isEqualToString:@"huey_vomit"] ||[name isEqualToString:@"dave_vomit"] || [name isEqualToString:@"princess_vomit"]){
+            [aud playEffect:@"Vomit_slip.wav"];
+            [NetworkManager sendSound:@"blank"];
+            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+            [aud1 playEffect:@"Vomit_slip.wav"];
+        }
+        
+        if([name isEqualToString:@"dave_revive"]){
+            [aud playEffect:@"Dave_Laugh.mp3"];
+            [NetworkManager sendSound:@"blank"];
+            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+            [aud1 playEffect:@"Dave_Laugh.mp3"];
+        }
+        
+        if([name isEqualToString:@"huey_revive"]){
+            [aud playEffect:@"Huey_Laugh.mp3"];
+            [NetworkManager sendSound:@"blank"];
+            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+            [aud1 playEffect:@"Huey_Laugh.mp3"];
+        }
     }
     
     
@@ -974,7 +1076,7 @@ OALSimpleAudio *aud;
     if((CGRectContainsPoint([gong boundingBox] , _dave.position) || CGRectContainsPoint([gong boundingBox] , _huey.position))  && gongAccess){
         
         
-        [aud playEffect:@"export.mp3"];
+        [aud playEffect:@"Gong_Activate_Duration.mp3"];
         if(gongColorChange){
             [gong setColor:[CCColor colorWithRed:0.5 green:0.8 blue:0.9 alpha:1.0]];
             gongColorChange=NO;
@@ -1018,7 +1120,7 @@ OALSimpleAudio *aud;
         float energy = [pair totalKineticEnergy];
         
         // if energy is large enough, remove the seal
-        if (energy > 20000.f) {
+        if (energy > 100.f) {
             [[_physicsNode space] addPostStepBlock:^{
                 //[self sealRemoved:nodeA];
                 
