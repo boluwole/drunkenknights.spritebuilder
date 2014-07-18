@@ -45,10 +45,6 @@ OALSimpleAudio *aud2;
     _physicsNode.collisionDelegate = self;
     opponentActivatedItem = nil;
     
-    gongColorChange=YES;
-    gongAccess=YES;
-    gongCounter = 0;
-    
     checkEnd=YES;
     //load players & statue
     _dave = (CCSprite*)[CCBReader load:@"_Dave"];
@@ -101,10 +97,15 @@ OALSimpleAudio *aud2;
     [_physicsNode addChild:_cd_wheel];
     
     
+    //GONG
     gong=(CCSprite*)[CCBReader load: @"Gongs"];
     [_physicsNode addChild: gong];
     gong.position= GONG_POSITION;
+    gong.physicsBody.collisionType = @"gong";
     
+    gongColorChange=YES;
+    gongAccess=YES;
+    gongCounter = 0;
     
     
     // tell this scene to accept touches
@@ -320,7 +321,7 @@ OALSimpleAudio *aud2;
     }
     
     if (_princess.zOrder > _stage.zOrder)[self checkGameEnd];
-    [self checkGong];
+    //[self checkGong];
     
     //dave authorities over beer bottle pickups
     if(_player == _dave) {
@@ -1069,7 +1070,7 @@ OALSimpleAudio *aud2;
 
 -(void) checkGong{
     
-    if((CGRectContainsPoint([gong boundingBox] , _dave.position) || CGRectContainsPoint([gong boundingBox] , _huey.position))  && gongAccess){
+    //if((CGRectContainsPoint([gong boundingBox] , _dave.position) || CGRectContainsPoint([gong boundingBox] , _huey.position))  && gongAccess){
         
         
         [aud playEffect:@"Gong_Activate_Duration.mp3"];
@@ -1085,7 +1086,7 @@ OALSimpleAudio *aud2;
         
         [self schedule:@selector(reactivateGong:) interval:1.0f];
         
-    }
+    //}
 }
 
 -(void) reactivateGong: (CCTime)delta {
@@ -1108,6 +1109,11 @@ OALSimpleAudio *aud2;
     }
 }
 
+- (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair gong:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
+    if(nodeB == _dave || nodeB == _huey) {
+        if(gongAccess) [self checkGong];
+    }
+}
 
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair barrel:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
     
