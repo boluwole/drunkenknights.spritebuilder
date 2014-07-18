@@ -543,6 +543,7 @@ OALSimpleAudio *aud2;
             
             //time to respawn
             if(beerNodesCounters[i] == BEER_BOTTLE_RESPAWN_TIME) {
+                [beerNodes[i] removeAllChildrenWithCleanup:YES];
                 CCNode* beerBottle = [CCBReader load:@"Beer"];
                 beerBottle.scale = 0.3;
                 [beerNodes[i] addChild:beerBottle];
@@ -981,7 +982,11 @@ OALSimpleAudio *aud2;
             NSArray* child = beerNodes[[index intValue]].children;
             if(child.count > 0) {
             CCNode* temp = (CCNode*)child[0];
-            [temp removeFromParent];
+            [temp removeFromParentAndCleanup:YES];
+            temp = [CCBReader load:@"BeerWheel"];
+            temp.scale = 0.2;
+            [beerNodes[[index intValue]] addChild:temp];
+
             if ( ![player isEqual:@"DAVE"] ) {
                 _drunkLevelHuey = [player intValue];
             }

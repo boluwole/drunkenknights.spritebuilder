@@ -24,7 +24,11 @@
                 [aud2 playEffect:@"Beer.wav"];
                 (*daveDrunkLevel)++;
                 CCNode* temp = (CCNode*)child[0];
-                [temp removeFromParent];
+                [temp removeFromParentAndCleanup:YES];
+                //temp = nil;
+                temp = [CCBReader load:@"BeerWheel"];
+                temp.scale = 0.2;
+                [beerNodes[i] addChild:temp];
                 
                 //TODO: network index i to Huey to kill child of beerNode[i]
                 // & and set beerNodesCounters[i] to 0
@@ -37,7 +41,11 @@
                 OALSimpleAudio *aud2=[OALSimpleAudio    sharedInstance];
                 [aud2 playEffect:@"Beer.wav"];
                 CCNode* temp = (CCNode*)child[0];
-                [temp removeFromParent];
+                [temp removeFromParentAndCleanup:YES];
+                temp = [CCBReader load:@"BeerWheel"];
+                temp.scale = 0.2;
+                [beerNodes[i] addChild:temp];
+
                 
                 //TODO: network index i to Huey to kill child of beerNode[i]
                 // & and set beerNodesCounters[i] to 0
