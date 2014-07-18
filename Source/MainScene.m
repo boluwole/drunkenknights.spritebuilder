@@ -104,7 +104,7 @@ OALSimpleAudio *aud2;
     gong=(CCSprite*)[CCBReader load: @"Gongs"];
     [_physicsNode addChild: gong];
     gong.position= GONG_POSITION;
-    gong.scale *= 0.3;
+    //gong.scale *= 0.3;
     
     
     // tell this scene to accept touches
