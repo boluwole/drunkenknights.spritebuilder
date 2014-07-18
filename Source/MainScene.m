@@ -104,7 +104,7 @@ OALSimpleAudio *aud2;
     gong=(CCSprite*)[CCBReader load: @"Gongs"];
     [_physicsNode addChild: gong];
     gong.position= GONG_POSITION;
-    gong.scale *= 0.3;
+    
     
     
     // tell this scene to accept touches
@@ -197,10 +197,8 @@ OALSimpleAudio *aud2;
     
     //beer bottles
     for(int i = 0; i < NUM_BEER_NODES; i++) {
-        CCNode* beerBottle = [CCBReader load:@"Barrel"];
-        beerBottle.scale *= 0.3;
-        beerBottle.scaleX *= 0.2;
-        beerBottle.rotation -= 25;
+        CCNode* beerBottle = [CCBReader load:@"Beer"];
+        beerBottle.scale = 0.3;
         beerNodes[i] = [[CCNode alloc] init];
         beerNodes[i].position = ccpAdd(princessStart, ccp(-120 + i*80,-60));
         [beerNodes[i] addChild:beerBottle];
@@ -545,10 +543,8 @@ OALSimpleAudio *aud2;
             
             //time to respawn
             if(beerNodesCounters[i] == BEER_BOTTLE_RESPAWN_TIME) {
-                CCNode* beerBottle = [CCBReader load:@"Barrel"];
-                beerBottle.scale *= 0.3;
-                beerBottle.scaleX *= 0.2;
-                beerBottle.rotation -= 25;
+                CCNode* beerBottle = [CCBReader load:@"Beer"];
+                beerBottle.scale = 0.3;
                 [beerNodes[i] addChild:beerBottle];
                 beerBottle.physicsBody.sensor = true;
             }
