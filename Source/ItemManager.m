@@ -20,13 +20,20 @@
         
         if(child.count > 0) {
             if(CGRectContainsPoint([dave boundingBox], beerNodes[i].position) && (*daveDrunkLevel) < DRUNK_METER_CAP) {
+                
+                CCNode* temp = (CCNode*)child[0];
+                
+                if([temp.name isEqualToString:@"BeerWheel"]) return -1;
+                
                 OALSimpleAudio *aud2=[OALSimpleAudio    sharedInstance];
                 [aud2 playEffect:@"Beer.wav"];
                 (*daveDrunkLevel)++;
-                CCNode* temp = (CCNode*)child[0];
+
+                
                 [temp removeFromParentAndCleanup:YES];
                 //temp = nil;
                 temp = [CCBReader load:@"BeerWheel"];
+                temp.opacity = 0.8;
                 temp.scale = 0.2;
                 [beerNodes[i] addChild:temp];
                 
@@ -37,12 +44,18 @@
                 return i;
             }
             else if(CGRectContainsPoint([huey boundingBox], beerNodes[i].position) && (*hueyDrunkLevel) < DRUNK_METER_CAP) {
+                
+                CCNode* temp = (CCNode*)child[0];
+                
+                if([temp.name isEqualToString:@"BeerWheel"]) return -1;
+                
                 (*hueyDrunkLevel)++;
                 OALSimpleAudio *aud2=[OALSimpleAudio    sharedInstance];
                 [aud2 playEffect:@"Beer.wav"];
-                CCNode* temp = (CCNode*)child[0];
+                
                 [temp removeFromParentAndCleanup:YES];
                 temp = [CCBReader load:@"BeerWheel"];
+                temp.opacity = 0.8;
                 temp.scale = 0.2;
                 [beerNodes[i] addChild:temp];
 

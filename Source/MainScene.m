@@ -541,6 +541,11 @@ OALSimpleAudio *aud2;
         if(beerNodesCounters[i] < BEER_BOTTLE_RESPAWN_TIME) {
             beerNodesCounters[i]++;
             
+            NSArray* child = beerNodes[i].children;
+            CCNode* temp = (CCNode*)child[0];
+            float rot = (360.0f/BEER_BOTTLE_RESPAWN_TIME);
+            if(temp != nil) temp.rotation += rot;
+            
             //time to respawn
             if(beerNodesCounters[i] == BEER_BOTTLE_RESPAWN_TIME) {
                 [beerNodes[i] removeAllChildrenWithCleanup:YES];
@@ -984,6 +989,7 @@ OALSimpleAudio *aud2;
             CCNode* temp = (CCNode*)child[0];
             [temp removeFromParentAndCleanup:YES];
             temp = [CCBReader load:@"BeerWheel"];
+            temp.opacity = 0.8;
             temp.scale = 0.2;
             [beerNodes[[index intValue]] addChild:temp];
 
@@ -1110,7 +1116,7 @@ OALSimpleAudio *aud2;
         float energy = [pair totalKineticEnergy];
         
         // if energy is large enough, remove the seal
-        if (energy > 20000.f) {
+        if (energy > 100.f) {
             [[_physicsNode space] addPostStepBlock:^{
                 //[self sealRemoved:nodeA];
                 
