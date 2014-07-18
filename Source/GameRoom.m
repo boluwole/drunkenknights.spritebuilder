@@ -15,6 +15,7 @@
     CCLabelTTF *_lblUpdate;
     NSString* chosenRoomId;
     NSMutableArray *labels;
+    NSMutableArray *buttons;
     BOOL newScreen;
 }
 
@@ -30,6 +31,7 @@
     [self initiateRoomLoad];
     
     labels = [[NSMutableArray alloc] init];
+    buttons = [[NSMutableArray alloc] init];
     
     for (int i=0; i<5; i++)
     {
@@ -42,6 +44,16 @@
         lblRoomId.anchorPoint = ccp(0,0.5);
         lblRoomId.fontSize = 15.0;
         [labels addObject:lblRoomId];
+        
+        // create a join button if first time checking for rooms
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"ccbResources/ccbButtonNormal.png"];
+        CCButton *btnJoin = [CCButton buttonWithTitle:@"Join room"  spriteFrame:sprite.spriteFrame ];
+        [btnJoin setTarget:self selector:@selector(joinRoom:) ];
+        btnJoin.position = ccp(410, 250 -( (i+1) * 35));
+        btnJoin.preferredSize = CGSizeMake(100.0, 30.0);
+        btnJoin.anchorPoint = ccp(0,0.5);
+        [buttons addObject:btnJoin];
+
         
     }
     
@@ -113,6 +125,7 @@
             {
                     
                     CCLabelTTF *lblRoomId ;
+                    CCButton    *btnJoin;
                     NSString* roomStatus = @" (empty)";
                     
                     if (room.roomOccupants.count == 1)
@@ -124,26 +137,20 @@
                     // Create a label for display purposes
                     lblRoomId = labels[roomCount-1];
                     lblRoomId.string = [room.roomName stringByAppendingString:  roomStatus];
+                
+                    //create button for joining room
+                    btnJoin = buttons[roomCount-1];
+                    btnJoin.name = room.roomId;
+                
+                    if (room.roomOccupants.count == 2){
+                        btnJoin.enabled = NO;
+                    }
+                
                     if ( newScreen )
                     {
-                        //add label to scene if first time checking for rooms
+                        //add views to scene if first time checking for rooms
                         [self addChild:lblRoomId];
-        
-                        // create a join button if first time checking for rooms
-                        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"ccbResources/ccbButtonNormal.png"];
-                        CCButton *btnJoin = [CCButton buttonWithTitle:@"Join room"  spriteFrame:sprite.spriteFrame ];
-                        [btnJoin setTarget:self selector:@selector(joinRoom:) ];
-                        btnJoin.position = ccp(410, 250 -( roomCount * 35));
-                        btnJoin.preferredSize = CGSizeMake(100.0, 30.0);
-                        btnJoin.anchorPoint = ccp(0,0.5);
-                        btnJoin.name = room.roomId;
-                
-                        if (room.roomOccupants.count == 2){
-                            btnJoin.enabled = NO;
-                        }
-                        
                         [self addChild:btnJoin];
-                        
                     }
                 
                 

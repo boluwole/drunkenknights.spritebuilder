@@ -86,8 +86,8 @@ OALSimpleAudio *aud2;
     [_physicsNode addChild: hueyRess];
     daveRess.position= DAVE_RESS;
     hueyRess.position= HUEY_RESS;
-    daveRess.scale *= 0.4;
-    hueyRess.scale *= 0.4;
+    //daveRess.scale *= 0.4;
+    //hueyRess.scale *= 0.4;
     
     arrow_down=(CCSprite*)[CCBReader load:@"Arrow_down"];
     arrow_down.position =  ARROW_POSN;
