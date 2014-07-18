@@ -23,6 +23,7 @@
     CCSprite *_stage;
     CCNode *_cd_wheel;
     CCNode *arrow_down;
+    CCNode *gong_wheel;
     int wheelStartCounter;
     bool startRotation;
     int magicianCounter;

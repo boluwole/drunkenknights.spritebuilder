@@ -25,6 +25,7 @@ static NSMutableArray *activeBarrelLifetimes;
 static bool isFallingHuey;
 static int _drunkLevelDave;
 static int _drunkLevelHuey;
+static bool gongHit;
 
 bool playerCharacterSet;
 bool ghostOn;
@@ -44,6 +45,7 @@ OALSimpleAudio *aud2;
     globalPhysicsNode = _physicsNode;
     _physicsNode.collisionDelegate = self;
     opponentActivatedItem = nil;
+    
     
     checkEnd=YES;
     //load players & statue
@@ -106,6 +108,7 @@ OALSimpleAudio *aud2;
     gongColorChange=YES;
     gongAccess=YES;
     gongCounter = 0;
+    gongHit = NO;
     
     
     // tell this scene to accept touches
@@ -321,7 +324,8 @@ OALSimpleAudio *aud2;
     }
     
     if (_princess.zOrder > _stage.zOrder)[self checkGameEnd];
-    //[self checkGong];
+    if(gongAccess && gongHit) [self checkGong];
+    gongHit = NO;
     
     //dave authorities over beer bottle pickups
     if(_player == _dave) {
@@ -929,6 +933,11 @@ OALSimpleAudio *aud2;
 +(void) activateItems:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString *)player
 {
     //if this is activated by opposing player
+    if([itemName isEqual:@"Gong"]) {
+        if([player isEqual:@"YES"]) gongHit = YES;
+    }
+    else {
+    
     if ((_player == _dave && [player isEqual:@"huey"]) || (_player == _huey &&  [player isEqual:@"dave"])) {
         if([itemName isEqual:@"Ghost"]) {
             _princess.opacity=0.3;
@@ -948,7 +957,7 @@ OALSimpleAudio *aud2;
         }
     }
     
-    
+    }
 }
 
 + (void) deActivateItem:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString*) player iIndex:(NSString*) index
@@ -1075,15 +1084,24 @@ OALSimpleAudio *aud2;
         
         [aud playEffect:@"Gong_Activate_Duration.mp3"];
         if(gongColorChange){
-            [gong setColor:[CCColor colorWithRed:0.5 green:0.8 blue:0.9 alpha:1.0]];
+            [gong setColor:[CCColor colorWithRed:0.5 green:0.8 blue:0.9 alpha:0.5]];
             gongColorChange=NO;
         }
+    gong_wheel=(CCSprite*)[CCBReader load:@"BeerWheel"];
+
+    gong_wheel.position=ccp(32.5,32);
+    gong_wheel.zOrder=gong.zOrder+1;
+    gong_wheel.scale=0.2;
+    gong_wheel.opacity=0.5;
+
+        [gong addChild: gong_wheel];
+    
         CGPoint daveRes = daveRess.position;
         daveRess.position = hueyRess.position;
         hueyRess.position = daveRes;
         gongAccess = NO ;
-        gongCounter = 0 ;
-        
+        //gongHit = NO;
+    
         [self schedule:@selector(reactivateGong:) interval:1.0f];
         
     //}
@@ -1092,6 +1110,8 @@ OALSimpleAudio *aud2;
 -(void) reactivateGong: (CCTime)delta {
     
     gongCounter++;
+    float rot=(360.0f/GONG_COOLDOWN);
+    gong_wheel.rotation+=rot;
     
     if(gongCounter == GONG_DURATION) {
        [aud playEffect:@"gong_reactivate.wav"];
@@ -1101,17 +1121,23 @@ OALSimpleAudio *aud2;
     }
     
     if(gongCounter == GONG_COOLDOWN) {
+        [gong removeAllChildren];
+        gongCounter = 0 ;
         [aud playEffect:@"gong_reactivate.wav"];
         gongColorChange=YES;
         gongAccess = YES;
-        [gong setColor:[CCColor colorWithRed:0.5 green:(1/(0.80f)) blue:(1/(0.90f)) alpha:1.0]];
+        [gong setColor:[CCColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0]];
         [self unschedule:@selector(reactivateGong:)];
     }
 }
 
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair gong:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
     if(nodeB == _dave || nodeB == _huey) {
-        if(gongAccess) [self checkGong];
+        if(gongAccess && gongHit == NO) {
+            gongHit = YES;
+            [NetworkManager sendActivatedToServer:@"Gong" iPosition:CGPointZero player:@"YES"];
+        }
+        
     }
 }
 
