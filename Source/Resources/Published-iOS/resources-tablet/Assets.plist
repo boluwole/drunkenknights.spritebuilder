@@ -124,11 +124,11 @@
 		<key>Assets/_Huey.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1353, 1587}, {208, 231}}</string>
+			<string>{{1353, 1602}, {208, 231}}</string>
 			<key>offset</key>
 			<string>{-4, 0}</string>
 			<key>rotated</key>
-			<false/>
+			<true/>
 			<key>sourceColorRect</key>
 			<string>{{12, 5}, {208, 231}}</string>
 			<key>sourceSize</key>
@@ -150,7 +150,7 @@
 		<key>Assets/_Legs_Near.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1563, 1587}, {139, 145}}</string>
+			<string>{{1586, 1602}, {139, 145}}</string>
 			<key>offset</key>
 			<string>{0, -3}</string>
 			<key>rotated</key>
@@ -329,10 +329,23 @@
 			<key>sourceSize</key>
 			<string>{240, 240}</string>
 		</dict>
+		<key>Assets/gong.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1551, 1464}, {136, 122}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {136, 122}}</string>
+			<key>sourceSize</key>
+			<string>{136, 122}</string>
+		</dict>
 		<key>Assets/itemPlaceholder.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1551, 1820}, {182, 182}}</string>
+			<string>{{1551, 1812}, {182, 182}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
