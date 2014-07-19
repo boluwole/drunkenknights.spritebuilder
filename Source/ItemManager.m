@@ -186,7 +186,10 @@
 
 + (void) barrelUpdate: (NSMutableArray*) activeBarrelLifetimes : (int) index : (int) life {
     
-    CCNode* barrel = (CCNode*) activeBarrelLifetimes[index];
+    //load game item images into memory
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"assets.plist"];
+    
+    CCSprite* barrel = (CCSprite*) activeBarrelLifetimes[index];
     activeBarrelLifetimes[index+1] = [NSNumber numberWithInt:life];
     
     CCLOG(@"\n\nthis barrel has %d lives left\n\n", [activeBarrelLifetimes[index+1] intValue]);
@@ -198,10 +201,12 @@
             barrel.opacity = 1.0f;
             break;
         case 2:
-            barrel.opacity = 0.8f;
+            //barrel.opacity = 0.8f;
+            [barrel setSpriteFrame:[CCSpriteFrame frameWithImageNamed: @"Assets/barrel_cracked.png"]];
             break;
         case 1:
-            barrel.opacity = 0.5f;
+            //barrel.opacity = 0.5f;
+            [barrel setSpriteFrame:[CCSpriteFrame frameWithImageNamed: @"Assets/barrel_broken.png"]];
             break;
         case 0:
             //kill

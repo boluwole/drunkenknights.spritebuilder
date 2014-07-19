@@ -111,7 +111,7 @@
 		<key>Assets/_Dave.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{107, 323}, {107, 116}}</string>
+			<string>{{107, 441}, {107, 116}}</string>
 			<key>offset</key>
 			<string>{3, 0}</string>
 			<key>rotated</key>
@@ -124,7 +124,7 @@
 		<key>Assets/_Huey.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1, 560}, {104, 116}}</string>
+			<string>{{107, 559}, {104, 116}}</string>
 			<key>offset</key>
 			<string>{-2, 0}</string>
 			<key>rotated</key>
@@ -267,7 +267,33 @@
 		<key>Assets/barrel.png</key>
 		<dict>
 			<key>frame</key>
+			<string>{{1, 442}, {104, 117}}</string>
+			<key>offset</key>
+			<string>{-1, 0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{7, 1}, {104, 117}}</string>
+			<key>sourceSize</key>
+			<string>{120, 120}</string>
+		</dict>
+		<key>Assets/barrel_broken.png</key>
+		<dict>
+			<key>frame</key>
 			<string>{{1, 323}, {104, 117}}</string>
+			<key>offset</key>
+			<string>{-1, 0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{7, 1}, {104, 117}}</string>
+			<key>sourceSize</key>
+			<string>{120, 120}</string>
+		</dict>
+		<key>Assets/barrel_cracked.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1, 561}, {104, 117}}</string>
 			<key>offset</key>
 			<string>{-1, 0}</string>
 			<key>rotated</key>
@@ -358,7 +384,7 @@
 		<key>Assets/itemPlaceholder.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{107, 560}, {91, 91}}</string>
+			<string>{{131, 677}, {91, 91}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -371,7 +397,7 @@
 		<key>Assets/potion.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1, 442}, {116, 110}}</string>
+			<string>{{107, 323}, {116, 110}}</string>
 			<key>offset</key>
 			<string>{0, -1}</string>
 			<key>rotated</key>

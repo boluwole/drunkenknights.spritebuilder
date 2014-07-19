@@ -124,7 +124,7 @@
 		<key>Assets/_Huey.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{437, 1075}, {208, 231}}</string>
+			<string>{{809, 1085}, {208, 231}}</string>
 			<key>offset</key>
 			<string>{-4, 0}</string>
 			<key>rotated</key>
@@ -267,11 +267,37 @@
 		<key>Assets/barrel.png</key>
 		<dict>
 			<key>frame</key>
+			<string>{{437, 1075}, {208, 234}}</string>
+			<key>offset</key>
+			<string>{-2, 1}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{14, 2}, {208, 234}}</string>
+			<key>sourceSize</key>
+			<string>{240, 240}</string>
+		</dict>
+		<key>Assets/barrel_broken.png</key>
+		<dict>
+			<key>frame</key>
 			<string>{{434, 865}, {208, 234}}</string>
 			<key>offset</key>
 			<string>{-2, 1}</string>
 			<key>rotated</key>
 			<true/>
+			<key>sourceColorRect</key>
+			<string>{{14, 2}, {208, 234}}</string>
+			<key>sourceSize</key>
+			<string>{240, 240}</string>
+		</dict>
+		<key>Assets/barrel_cracked.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{599, 1285}, {208, 234}}</string>
+			<key>offset</key>
+			<string>{-2, 1}</string>
+			<key>rotated</key>
+			<false/>
 			<key>sourceColorRect</key>
 			<string>{{14, 2}, {208, 234}}</string>
 			<key>sourceSize</key>

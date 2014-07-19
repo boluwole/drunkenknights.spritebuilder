@@ -267,7 +267,33 @@
 		<key>Assets/barrel.png</key>
 		<dict>
 			<key>frame</key>
+			<string>{{852, 2215}, {417, 470}}</string>
+			<key>offset</key>
+			<string>{-4, 2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{27, 3}, {417, 470}}</string>
+			<key>sourceSize</key>
+			<string>{480, 480}</string>
+		</dict>
+		<key>Assets/barrel_broken.png</key>
+		<dict>
+			<key>frame</key>
 			<string>{{433, 2215}, {417, 470}}</string>
+			<key>offset</key>
+			<string>{-4, 2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{27, 3}, {417, 470}}</string>
+			<key>sourceSize</key>
+			<string>{480, 480}</string>
+		</dict>
+		<key>Assets/barrel_cracked.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{881, 2687}, {417, 470}}</string>
 			<key>offset</key>
 			<string>{-4, 2}</string>
 			<key>rotated</key>
@@ -462,7 +488,7 @@
 		<key>Assets/wing.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{852, 2215}, {398, 470}}</string>
+			<string>{{1271, 2201}, {398, 470}}</string>
 			<key>offset</key>
 			<string>{20, 4}</string>
 			<key>rotated</key>

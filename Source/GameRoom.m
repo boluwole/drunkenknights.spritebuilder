@@ -145,6 +145,9 @@
                     if (room.roomOccupants.count == 2){
                         btnJoin.enabled = NO;
                     }
+                    else{
+                        btnJoin.enabled = YES;
+                    }
                 
                     if ( newScreen )
                     {

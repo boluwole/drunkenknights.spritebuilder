@@ -1134,8 +1134,10 @@ OALSimpleAudio *aud2;
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair gong:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
     if(nodeB == _dave || nodeB == _huey) {
         if(gongAccess && gongHit == NO) {
-            gongHit = YES;
-            [NetworkManager sendActivatedToServer:@"Gong" iPosition:CGPointZero player:@"YES"];
+            [[_physicsNode space] addPostStepBlock:^{
+                gongHit = YES;
+                [NetworkManager sendActivatedToServer:@"Gong" iPosition:CGPointZero player:@"YES"];
+            } key:nodeA];
         }
         
     }
