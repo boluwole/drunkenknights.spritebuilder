@@ -12,7 +12,7 @@
 @implementation ItemManager
 
 //return index of beer bottle that needs to start a respawn counter, -1 if none
-+ (int) checkBeerBottles : (CCSprite*) dave :(CCSprite*) huey :(int*) daveDrunkLevel :(int*) hueyDrunkLevel :(__strong CCNode*[]) beerNodes {
++ (int) checkBeerBottles : (CCSprite*) dave :(CCSprite*) huey :(float*) daveDrunkLevel :(float*) hueyDrunkLevel :(__strong CCNode*[]) beerNodes {
     
     for(int i = 0; i < NUM_BEER_NODES; i++) {
         
@@ -27,7 +27,7 @@
                 
                 OALSimpleAudio *aud2=[OALSimpleAudio    sharedInstance];
                 [aud2 playEffect:@"Beer.wav"];
-                (*daveDrunkLevel)++;
+                (*daveDrunkLevel)+=10;
 
                 
                 [temp removeFromParentAndCleanup:YES];
@@ -49,7 +49,7 @@
                 
                 if([temp.name isEqualToString:@"BeerWheel"]) return -1;
                 
-                (*hueyDrunkLevel)++;
+                (*hueyDrunkLevel)+=10;
                 OALSimpleAudio *aud2=[OALSimpleAudio    sharedInstance];
                 [aud2 playEffect:@"Beer.wav"];
                 
@@ -65,7 +65,7 @@
                 // & network hueyDrunkLevel to update _hueyDrunkLevel on his side
                 [NetworkManager sendDeActivateItemsToServer:@"Beer"
                                                   iPosition:beerNodes[i].position
-                                                 playerInfo:[NSString stringWithFormat:@"%i", *hueyDrunkLevel]
+                                                 playerInfo:[NSString stringWithFormat:@"%f", *hueyDrunkLevel]
                                                      iIndex:[NSString stringWithFormat:@"%i", i]];
                 return i;
             }

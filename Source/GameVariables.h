@@ -14,12 +14,14 @@
 
 +(int) getItemIndex1;
 +(int) getItemIndex2;
++(NSString*) getCurrentRoomName;
 +(NSString*) getJoinRoomSuccess;
 +(NSString*) getInitConnectionStatus;
 +(NSString*) getCurrentRoom;
 +(NSMutableArray*) RoomList;
 +(NSMutableArray*) RoomInfoList;
 
++ (void) setCurrentRoomName: (NSString*) currentRoom;
 + (void) setPlayerName: (NSString*) inputName;
 + (NSString*) getPlayerName;
 +(void) setDPlayerName: (NSString*) inputName;

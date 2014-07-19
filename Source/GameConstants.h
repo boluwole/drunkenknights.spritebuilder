@@ -42,8 +42,8 @@ static CCSprite *_player;
 
 #define NUM_BEER_NODES (4)
 #define BEER_BOTTLE_RESPAWN_TIME (10)
-#define DRUNK_METER_CAP (5)
-#define BUZZ_LEVEL (3)
+#define DRUNK_METER_CAP (50)
+#define BUZZ_LEVEL (30)
 
 #define ARROW_DOTS (10)
 

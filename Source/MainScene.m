@@ -23,8 +23,8 @@ static int beerNodesCounters[NUM_BEER_NODES];
 static NSMutableArray *activeSlimeLifetimes;
 static NSMutableArray *activeBarrelLifetimes;
 static bool isFallingHuey;
-static int _drunkLevelDave;
-static int _drunkLevelHuey;
+static float _drunkLevelDave;
+static float _drunkLevelHuey;
 static bool gongHit;
 
 bool playerCharacterSet;
@@ -162,6 +162,9 @@ OALSimpleAudio *aud2;
     drunkMeter.scaleY *= 0.1;
     [self addChild:drunkMeter];
     
+    //sobering up
+    [self schedule:@selector(drunkDecrease:) interval:2.0];
+    
     //always damp
     [self schedule:@selector(damping:) interval:0.02];
     
@@ -204,7 +207,22 @@ OALSimpleAudio *aud2;
         CCNode* beerBottle = [CCBReader load:@"Beer"];
         beerBottle.scale = 0.3;
         beerNodes[i] = [[CCNode alloc] init];
-        beerNodes[i].position = ccpAdd(princessStart, ccp(-120 + i*80,-60));
+        switch(i)
+        {
+            case 1:
+                beerNodes[i].position = ccpAdd(princessStart, ccp(-40,-60));
+                break;
+            case 2:
+                beerNodes[i].position = ccpAdd(princessStart, ccp(-40,60));
+                break;
+            case 3:
+                beerNodes[i].position = ccpAdd(princessStart, ccp(40,-60));
+                break;
+            case 0:
+                beerNodes[i].position = ccpAdd(princessStart, ccp(40,60));
+                break;
+                
+        }
         [beerNodes[i] addChild:beerBottle];
         beerBottle.physicsBody.sensor = true;
         [_physicsNode addChild:beerNodes[i]];
@@ -335,7 +353,7 @@ OALSimpleAudio *aud2;
             beerNodesCounters[beerPickedUp] = 0;
         }
         
-        drunkMeter.scaleX = (_drunkLevelDave + 1);
+        drunkMeter.scaleX = ((_drunkLevelDave/10) + 0.5);
         
         if(_drunkLevelDave > BUZZ_LEVEL) {
             [MoveManager drunkSwaying:_dave :_drunkLevelDave :timeElapsed];
@@ -345,7 +363,7 @@ OALSimpleAudio *aud2;
         }
     }
     else {
-        drunkMeter.scaleX = (_drunkLevelHuey + 1);
+        drunkMeter.scaleX = ((_drunkLevelHuey/10) + 0.5);
     }
     
     
@@ -563,7 +581,17 @@ OALSimpleAudio *aud2;
     }
 }
 
-
+//sobering
+- (void)drunkDecrease:(CCTime)delta {
+    if(_player == _dave) {
+        if(_drunkLevelDave > 0) _drunkLevelDave *= 0.9;
+        if(_drunkLevelDave < 1) _drunkLevelDave = 0;
+    }
+    else {
+        if(_drunkLevelHuey > 0) _drunkLevelHuey *= 0.9;
+        if(_drunkLevelHuey < 1) _drunkLevelHuey = 0;
+    }
+}
 
 //damping
 - (void)damping:(CCTime)delta {
@@ -618,7 +646,7 @@ OALSimpleAudio *aud2;
         _dave.position = daveStart;
         _dave.physicsBody.collisionMask = NULL;
         _dave.physicsBody.velocity = ccp(0,0);
-        _drunkLevelDave = 0;
+        //_drunkLevelDave = 0;
         [self unschedule:@selector(reviveDave:)];
         [NetworkManager sendSound:@"dave_revive"];
         [aud playEffect:@"Dave_Laugh.mp3"];
@@ -640,12 +668,12 @@ OALSimpleAudio *aud2;
         _huey.position = hueyStart;
         _huey.physicsBody.collisionMask = NULL;
         _huey.physicsBody.velocity = ccp(0,0);
-        _drunkLevelHuey = 0;
+        //_drunkLevelHuey = 0;
         //TODO : network updated drunklevel to huey, or send it over in sendEveryPositionToServer
-        [NetworkManager sendDeActivateItemsToServer:@"DrunkLevel"
-                                          iPosition:CGPointZero
-                                         playerInfo:[NSString stringWithFormat:@"%i", _drunkLevelHuey]
-                                             iIndex:[NSString stringWithFormat:@"%i", _drunkLevelHuey]];
+//        [NetworkManager sendDeActivateItemsToServer:@"DrunkLevel"
+//                                          iPosition:CGPointZero
+//                                         playerInfo:[NSString stringWithFormat:@"%i", _drunkLevelHuey]
+//                                             iIndex:[NSString stringWithFormat:@"%i", _drunkLevelHuey]];
         [self unschedule:@selector(reviveHuey:)];
         [NetworkManager sendSound:@"huey_revive"];
         [aud playEffect:@"Huey_Laugh.mp3"];
@@ -1004,13 +1032,13 @@ OALSimpleAudio *aud2;
             [beerNodes[[index intValue]] addChild:temp];
 
             if ( ![player isEqual:@"DAVE"] ) {
-                _drunkLevelHuey = [player intValue];
+                _drunkLevelHuey = [player floatValue];
             }
             }
         }
     }
     else if( _player == _huey && [itemName isEqual:@"DrunkLevel"] ){
-        _drunkLevelHuey = [player intValue];
+        _drunkLevelHuey = [player floatValue];
     }
 }
 
