@@ -87,3 +87,5 @@ static CCSprite *_player;
 
 #define MAX_NUMBER_OF_RECORDS_DISPLAYED_IN_LB   20
 
+#define TIME_FOR_ITEM_ACTIVATION (12)
+

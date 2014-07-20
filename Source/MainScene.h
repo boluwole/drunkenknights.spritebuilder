@@ -19,6 +19,8 @@
     
     CCPhysicsNode *_physicsNode;
     CCPhysicsNode *_backPhysicsNode;
+    CCPhysicsNode *_temp_PhysicsNode;
+    
     
     CCSprite *_stage;
     CCNode *_cd_wheel;
@@ -27,9 +29,11 @@
     int wheelStartCounter;
     bool startRotation;
     int magicianCounter;
+    int gameStartTime;
+    BOOL itemActivate;
     //UI
     CCNode *itemBox[3];
-    
+    CCNode *iBox[3];
     CCNode *arrowNode;
     
     CCNode *drunkMeter;

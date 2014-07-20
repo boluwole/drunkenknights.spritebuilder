@@ -31,14 +31,17 @@ bool playerCharacterSet;
 bool ghostOn;
 OALSimpleAudio *aud;
 OALSimpleAudio *aud2;
+CCNode* tempItem1;
+CCNode* tempItem2;
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
     magicianCounter=0;
     startRotation=YES;
-    wheelStartCounter   =0;
+        wheelStartCounter   =0;
     [self schedule:@selector(rotateWheel:) interval:0.01f];
     [self schedule:@selector(playTing:) interval:1.0f];
+    [self schedule:@selector(keepStartTime:) interval:1.0f];
 
     aud=[OALSimpleAudio sharedInstance];
     [aud playEffect:@"StartGame.wav"];
@@ -46,7 +49,8 @@ OALSimpleAudio *aud2;
     _physicsNode.collisionDelegate = self;
     opponentActivatedItem = nil;
     
-    
+    itemActivate=NO;
+    gameStartTime=0;
     checkEnd=YES;
     //load players & statue
     _dave = (CCSprite*)[CCBReader load:@"_Dave"];
@@ -182,21 +186,20 @@ OALSimpleAudio *aud2;
     
     //initialize original two items
     NSArray* gameItems = [GameItem getGameItems];
-    CCNode* tempItem;
     GameItemData *data = [gameItems objectAtIndex:[GameVariables getItemIndex1]];
-    tempItem = [CCBReader load:data.itemName];
-    [ItemManager itemEntersInventory:tempItem];
-    tempItem.zOrder = itemBox[itemsHeld].zOrder - 1;
-    [tempItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
-    [itemBox[itemsHeld] addChild:tempItem];
+    tempItem1= [CCBReader load:data.itemName];
+    [ItemManager itemEntersInventory:tempItem1];
+    tempItem1.zOrder = itemBox[itemsHeld].zOrder - 1;
+    [tempItem1 setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
+    [itemBox[itemsHeld] addChild:tempItem1];
     itemsHeld++;
     
     data = [gameItems objectAtIndex:[GameVariables getItemIndex2]];
-    tempItem = [CCBReader load:data.itemName];
-    [ItemManager itemEntersInventory:tempItem];
-    tempItem.zOrder = itemBox[itemsHeld].zOrder - 1;
-    [tempItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
-    [itemBox[itemsHeld] addChild:tempItem];
+    tempItem2 = [CCBReader load:data.itemName];
+    [ItemManager itemEntersInventory:tempItem2];
+    tempItem2.zOrder = itemBox[itemsHeld].zOrder - 1;
+    [tempItem2 setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
+    [itemBox[itemsHeld] addChild:tempItem2];
     itemsHeld++;
     
     //beer bottles
@@ -299,7 +302,33 @@ OALSimpleAudio *aud2;
 
 
 
-
+-(void)keepStartTime:(CCTime)delta{
+    
+    gameStartTime++;
+    if(gameStartTime == TIME_FOR_ITEM_ACTIVATION ){
+        
+        itemActivate=YES;
+        for(int i=0 ; i<3 ; i++)
+            
+            tempItem1.opacity=1;
+            tempItem2.opacity=1;
+        
+        [self unschedule:@selector(keepStartTime:)];
+        
+    }
+    else if(gameStartTime  < TIME_FOR_ITEM_ACTIVATION  ){
+        for(int i = 0; i < 3; i++) {
+        
+            tempItem1.opacity=0.3;
+            tempItem2.opacity=0.3;
+            
+        }
+        
+        
+    }
+    
+    
+}
 
 - (void)update:(CCTime)delta {
     
@@ -752,6 +781,8 @@ OALSimpleAudio *aud2;
     }
     
     //item usage
+    
+    if(itemActivate){
     for(int i = 0; i < itemsHeld; i++) {
         if(CGRectContainsPoint([itemBox[i] boundingBox], touchLocation)) {
             NSArray* child = itemBox[i].children;
@@ -762,7 +793,7 @@ OALSimpleAudio *aud2;
             break;
         }
     }
-    
+    }
 }
 
 - (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
@@ -812,7 +843,7 @@ OALSimpleAudio *aud2;
         arrowNode.visible = YES;
     }
     
-    if(validItemMove) {
+    if(validItemMove && itemActivate) {
         //touchLocation = [touch locationInNode:self];
         [activatedItem.parent removeChild:activatedItem];
         activatedItem.scale = 0.5;
