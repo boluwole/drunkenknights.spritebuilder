@@ -20,6 +20,7 @@ static int roomPosition=0;
 static NSString* currentScene;
 static NSString* playername;
 static NSString* decidePlayer;
+static NSString* currentRoomName;
 
 +(void) setDPlayerName: (NSString*) inputName
 {
@@ -29,6 +30,17 @@ static NSString* decidePlayer;
 +(NSString*) getDPlayerName
 {
     return decidePlayer;
+}
+
+
++(void) setCurrentRoomName: (NSString*) input
+{
+    currentRoomName = input;
+}
+
++(NSString*) getCurrentRoomName
+{
+    return currentRoomName;
 }
 
 

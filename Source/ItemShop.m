@@ -69,6 +69,16 @@ static UIAlertView * waitAlert;
     //markers to show that we have not selected an item
     _item1Index = -1;
     _item2Index = -1;
+    
+    //display room name
+    CCLabelTTF* roomNameLabel = [CCLabelTTF labelWithString: @"Your room:" fontName:@"Helvetica" fontSize:12   ];
+    CCLabelTTF* roomName = [CCLabelTTF labelWithString: [GameVariables getCurrentRoomName] fontName:@"Helvetica" fontSize:12   ];
+    roomNameLabel.position = ccp(340,130);
+    roomNameLabel.color = [CCColor blackColor];
+    roomName.position = ccp(450,130);
+    [self addChild:roomNameLabel];
+    [self addChild:roomName];
+    
 }
 
 
@@ -325,12 +335,16 @@ static UIAlertView * waitAlert;
     
     if (buttonIndex == 1){
         //gameroom
-        
-        //[[WarpClient getInstance] leaveRoom: [GameVariables getCurrentRoom]];
-        //[GameVariables setDPlayerName:nil];
-        CCScene *gameRoomScene = [CCBReader loadAsScene:@"GameRoom"];
-        [[CCDirector sharedDirector] replaceScene:gameRoomScene];
+        [self goBack];
     }
+}
+
+- (void)goBack {
+    
+    [[WarpClient getInstance] leaveRoom: [GameVariables getCurrentRoom]];
+    
+    CCScene *gameRoomScene = [CCBReader loadAsScene:@"GameRoom"];
+    [[CCDirector sharedDirector] replaceScene:gameRoomScene];
 }
 
 

@@ -14,6 +14,7 @@
     NSMutableArray *rooms;
     CCLabelTTF *_lblUpdate;
     NSString* chosenRoomId;
+    NSString* chosenRoomName;
     NSMutableArray *labels;
     NSMutableArray *buttons;
     BOOL newScreen;
@@ -38,11 +39,10 @@
         
         CCLabelTTF *lblRoomId ;
         
-        lblRoomId = [CCLabelTTF labelWithString: @"" fontName:@"Helvetica" fontSize:12   ];
+        lblRoomId = [CCLabelTTF labelWithString: @"" fontName:@"Helvetica" fontSize:15   ];
         [lblRoomId setHorizontalAlignment:CCTextAlignmentLeft ];
         lblRoomId.position = ccp(80, 250 - ( (i+1) * 35));
         lblRoomId.anchorPoint = ccp(0,0.5);
-        lblRoomId.fontSize = 15.0;
         [labels addObject:lblRoomId];
         
         // create a join button if first time checking for rooms
@@ -140,10 +140,15 @@
                 
                     //create button for joining room
                     btnJoin = buttons[roomCount-1];
-                    btnJoin.name = room.roomId;
+                    NSString* btnMessage = [[room.roomId stringByAppendingString:@"-"] stringByAppendingString:room.roomName ];
+                    CCLOG(@"%@", btnMessage);
+                    btnJoin.name = btnMessage;
                 
                     if (room.roomOccupants.count == 2){
                         btnJoin.enabled = NO;
+                    }
+                    else{
+                        btnJoin.enabled = YES;
                     }
                 
                     if ( newScreen )
@@ -180,8 +185,9 @@
     
     CCButton *_sender = (CCButton*) sender;
     
-    chosenRoomId = _sender.name;
-    
+    NSArray *_split = [_sender.name componentsSeparatedByString:@"-"];
+    chosenRoomId = _split[0];
+    chosenRoomName = _split[1];
     //int roomJoinPosition  = [GameVariables getNoOfRoomOccupants:chosenRoomId] + 1;
     //[GameVariables : roomJoinPosition ];
     
@@ -207,11 +213,12 @@
         
         [self unschedule:@selector(roomJoinMonitor:)];
         
+        CCLOG(@"%@", chosenRoomName);
+        [GameVariables setCurrentRoom: chosenRoomId];
+        [GameVariables setCurrentRoomName: chosenRoomName];
         
         CCScene *itemShopScene = [CCBReader loadAsScene:@"ItemShop"];
         [[CCDirector sharedDirector] replaceScene:itemShopScene];
-        
-        [GameVariables setCurrentRoom: chosenRoomId];
         
     }
     else if ([status isEqualToString: @"error"]) {

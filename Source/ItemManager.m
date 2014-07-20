@@ -12,7 +12,7 @@
 @implementation ItemManager
 
 //return index of beer bottle that needs to start a respawn counter, -1 if none
-+ (int) checkBeerBottles : (CCSprite*) dave :(CCSprite*) huey :(int*) daveDrunkLevel :(int*) hueyDrunkLevel :(__strong CCNode*[]) beerNodes {
++ (int) checkBeerBottles : (CCSprite*) dave :(CCSprite*) huey :(float*) daveDrunkLevel :(float*) hueyDrunkLevel :(__strong CCNode*[]) beerNodes {
     
     for(int i = 0; i < NUM_BEER_NODES; i++) {
         
@@ -27,7 +27,7 @@
                 
                 OALSimpleAudio *aud2=[OALSimpleAudio    sharedInstance];
                 [aud2 playEffect:@"Beer.wav"];
-                (*daveDrunkLevel)++;
+                (*daveDrunkLevel)+=10;
 
                 
                 [temp removeFromParentAndCleanup:YES];
@@ -49,7 +49,7 @@
                 
                 if([temp.name isEqualToString:@"BeerWheel"]) return -1;
                 
-                (*hueyDrunkLevel)++;
+                (*hueyDrunkLevel)+=10;
                 OALSimpleAudio *aud2=[OALSimpleAudio    sharedInstance];
                 [aud2 playEffect:@"Beer.wav"];
                 
@@ -65,7 +65,7 @@
                 // & network hueyDrunkLevel to update _hueyDrunkLevel on his side
                 [NetworkManager sendDeActivateItemsToServer:@"Beer"
                                                   iPosition:beerNodes[i].position
-                                                 playerInfo:[NSString stringWithFormat:@"%i", *hueyDrunkLevel]
+                                                 playerInfo:[NSString stringWithFormat:@"%f", *hueyDrunkLevel]
                                                      iIndex:[NSString stringWithFormat:@"%i", i]];
                 return i;
             }
@@ -186,7 +186,10 @@
 
 + (void) barrelUpdate: (NSMutableArray*) activeBarrelLifetimes : (int) index : (int) life {
     
-    CCNode* barrel = (CCNode*) activeBarrelLifetimes[index];
+    //load game item images into memory
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"assets.plist"];
+    
+    CCSprite* barrel = (CCSprite*) activeBarrelLifetimes[index];
     activeBarrelLifetimes[index+1] = [NSNumber numberWithInt:life];
     
     CCLOG(@"\n\nthis barrel has %d lives left\n\n", [activeBarrelLifetimes[index+1] intValue]);
@@ -198,10 +201,12 @@
             barrel.opacity = 1.0f;
             break;
         case 2:
-            barrel.opacity = 0.8f;
+            //barrel.opacity = 0.8f;
+            [barrel setSpriteFrame:[CCSpriteFrame frameWithImageNamed: @"Assets/barrel_cracked.png"]];
             break;
         case 1:
-            barrel.opacity = 0.5f;
+            //barrel.opacity = 0.5f;
+            [barrel setSpriteFrame:[CCSpriteFrame frameWithImageNamed: @"Assets/barrel_broken.png"]];
             break;
         case 0:
             //kill
