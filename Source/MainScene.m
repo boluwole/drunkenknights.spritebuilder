@@ -34,6 +34,9 @@ OALSimpleAudio *aud2;
 CCNode* tempItem1;
 CCNode* tempItem2;
 
+CGPoint _oldVelocities[3];
+BOOL _oldFalling[3];
+
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
     magicianCounter=0;
@@ -59,6 +62,8 @@ CCNode* tempItem2;
     _dave.scale *= 0.25;
     daveStart = _dave.position;
     _drunkLevelDave = 0;
+    //_daveOldVelocity = _dave.physicsBody.velocity;
+    _oldVelocities[DAVE] = _dave.physicsBody.velocity;
     
     _huey = (CCSprite*)[CCBReader load:@"_Huey"];
     [_physicsNode addChild:_huey];
@@ -66,12 +71,16 @@ CCNode* tempItem2;
     _huey.scale *= 0.25;
     hueyStart = _huey.position;
     _drunkLevelHuey = 0;
+    //_hueyOldVelocity = _huey.physicsBody.velocity;
+    _oldVelocities[HUEY] = _huey.physicsBody.velocity;
     
     _princess = (CCSprite*)[CCBReader load:@"Princess"];
     [_physicsNode addChild:_princess];
     _princess.position = PRINCESS_START;
     _princess.scale *= 0.30;
     princessStart = _princess.position;
+    //_princessOldVelocity = _princess.physicsBody.velocity;
+    _oldVelocities[PRINCESS] = _princess.physicsBody.velocity;
     
     //decide plyaer is dave or huey based on itemshops update
     if([[GameVariables getDPlayerName] isEqualToString:@"_dave"]){
@@ -135,6 +144,7 @@ CCNode* tempItem2;
     
     for(int i = DAVE; i < HUEY; i++) {
         falling[i] = NO;
+        _oldFalling[i] = NO;
         reviveCounter[i] = 0;
     }
     
@@ -353,6 +363,20 @@ CCNode* tempItem2;
     //items
     timeElapsed = [startTime timeIntervalSinceNow];
     
+    //to make sure velocity doesn't go out of control;
+    //if current velocity is too different from last frame's velocity, cap it at past frame's velocity * cap_factor
+    if(_player == _dave) {
+        if(ccpLength(ccpSub(_dave.physicsBody.velocity, _oldVelocities[DAVE])) > VELOCITY_DIFF_CAP && !_oldFalling[DAVE]) {
+            _dave.physicsBody.velocity = ccpMult(_oldVelocities[DAVE], VELOCITY_CAP_FACTOR);
+        }
+        if(ccpLength(ccpSub(_huey.physicsBody.velocity, _oldVelocities[HUEY])) > VELOCITY_DIFF_CAP && !_oldFalling[HUEY]) {
+            _huey.physicsBody.velocity = ccpMult(_oldVelocities[HUEY], VELOCITY_CAP_FACTOR);
+        }
+        if(ccpLength(ccpSub(_princess.physicsBody.velocity, _oldVelocities[PRINCESS])) > VELOCITY_DIFF_CAP && !_oldFalling[PRINCESS]) {
+            _princess.physicsBody.velocity = ccpMult(_oldVelocities[PRINCESS], VELOCITY_CAP_FACTOR);
+        }
+    }
+    
     [self checkGhostIntersection];
     
     if(_player == _huey) {
@@ -507,6 +531,16 @@ CCNode* tempItem2;
     if (_player == _dave) {
         [ItemManager SlimeCheck:activeSlimes :activeSlimeLifetimes :timeElapsed :_dave :_huey :_princess];
         
+    }
+    
+    if(_player == _dave) {
+        _oldVelocities[DAVE] = _dave.physicsBody.velocity;
+        _oldVelocities[HUEY] = _huey.physicsBody.velocity;
+        _oldVelocities[PRINCESS] = _princess.physicsBody.velocity;
+        
+        _oldFalling[DAVE] = falling[DAVE];
+        _oldFalling[HUEY] = falling[HUEY];
+        _oldFalling[PRINCESS] = falling[PRINCESS];
     }
     
     //NetWorking
