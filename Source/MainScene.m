@@ -615,6 +615,9 @@ CCNode* tempItem2;
     if(_player == _dave) {
         if(_drunkLevelDave > 0) _drunkLevelDave *= 0.9;
         if(_drunkLevelDave < 1) _drunkLevelDave = 0;
+        
+        if(_drunkLevelHuey > 0) _drunkLevelHuey *= 0.9;
+        if(_drunkLevelHuey < 1) _drunkLevelHuey = 0;
     }
     else {
         if(_drunkLevelHuey > 0) _drunkLevelHuey *= 0.9;
