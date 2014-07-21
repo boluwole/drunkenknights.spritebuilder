@@ -175,7 +175,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "571"
             endingLineNumber = "571"
-            landmarkName = "+updateItems:name:"
+            landmarkName = "-playTing:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -207,7 +207,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "571"
             endingLineNumber = "571"
-            landmarkName = "+updateItems:name:"
+            landmarkName = "-playTing:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -223,7 +223,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "571"
             endingLineNumber = "571"
-            landmarkName = "+updateItems:name:"
+            landmarkName = "-playTing:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -255,8 +255,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "559"
             endingLineNumber = "559"
-            landmarkName = "+updateItems:name:"
-            landmarkType = "5">
+            landmarkName = "@implementation MainScene"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -399,8 +399,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "594"
             endingLineNumber = "594"
-            landmarkName = "@implementation MainScene"
-            landmarkType = "3">
+            landmarkName = "-respawnBeerBottles:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -415,7 +415,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "589"
             endingLineNumber = "589"
-            landmarkName = "-respawnBeerBottles:"
+            landmarkName = "+updateItems:name:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -479,7 +479,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "620"
             endingLineNumber = "620"
-            landmarkName = "-dropPlayer::"
+            landmarkName = "-drunkDecrease:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -575,7 +575,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "859"
             endingLineNumber = "859"
-            landmarkName = "-releaseTouch"
+            landmarkName = "-touchMoved:withEvent:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -591,7 +591,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "927"
             endingLineNumber = "927"
-            landmarkName = "-touchEnded:withEvent:"
+            landmarkName = "+updateOpponentName:"
             landmarkType = "5">
             <Locations>
                <Location
@@ -697,7 +697,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "873"
             endingLineNumber = "873"
-            landmarkName = "-releaseTouch"
+            landmarkName = "-touchMoved:withEvent:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -761,7 +761,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "290"
             endingLineNumber = "290"
-            landmarkName = "-checkGhostIntersection"
+            landmarkName = "-checkGameEnd"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -889,7 +889,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "288"
             endingLineNumber = "288"
-            landmarkName = "-alertView:clickedButtonAtIndex:"
+            landmarkName = "-checkGameEnd"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -905,7 +905,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "319"
             endingLineNumber = "319"
-            landmarkName = "-keepStartTime:"
+            landmarkName = "-checkGhostIntersection"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -921,7 +921,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "312"
             endingLineNumber = "312"
-            landmarkName = "-keepStartTime:"
+            landmarkName = "-checkGhostIntersection"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
