@@ -21,7 +21,6 @@
 + (void) sendGameStart:(NSString *)info;
 + (void) receiveGameStart:(NSString *)info;
 + (void) sendNameToServer:(NSString*)name;
-
 + (void) sendCGPointToServer:(CGPoint) msg;
 + (void) receiveCGPointFromServer:(CGPoint) msg;
 //Movement
@@ -55,7 +54,9 @@
 //sound stuff
 + (void) sendSound:(NSString*) name;
 + (void) updateMainSceneSound:(NSString*) name;
-
+//update drunkness for bubble
++ (void) sendDrunknessToServer:(NSString*)daveDrunkIndex huey_index: (NSString*)hueyDrunkIndex;
++ (void) updateDrunkIndex:(NSString*) index;
 
 
 

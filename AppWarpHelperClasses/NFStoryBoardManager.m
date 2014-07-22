@@ -118,6 +118,12 @@ static NFStoryBoardManager *nFStoryBoardManager;
     //sound stuff
     _sounds = [dataDict objectForKey:@"sounds"];
     [NetworkManager updateMainSceneSound:_sounds];
+        
+    //drunkness for bubble
+    _daveDrunkIndex = [dataDict objectForKey:@"dave_drunkness"];
+    _hueyDrunkIndex = [dataDict objectForKey:@"huey_drunkness"];
+    [NetworkManager updateDrunkIndex:_daveDrunkIndex];
+    [NetworkManager updateDrunkIndex:_hueyDrunkIndex];
     }
     
 }

@@ -581,19 +581,10 @@ BOOL _oldFalling[3];
     dave_drunk_bubble.position = ccpAdd(_dave.position, ccp(0, 10));
     huey_drunk_bubble.position = ccpAdd(_huey.position, ccp(0, 10));
     CCLOG(@"dave drunkness:%f and huey drunkness:%f", _drunkLevelDave, _drunkLevelHuey);
-    if(_drunkLevelDave>= 30.0){
-        [dave_drunk_bubble setOpacity:1];
-    }
-    else{
-        [dave_drunk_bubble setOpacity:0];
-    }
+
+    [NetworkManager sendDrunknessToServer:[NSString stringWithFormat:@"%f", _drunkLevelDave] huey_index:[NSString stringWithFormat:@"%f",_drunkLevelHuey]];
+
     
-    if(_drunkLevelHuey>=30.0){
-        [huey_drunk_bubble setOpacity:1];
-    }
-    else{
-        [huey_drunk_bubble setOpacity:0];
-    }
 }
 
 + (void)itemInfo:(NSString *) msg
@@ -1200,6 +1191,29 @@ BOOL _oldFalling[3];
     }
     
     
+}
+
++(void) updateDrunkIndex:(NSString *)index{
+    if(_player == _dave){
+        _drunkLevelHuey = [index floatValue];
+    }
+    else{
+        _drunkLevelDave = [index floatValue];
+    }
+    
+    if(_drunkLevelDave>= 30.0){
+        [dave_drunk_bubble setVisible:YES];
+    }
+    else{
+        [dave_drunk_bubble setVisible:NO];
+    }
+    
+    if(_drunkLevelHuey>=30.0){
+        [huey_drunk_bubble setVisible:YES];
+    }
+    else{
+        [huey_drunk_bubble setVisible:NO];
+    }
 }
 
 

@@ -50,7 +50,9 @@
 @property NSString* item_index;
 //sound stuff
 @property NSString* sounds;
-
+//drunkness for bubble
+@property NSString* daveDrunkIndex;
+@property NSString* hueyDrunkIndex;
 //
 @property CGPoint New_impulse;
 
