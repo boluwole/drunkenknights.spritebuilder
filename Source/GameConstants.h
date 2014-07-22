@@ -26,7 +26,7 @@ static CCSprite *_player;
 #define MOVE_SPEED (5)  //originally 20
 #define VECTOR_CAP (150)
 //#define VELOCITY_CAP (
-#define VELOCITY_DIFF_CAP (20)
+#define VELOCITY_DIFF_CAP (200)
 #define VELOCITY_CAP_FACTOR (1)
 #define DAMPING (0.978)
 #define DAMPING_STATUE (0.9)

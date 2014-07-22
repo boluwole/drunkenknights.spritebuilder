@@ -35,6 +35,7 @@ CCNode* tempItem1;
 CCNode* tempItem2;
 
 CGPoint _oldVelocities[3];
+CGPoint _oldPositions[3];
 BOOL _oldFalling[3];
 
 // is called when CCB file has completed loading
@@ -64,6 +65,7 @@ BOOL _oldFalling[3];
     _drunkLevelDave = 0;
     //_daveOldVelocity = _dave.physicsBody.velocity;
     _oldVelocities[DAVE] = _dave.physicsBody.velocity;
+    _oldPositions[DAVE] = _dave.position;
     
     _huey = (CCSprite*)[CCBReader load:@"_Huey"];
     [_physicsNode addChild:_huey];
@@ -73,6 +75,7 @@ BOOL _oldFalling[3];
     _drunkLevelHuey = 0;
     //_hueyOldVelocity = _huey.physicsBody.velocity;
     _oldVelocities[HUEY] = _huey.physicsBody.velocity;
+    _oldPositions[HUEY] = _huey.position;
     
     _princess = (CCSprite*)[CCBReader load:@"Princess"];
     [_physicsNode addChild:_princess];
@@ -81,6 +84,7 @@ BOOL _oldFalling[3];
     princessStart = _princess.position;
     //_princessOldVelocity = _princess.physicsBody.velocity;
     _oldVelocities[PRINCESS] = _princess.physicsBody.velocity;
+    _oldPositions[PRINCESS] = _princess.position;
     
     //decide plyaer is dave or huey based on itemshops update
     if([[GameVariables getDPlayerName] isEqualToString:@"_dave"]){
@@ -365,17 +369,24 @@ BOOL _oldFalling[3];
     
     //to make sure velocity doesn't go out of control;
     //if current velocity is too different from last frame's velocity, cap it at past frame's velocity * cap_factor
+    //CCLOG(@"\n\n\nDAVE VELOCITY: %f, %f\n",_dave.physicsBody.velocity.x,_dave.physicsBody.velocity.y);
+    
     if(_player == _dave) {
         if(ccpLength(ccpSub(_dave.physicsBody.velocity, _oldVelocities[DAVE])) > VELOCITY_DIFF_CAP && !_oldFalling[DAVE]) {
             _dave.physicsBody.velocity = ccpMult(_oldVelocities[DAVE], VELOCITY_CAP_FACTOR);
+            _dave.position = ccpAdd(_oldPositions[DAVE],_dave.physicsBody.velocity);
         }
         if(ccpLength(ccpSub(_huey.physicsBody.velocity, _oldVelocities[HUEY])) > VELOCITY_DIFF_CAP && !_oldFalling[HUEY]) {
             _huey.physicsBody.velocity = ccpMult(_oldVelocities[HUEY], VELOCITY_CAP_FACTOR);
+            _huey.position = ccpAdd(_oldPositions[HUEY],_huey.physicsBody.velocity);
         }
         if(ccpLength(ccpSub(_princess.physicsBody.velocity, _oldVelocities[PRINCESS])) > VELOCITY_DIFF_CAP && !_oldFalling[PRINCESS]) {
             _princess.physicsBody.velocity = ccpMult(_oldVelocities[PRINCESS], VELOCITY_CAP_FACTOR);
+            _princess.position = ccpAdd(_oldPositions[PRINCESS],_princess.physicsBody.velocity);
         }
     }
+    
+    //CCLOG(@"\nDAVE VELOCITY REDONE: %f, %f\n\n\n",_dave.physicsBody.velocity.x,_dave.physicsBody.velocity.y);
     
     [self checkGhostIntersection];
     
@@ -682,7 +693,8 @@ BOOL _oldFalling[3];
     
     switch(playerNum) {
         case DAVE:
-            [aud playEffect:@"Stage_Fall_Player.wav"];            [self schedule:@selector(reviveDave:) interval:1.0f];
+            [aud playEffect:@"Stage_Fall_Player.wav"];
+            [self schedule:@selector(reviveDave:) interval:1.0f];
             [NetworkManager sendSound:(@"dave_drop")];
             break;
         case HUEY:
