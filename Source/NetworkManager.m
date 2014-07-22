@@ -31,11 +31,7 @@
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
 }
 
-+ (void) sendDrunknessToServer:(NSString *)daveDrunkIndex huey_index:(NSString *)hueyDrunkIndex
-{
-    NSDictionary *dict =[NSDictionary dictionaryWithObjectsAndKeys:daveDrunkIndex, @"dave_drunkness",hueyDrunkIndex,@"huey_drunkness", nil];
-    [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
-}
+
 
 + (void) sendCGPointToServer:(CGPoint) msg {
     //CCLOG(@"\n\nSending %f, %f\n\n",msg.x,msg.y);
@@ -167,12 +163,21 @@
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:name, @"sounds", nil];
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
 }
+
 + (void) updateMainSceneSound:(NSString*) name {
     [MainScene playSound:name];
+
 }
 //update drunkness index
 + (void) updateDrunkIndex:(NSString*) index {
     [MainScene updateDrunkIndex:index];
 }
+
++ (void) sendDrunknessToServer:(NSString *)daveDrunkIndex huey_index:(NSString *)hueyDrunkIndex
+{
+    NSDictionary *dict =[NSDictionary dictionaryWithObjectsAndKeys:daveDrunkIndex, @"dave_drunkness",hueyDrunkIndex,@"huey_drunkness", nil];
+    [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
+}
+
 
 @end

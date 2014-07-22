@@ -34,6 +34,12 @@ static CCSprite *_player;
 #define PLAYER_REVIVE_TIME (3.0f)
 #define STATUE_REVIVE_TIME (2.0f)
 
+//Magician Spells
+#define MAGICIAN_INTERFERENCE (30)
+#define DURATION_STONES_MOVE (2)
+#define DISTANCE_RESS_STONES_MOVE (20)
+#define DISTANCE_FROM_PRINCESS_START (80)
+
 //items
 #define ITEM_DROP_PERIOD (12)
 #define ITEM_ALIVE_PERIOD (-4)

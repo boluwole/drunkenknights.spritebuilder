@@ -16,12 +16,14 @@
     
 }
 
+
 enum ItemType {
     BARREL = 0,
     Slime = 1,
     GHOST = 2,
     POWERUP = 3,
 };
+
 
 + (int) checkBeerBottles : (CCSprite*) dave :(CCSprite*) huey :(float*) daveDrunkLevel :(float*) hueyDrunkLevel :(__strong CCNode*[]) beerNodes;
 + (CCNode*)dropItem;;
@@ -33,5 +35,14 @@ enum ItemType {
     (CCSprite*) dave : (CCSprite*) huey : (CCSprite*) princess;
 + (void) barrelCheck: (CCNode*) barrel : (NSMutableArray*) activeBarrelLifetimes;
 + (void) barrelUpdate: (NSMutableArray*) activeBarrelLifetimes : (int) index : (int) life;
+
++ (bool) returnDaveSlime;
++ (bool) returnHueySlime;
++ (bool) returnPrincessSlime;
+
++(void) setDaveSlime: (bool) ds;
++(void) setHueySlime: (bool) hs;
++(void) setPrincessSlime: (bool) ps;
+
 
 @end

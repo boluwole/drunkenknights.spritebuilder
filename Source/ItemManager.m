@@ -11,6 +11,11 @@
 
 @implementation ItemManager
 
+
+static bool daveSlime=YES;
+static bool hueySlime=YES;
+static bool princessSlime=YES;
+
 //return index of beer bottle that needs to start a respawn counter, -1 if none
 + (int) checkBeerBottles : (CCSprite*) dave :(CCSprite*) huey :(float*) daveDrunkLevel :(float*) hueyDrunkLevel :(__strong CCNode*[]) beerNodes {
     
@@ -219,7 +224,7 @@
 }
 
 + (void) SlimeCheck: (CCNode*) activeSlimes : (NSMutableArray*) activeSlimeLifetimes : (NSTimeInterval) currTime :
-    (CCSprite*) dave : (CCSprite*) huey : (CCSprite*) princess {
+(CCSprite*) dave : (CCSprite*) huey : (CCSprite*) princess {
     
     NSArray* allSlimes = activeSlimes.children;
     for(int i = 0; i < allSlimes.count; i++) {
@@ -242,27 +247,68 @@
         if(CGRectContainsPoint([allSlimes[i] boundingBox], dave.position)) {
             //CCLOG(@"\n\nSlime all up");
             dave.physicsBody.velocity = ccpMult(dave.physicsBody.velocity, Slime_MULTIPLIER);
-            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
-            [aud1 playEffect:@"Vomit_slip.wav"];
-            [NetworkManager sendSound:@"dave_vomit"];
-            
+            if(daveSlime){
+                OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+                [aud1 playEffect:@"Vomit_slip.wav"];
+                [NetworkManager sendSound:@"dave_vomit"];
+                daveSlime=NO;
+            }
         }
-        if(CGRectContainsPoint([allSlimes[i] boundingBox], huey.position)) {
+        if(CGRectContainsPoint([allSlimes[i] boundingBox], huey.position) ) {
             //CCLOG(@"\n\nSlime all up");
             huey.physicsBody.velocity = ccpMult(huey.physicsBody.velocity, Slime_MULTIPLIER);
-            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
-            [aud1 playEffect:@"Vomit_slip.wav"];
-            [NetworkManager sendSound:@"huey_vomit"];
+            if(hueySlime){
+                OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+                [aud1 playEffect:@"Vomit_slip.wav"];
+                [NetworkManager sendSound:@"huey_vomit"];
+                hueySlime = NO;
+            }
         }
-        if(CGRectContainsPoint([allSlimes[i] boundingBox], princess.position)) {
+        if(CGRectContainsPoint([allSlimes[i] boundingBox], princess.position) && princessSlime) {
             princess.physicsBody.velocity = ccpMult(princess.physicsBody.velocity, Slime_MULTIPLIER);
-            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
-            [aud1 playEffect:@"Vomit_slip.wav"];
-            [NetworkManager sendSound:@"princess_vomit"];
+            if(princessSlime){
+                OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+                [aud1 playEffect:@"Vomit_slip.wav"];
+                [NetworkManager sendSound:@"princess_vomit"];
+                princessSlime=NO;
+            }
         }
     }
 }
 
+
++(bool) returnDaveSlime{
+    
+    return daveSlime;
+    
+}
+
++(bool) returnHueySlime{
+    
+    return hueySlime;
+}
+
++(bool) returnPrincessSlime{
+    
+    return princessSlime;
+    
+}
+
++(void) setDaveSlime: (bool) ds{
+    
+    daveSlime=ds;
+    
+}
++(void) setHueySlime: (bool) hs{
+    
+    hueySlime=hs;
+    
+}
++(void) setPrincessSlime: (bool) ps{
+    
+    princessSlime=ps;
+    
+}
 
 
 
