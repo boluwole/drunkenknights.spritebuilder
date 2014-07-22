@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/MainScene.m"
-            timestampString = "427355066.478865"
+            timestampString = "427684819.619593"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1031"
-            endingLineNumber = "1031"
-            landmarkName = "+playSound:"
+            startingLineNumber = "1063"
+            endingLineNumber = "1063"
+            landmarkName = "+deActivateItem:iPosition:playerInfo:iIndex:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,13 +26,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/MainScene.m"
-            timestampString = "427355066.478865"
+            timestampString = "427684819.619593"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1126"
-            endingLineNumber = "1126"
-            landmarkName = "-ccPhysicsCollisionPostSolve:gong:wildcard:"
-            landmarkType = "5">
+            startingLineNumber = "1158"
+            endingLineNumber = "1158"
+            landmarkName = "@implementation MainScene"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
