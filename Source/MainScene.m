@@ -26,8 +26,7 @@ static bool isFallingHuey;
 static float _drunkLevelDave;
 static float _drunkLevelHuey;
 static bool gongHit;
-static CCParticleSystem *dave_drunk_bubble;
-static CCParticleSystem *huey_drunk_bubble;
+
 
 bool davebubble;
 bool hueybubble;
@@ -43,6 +42,10 @@ OALSimpleAudio *aud;
 OALSimpleAudio *aud2;
 CCNode* tempItem1;
 CCNode* tempItem2;
+CCParticleSystem *dave_drunk_bubble;
+CCParticleSystem *huey_drunk_bubble;
+CCParticleSystem *dave_stone_smoke;
+CCParticleSystem *huey_stone_smoke;
 
 CGPoint _oldVelocities[3];
 CGPoint _oldPositions[3];
@@ -750,6 +753,14 @@ BOOL _oldFalling[3];
         id moveActionHueyRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp(sign * (-1) * (DISTANCE_RESS_STONES_MOVE),0)];
         [daveRess runAction: [CCActionSequence actions:moveActionDaveRess,nil]];
         [hueyRess runAction: [CCActionSequence actions:moveActionHueyRess,nil]];
+        //smoke
+        dave_stone_smoke = (CCParticleSystem *)[CCBReader load:@"Smoke_Dave"];
+        dave_stone_smoke.autoRemoveOnFinish = TRUE;
+        [daveRess.physicsNode addChild:dave_drunk_bubble];
+        
+        huey_stone_smoke = (CCParticleSystem *)[CCBReader load:@"Smoke_Huey"];
+        huey_stone_smoke.autoRemoveOnFinish = TRUE;
+        [hueyRess.physicsNode addChild:huey_stone_smoke];
     }
     
     else{
