@@ -162,7 +162,9 @@
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
 }
 + (void) updateMainSceneSound:(NSString*) name{
-    [MainScene playSound:name];
+  [MainScene playSound:name];
 }
+
+
 
 @end

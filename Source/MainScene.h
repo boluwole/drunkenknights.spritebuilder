@@ -28,9 +28,13 @@
     CCNode *gong_wheel;
     int wheelStartCounter;
     bool startRotation;
+    int slimeSound;
+    int slimeSoundForDave;
     int magicianCounter;
     int gameStartTime;
     BOOL itemActivate;
+    bool magicianAppear;
+ 
     //UI
     CCNode *itemBox[3];
     CCNode *iBox[3];

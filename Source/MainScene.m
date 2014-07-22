@@ -27,8 +27,14 @@ static float _drunkLevelDave;
 static float _drunkLevelHuey;
 static bool gongHit;
 
+bool playSlime;
+bool daveSlip;
+bool hueySlip;
+bool princessSlip;
 bool playerCharacterSet;
 bool ghostOn;
+bool replayVomit;
+bool replayVomit_dave;
 OALSimpleAudio *aud;
 OALSimpleAudio *aud2;
 CCNode* tempItem1;
@@ -40,9 +46,17 @@ BOOL _oldFalling[3];
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
+    slimeSound=0;
+    slimeSoundForDave=0;
+    daveSlip=YES;
+    hueySlip=YES;
+    princessSlip=YES;
+    magicianAppear=YES;
     magicianCounter=0;
     startRotation=YES;
         wheelStartCounter   =0;
+    replayVomit=YES;
+    replayVomit_dave=YES;
     [self schedule:@selector(rotateWheel:) interval:0.01f];
     [self schedule:@selector(playTing:) interval:1.0f];
     [self schedule:@selector(keepStartTime:) interval:1.0f];
@@ -362,10 +376,73 @@ BOOL _oldFalling[3];
     
 }
 
+-(void) slimeSoundCounter: (CCTime) delta{
+    
+    slimeSound++;
+    
+    if (slimeSound >=7){
+        
+        daveSlip=YES;
+        hueySlip=YES;
+        princessSlip=YES;
+        slimeSound=0;
+        replayVomit=YES;
+        [self unschedule:@selector(slimeSoundCounter:)];
+    }
+    
+}
+
+-(void) reactivateSlimeSound{
+    
+    if((!daveSlip || !hueySlip || !princessSlip) && replayVomit) {
+        
+        replayVomit=NO;
+        [self schedule:@selector(slimeSoundCounter:) interval:1.0f];
+        
+        
+    }
+    
+}
+
+-(void) slimeSoundCounterForDave: (CCTime) delta{
+    
+    
+    slimeSoundForDave++;
+    if (slimeSoundForDave >=7){
+        [ItemManager setDaveSlime: YES ];
+        [ItemManager setHueySlime: YES ];
+        [ItemManager setPrincessSlime:YES];
+        slimeSoundForDave=0;
+        replayVomit_dave=YES;
+        [self unschedule:@selector(slimeSoundCounterForDave:)];
+    }
+    
+}
+
+
+-(void) reactivateSlimeSoundForDave{
+    
+    [self schedule:@selector(slimeSoundCounterForDave:) interval:1.0f];
+    
+}
+
 - (void)update:(CCTime)delta {
     
     //items
     timeElapsed = [startTime timeIntervalSinceNow];
+    
+    [self reactivateSlimeSound];
+    
+     bool dave_Slip=[ItemManager returnDaveSlime];
+     bool huey_Slip=[ItemManager returnHueySlime];
+     bool princess_Slip=[ItemManager returnPrincessSlime];
+    
+    if((!dave_Slip || !huey_Slip || !princess_Slip) && replayVomit_dave)
+    {
+        replayVomit_dave=NO;
+        [self reactivateSlimeSoundForDave];
+        
+    }
     
     //to make sure velocity doesn't go out of control;
     //if current velocity is too different from last frame's velocity, cap it at past frame's velocity * cap_factor
@@ -610,11 +687,38 @@ BOOL _oldFalling[3];
         [aud playEffect:@"item_ping.wav"];
     if(wheelStartCounter >= ITEM_DROP_PERIOD)
         wheelStartCounter = 0;
-    if(magicianCounter>=35){
+    if(magicianCounter >= MAGICIAN_INTERFERENCE && magicianAppear){
         magicianCounter=0;
         [aud playEffect:@"Evil Magician Random DIalogue.mp3"];
+        [self moveRessurectionStone];
     }
     
+}
+
+
+-(void) moveRessurectionStone{
+    int sign;
+    float dist = ccpDistance(daveRess.position, princessStart);
+    if( (int)dist >= DISTANCE_FROM_PRINCESS_START ){
+        
+        if(daveRess.position.x > princessStart.x){
+            sign= -1 ;
+        }
+        else{
+            sign= 1 ;
+        }
+        
+        id moveActionDaveRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp(sign*DISTANCE_RESS_STONES_MOVE,0)];
+        id moveActionHueyRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp(sign * (-1) * (DISTANCE_RESS_STONES_MOVE),0)];
+        [daveRess runAction: [CCActionSequence actions:moveActionDaveRess,nil]];
+        [hueyRess runAction: [CCActionSequence actions:moveActionHueyRess,nil]];
+    }
+    
+    else{
+        
+        magicianAppear=NO;
+        
+    }
 }
 
 
@@ -1145,12 +1249,28 @@ BOOL _oldFalling[3];
             [aud1 playEffect:@"Stage_Fall_Princess.wav"];
         }
         
-        if([name isEqualToString:@"huey_vomit"] ||[name isEqualToString:@"dave_vomit"] || [name isEqualToString:@"princess_vomit"]){
+        if([name isEqualToString:@"huey_vomit"] && hueySlip){
+            hueySlip=NO;
             [aud playEffect:@"Vomit_slip.wav"];
             [NetworkManager sendSound:@"blank"];
             OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
             [aud1 playEffect:@"Vomit_slip.wav"];
         }
+        if([name isEqualToString:@"dave_vomit"] && daveSlip){
+            daveSlip=NO;
+            [aud playEffect:@"Vomit_slip.wav"];
+            [NetworkManager sendSound:@"blank"];
+            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+            [aud1 playEffect:@"Vomit_slip.wav"];
+        }
+
+        if([name isEqualToString:@"princess_vomit"] && princessSlip){
+            princessSlip=NO;
+            [NetworkManager sendSound:@"blank"];
+            OALSimpleAudio *aud1=[OALSimpleAudio sharedInstance];
+            [aud1 playEffect:@"Vomit_slip.wav"];
+        }
+
         
         if([name isEqualToString:@"dave_revive"]){
             [aud playEffect:@"Dave_Laugh.mp3"];
@@ -1166,7 +1286,6 @@ BOOL _oldFalling[3];
             [aud1 playEffect:@"Huey_Laugh.mp3"];
         }
     }
-    
     
 }
 
@@ -1190,7 +1309,7 @@ BOOL _oldFalling[3];
     //if((CGRectContainsPoint([gong boundingBox] , _dave.position) || CGRectContainsPoint([gong boundingBox] , _huey.position))  && gongAccess){
         
         
-        [aud playEffect:@"Gong_Activate_Duration.mp3"];
+        [aud playEffect:@"export.mp3"];
         if(gongColorChange){
             [gong setColor:[CCColor colorWithRed:0.5 green:0.8 blue:0.9 alpha:0.5]];
             gongColorChange=NO;
