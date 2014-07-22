@@ -83,6 +83,8 @@
 		F59F9FE0194854EC00AD2AEC /* GameItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F59F9FDF194854EC00AD2AEC /* GameItem.m */; };
 		F59F9FEC1949579200AD2AEC /* ArrowHead.m in Sources */ = {isa = PBXBuildFile; fileRef = F59F9FEB1949579200AD2AEC /* ArrowHead.m */; };
 		F59F9FF0194957B100AD2AEC /* ArrowBody.m in Sources */ = {isa = PBXBuildFile; fileRef = F59F9FEF194957B100AD2AEC /* ArrowBody.m */; };
+		F5F881FF197F150100CB2C0A /* gameOverLoser.wav in Resources */ = {isa = PBXBuildFile; fileRef = F5F881FE197F150100CB2C0A /* gameOverLoser.wav */; };
+		F5F88201197F171600CB2C0A /* gameOverWin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F5F88200197F171600CB2C0A /* gameOverWin.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,6 +209,8 @@
 		F59F9FEB1949579200AD2AEC /* ArrowHead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArrowHead.m; path = Source/ArrowHead.m; sourceTree = "<group>"; };
 		F59F9FEE194957B100AD2AEC /* ArrowBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArrowBody.h; path = Source/ArrowBody.h; sourceTree = "<group>"; };
 		F59F9FEF194957B100AD2AEC /* ArrowBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArrowBody.m; path = Source/ArrowBody.m; sourceTree = "<group>"; };
+		F5F881FE197F150100CB2C0A /* gameOverLoser.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gameOverLoser.wav; sourceTree = "<group>"; };
+		F5F88200197F171600CB2C0A /* gameOverWin.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gameOverWin.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +250,8 @@
 				0AA80F2F1975F4A50090E213 /* export.mp3 */,
 				0AA80F301975F4A50090E213 /* Game_Music.mp3 */,
 				0AA80F311975F4A50090E213 /* Game_Over.mp3 */,
+				F5F881FE197F150100CB2C0A /* gameOverLoser.wav */,
+				F5F88200197F171600CB2C0A /* gameOverWin.mp3 */,
 				0AA80F321975F4A50090E213 /* GhostStatue_PlayerPassThrough.wav */,
 				0AA80F331975F4A50090E213 /* Gong_Activate_Duration.mp3 */,
 				0AA80F341975F4A50090E213 /* gong_reactivate.wav */,
@@ -526,6 +532,7 @@
 				F594CD43194BCD2000FE0029 /* ManagerIncludes.h in Resources */,
 				0AA80F421975F4A50090E213 /* GhostStatue_PlayerPassThrough.wav in Resources */,
 				B7378978180762440076A88C /* Default@2x.png in Resources */,
+				F5F881FF197F150100CB2C0A /* gameOverLoser.wav in Resources */,
 				0AA80F3C1975F4A50090E213 /* Dave_Huey_Collide.wav in Resources */,
 				0AA80F52197604FA0090E213 /* Vomit_slip.wav in Resources */,
 				B71F5914188484E7003F4D28 /* iPad@2x.png in Resources */,
@@ -554,6 +561,7 @@
 				B71F5918188484E7003F4D28 /* iPhone@2x.png in Resources */,
 				0AA80F381975F4A50090E213 /* Activate_Item.wav in Resources */,
 				0AA80F3E1975F4A50090E213 /* Evil Magician Random DIalogue.mp3 in Resources */,
+				F5F88201197F171600CB2C0A /* gameOverWin.mp3 in Resources */,
 				B7378977180762440076A88C /* Default.png in Resources */,
 				B71F5911188484E7003F4D28 /* iPad-old.png in Resources */,
 			);

@@ -305,15 +305,41 @@ BOOL _oldFalling[3];
     if(checkEnd && (CGRectContainsPoint([daveRess boundingBox], _princess.position) || CGRectContainsPoint([hueyRess boundingBox], _princess.position))) {
         
         checkEnd=NO;
-        [aud playEffect:@"Game_Over.mp3"];
+       // [aud playEffect:@"Game_Over.mp3"];
         NSString* gameEndMessage;
         NSString* victory = @"The Day Is Yours!";
         NSString* defeat = @"Sorry, You Sad Drunk";
         if(CGRectContainsPoint([daveRess boundingBox], _princess.position)) {
             gameEndMessage = (_player == _dave) ? victory : defeat;
+            if(gameEndMessage == victory){
+                
+                [aud playEffect:@"gameOverWin.mp3"];
+                
+            }
+            
+            else{
+                
+                [aud playEffect:@"gameOverLoser.wav"];
+                
+            }
+            
+            
         }
         else {
             gameEndMessage = (_player == _dave) ? defeat : victory;
+            
+            if(gameEndMessage == victory){
+                
+                [aud playEffect:@"gameOverWin.mp3"];
+                
+            }
+            
+            else{
+                
+                [aud playEffect:@"gameOverLoser.wav"];
+                
+            }
+
         }
         
         _dave.physicsBody.velocity = CGPointZero;
