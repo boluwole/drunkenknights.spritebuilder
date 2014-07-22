@@ -21,8 +21,13 @@ static CCSprite *_player;
 #define HUEY_START ccp(465,160)
 #define PRINCESS_START ccp(285,160)
 
+
+//MOVEMENT
 #define MOVE_SPEED (5)  //originally 20
 #define VECTOR_CAP (150)
+//#define VELOCITY_CAP (
+#define VELOCITY_DIFF_CAP (200)
+#define VELOCITY_CAP_FACTOR (1)
 #define DAMPING (0.978)
 #define DAMPING_STATUE (0.9)
 

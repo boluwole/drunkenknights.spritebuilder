@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1063"
             endingLineNumber = "1063"
-            landmarkName = "+deActivateItem:iPosition:playerInfo:iIndex:"
+            landmarkName = "-touchEnded:withEvent:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -31,8 +31,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1158"
             endingLineNumber = "1158"
-            landmarkName = "@implementation MainScene"
-            landmarkType = "3">
+            landmarkName = "+playSound:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
