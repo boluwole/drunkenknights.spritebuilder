@@ -26,6 +26,8 @@ static bool isFallingHuey;
 static float _drunkLevelDave;
 static float _drunkLevelHuey;
 static bool gongHit;
+static CCParticleSystem *dave_drunk_bubble;
+static CCParticleSystem *huey_drunk_bubble;
 
 bool playSlime;
 bool daveSlip;
@@ -81,6 +83,11 @@ BOOL _oldFalling[3];
     _oldVelocities[DAVE] = _dave.physicsBody.velocity;
     _oldPositions[DAVE] = _dave.position;
     
+    //bubble
+    dave_drunk_bubble = (CCParticleSystem *)[CCBReader load:@"bubble"];
+    dave_drunk_bubble.autoRemoveOnFinish = TRUE;
+    [_dave.physicsNode addChild:dave_drunk_bubble];
+    
     _huey = (CCSprite*)[CCBReader load:@"_Huey"];
     [_physicsNode addChild:_huey];
     _huey.position = HUEY_START;
@@ -90,6 +97,12 @@ BOOL _oldFalling[3];
     //_hueyOldVelocity = _huey.physicsBody.velocity;
     _oldVelocities[HUEY] = _huey.physicsBody.velocity;
     _oldPositions[HUEY] = _huey.position;
+    
+    //bubble
+    huey_drunk_bubble = (CCParticleSystem *)[CCBReader load:@"bubble"];
+    huey_drunk_bubble.autoRemoveOnFinish = TRUE;
+    //huey_drunk_bubble.position = _huey.position;
+    [_huey.physicsNode addChild:huey_drunk_bubble];
     
     _princess = (CCSprite*)[CCBReader load:@"Princess"];
     [_physicsNode addChild:_princess];
@@ -638,9 +651,26 @@ BOOL _oldFalling[3];
                                                  :[NSString stringWithFormat:@"%i",_huey.zOrder] :[NSString stringWithFormat:@"%i",_dave.zOrder] :[NSString stringWithFormat:@"%i",_princess.zOrder]
                                                  :[NSString stringWithFormat:@"%i",falling[HUEY]]];
         
+    
+    }
+    //update bubble
+    
+    dave_drunk_bubble.position = ccpAdd(_dave.position, ccp(0, 10));
+    huey_drunk_bubble.position = ccpAdd(_huey.position, ccp(0, 10));
+    CCLOG(@"dave drunkness:%f and huey drunkness:%f", _drunkLevelDave, _drunkLevelHuey);
+    if(_drunkLevelDave>= 30.0){
+        [dave_drunk_bubble setOpacity:1];
+    }
+    else{
+        [dave_drunk_bubble setOpacity:0];
     }
     
-    
+    if(_drunkLevelHuey>=30.0){
+        [huey_drunk_bubble setOpacity:1];
+    }
+    else{
+        [huey_drunk_bubble setOpacity:0];
+    }
 }
 
 + (void)itemInfo:(NSString *) msg
@@ -1045,6 +1075,8 @@ BOOL _oldFalling[3];
         else {
             [NetworkManager sendCGPointToServer:launchDirection];
         }
+        //dave_drunk_bubble.position = _dave.position;
+        //huey_drunk_bubble.position = _huey.position;
         
     }
     
