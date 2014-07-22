@@ -169,13 +169,22 @@
 
 }
 //update drunkness index
-+ (void) updateDrunkIndex:(NSString*) index {
-    [MainScene updateDrunkIndex:index];
++ (void) updateDaveDrunkIndex:(NSString*) index {
+    [MainScene updateDaveDrunkIndex:index];
+}
++ (void) updateHueyDrunkIndex:(NSString *)index{
+    [MainScene updateHueyDrunkIndex:index];
 }
 
-+ (void) sendDrunknessToServer:(NSString *)daveDrunkIndex huey_index:(NSString *)hueyDrunkIndex
++ (void) sendDaveDrunknessToServer:(NSString *)daveDrunkIndex
 {
-    NSDictionary *dict =[NSDictionary dictionaryWithObjectsAndKeys:daveDrunkIndex, @"dave_drunkness",hueyDrunkIndex,@"huey_drunkness", nil];
+    NSDictionary *dict =[NSDictionary dictionaryWithObjectsAndKeys:daveDrunkIndex, @"dave_drunkness", nil];
+    [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
+}
+
++ (void) sendHueyDrunknessToServer:(NSString *)hueyDrunkIndex
+{
+    NSDictionary *dict =[NSDictionary dictionaryWithObjectsAndKeys:hueyDrunkIndex,@"huey_drunkness", nil];
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
 }
 

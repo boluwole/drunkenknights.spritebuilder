@@ -122,8 +122,8 @@ static NFStoryBoardManager *nFStoryBoardManager;
     //drunkness for bubble
     _daveDrunkIndex = [dataDict objectForKey:@"dave_drunkness"];
     _hueyDrunkIndex = [dataDict objectForKey:@"huey_drunkness"];
-    [NetworkManager updateDrunkIndex:_daveDrunkIndex];
-    [NetworkManager updateDrunkIndex:_hueyDrunkIndex];
+    [NetworkManager updateDaveDrunkIndex:_daveDrunkIndex];
+    [NetworkManager updateHueyDrunkIndex:_hueyDrunkIndex];
     }
     
 }

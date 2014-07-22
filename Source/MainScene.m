@@ -29,6 +29,8 @@ static bool gongHit;
 static CCParticleSystem *dave_drunk_bubble;
 static CCParticleSystem *huey_drunk_bubble;
 
+bool davebubble;
+bool hueybubble;
 bool playSlime;
 bool daveSlip;
 bool hueySlip;
@@ -654,13 +656,28 @@ BOOL _oldFalling[3];
     
     }
     //update bubble
+    if(davebubble == YES){
+        dave_drunk_bubble.position = ccpAdd(_dave.position, ccp(0, 10));
+    }
+    else{
+        dave_drunk_bubble.position = ccp(-100, -100);
+    }
     
-    dave_drunk_bubble.position = ccpAdd(_dave.position, ccp(0, 10));
-    huey_drunk_bubble.position = ccpAdd(_huey.position, ccp(0, 10));
+    if(hueybubble == YES){
+        huey_drunk_bubble.position = ccpAdd(_huey.position, ccp(0, 10));
+    }
+    else{
+        huey_drunk_bubble.position = ccp(-100, -100);
+    }
     CCLOG(@"dave drunkness:%f and huey drunkness:%f", _drunkLevelDave, _drunkLevelHuey);
 
-    [NetworkManager sendDrunknessToServer:[NSString stringWithFormat:@"%f", _drunkLevelDave] huey_index:[NSString stringWithFormat:@"%f",_drunkLevelHuey]];
-
+    //[NetworkManager sendDaveDrunknessToServer:[NSString stringWithFormat:@"%f", _drunkLevelDave] huey_index:[NSString stringWithFormat:@"%f",_drunkLevelHuey]];
+    if(_player == _dave){
+        [NetworkManager sendDaveDrunknessToServer:[NSString stringWithFormat:@"%f", _drunkLevelDave]];
+    }
+    else{
+        [NetworkManager sendHueyDrunknessToServer:[NSString stringWithFormat:@"%f", _drunkLevelHuey]];
+    }
     
 }
 
@@ -1312,29 +1329,25 @@ BOOL _oldFalling[3];
     
 }
 
-+(void) updateDrunkIndex:(NSString *)index{
-    if(_player == _dave){
-        _drunkLevelHuey = [index floatValue];
++(void) updateDaveDrunkIndex:(NSString *)index{
+    _drunkLevelDave = [index floatValue];
+    if(_drunkLevelDave >= 30.0){
+        davebubble = YES;
     }
     else{
-        _drunkLevelDave = [index floatValue];
-    }
-    
-    if(_drunkLevelDave>= 30.0){
-        [dave_drunk_bubble setVisible:YES];
-    }
-    else{
-        [dave_drunk_bubble setVisible:NO];
-    }
-    
-    if(_drunkLevelHuey>=30.0){
-        [huey_drunk_bubble setVisible:YES];
-    }
-    else{
-        [huey_drunk_bubble setVisible:NO];
+        davebubble = NO;
     }
 }
 
++(void) updateHueyDrunkIndex:(NSString *)index{
+    _drunkLevelHuey = [index floatValue];
+    if(_drunkLevelHuey >= 30.0){
+        hueybubble = YES;
+    }
+    else{
+        hueybubble = NO;
+    }
+}
 
 -(void) touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
 {

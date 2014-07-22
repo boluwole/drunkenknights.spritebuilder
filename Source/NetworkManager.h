@@ -55,9 +55,9 @@
 + (void) sendSound:(NSString*) name;
 + (void) updateMainSceneSound:(NSString*) name;
 //update drunkness for bubble
-+ (void) sendDrunknessToServer:(NSString*)daveDrunkIndex huey_index: (NSString*)hueyDrunkIndex;
-+ (void) updateDrunkIndex:(NSString*) index;
-
-
++ (void) updateDaveDrunkIndex:(NSString*) index;
++ (void) updateHueyDrunkIndex:(NSString*) index;
++ (void) sendDaveDrunknessToServer:(NSString *)daveDrunkIndex;
++ (void) sendHueyDrunknessToServer:(NSString *)hueyDrunkIndex;
 
 @end
