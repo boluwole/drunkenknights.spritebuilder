@@ -54,7 +54,7 @@ static bool princessSlime=YES;
                 
                 if([temp.name isEqualToString:@"BeerWheel"]) return -1;
                 
-                (*hueyDrunkLevel)+=10;
+                //(*hueyDrunkLevel)+=10;
                 OALSimpleAudio *aud2=[OALSimpleAudio    sharedInstance];
                 [aud2 playEffect:@"Beer.wav"];
                 

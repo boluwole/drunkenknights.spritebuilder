@@ -61,7 +61,7 @@ BOOL _oldFalling[3];
     magicianAppear=YES;
     magicianCounter=0;
     startRotation=YES;
-        wheelStartCounter   =0;
+    wheelStartCounter   =0;
     replayVomit=YES;
     replayVomit_dave=YES;
     [self schedule:@selector(rotateWheel:) interval:0.01f];
@@ -83,7 +83,7 @@ BOOL _oldFalling[3];
     _dave.position = DAVE_START;
     _dave.scale *= 0.25;
     daveStart = _dave.position;
-    _drunkLevelDave = 0;
+    _drunkLevelDave = 10;
     //_daveOldVelocity = _dave.physicsBody.velocity;
     _oldVelocities[DAVE] = _dave.physicsBody.velocity;
     _oldPositions[DAVE] = _dave.position;
@@ -98,7 +98,7 @@ BOOL _oldFalling[3];
     _huey.position = HUEY_START;
     _huey.scale *= 0.25;
     hueyStart = _huey.position;
-    _drunkLevelHuey = 0;
+    _drunkLevelHuey = 10;
     //_hueyOldVelocity = _huey.physicsBody.velocity;
     _oldVelocities[HUEY] = _huey.physicsBody.velocity;
     _oldPositions[HUEY] = _huey.position;
@@ -782,14 +782,18 @@ BOOL _oldFalling[3];
         //smoke
         dave_stone_smoke = (CCParticleSystem *)[CCBReader load:@"Smoke_Dave"];
         dave_stone_smoke.autoRemoveOnFinish = TRUE;
-        //[dave_stone_smoke rem];
-        [daveRess addChild:dave_stone_smoke];
-
         
         huey_stone_smoke = (CCParticleSystem *)[CCBReader load:@"Smoke_Huey"];
         huey_stone_smoke.autoRemoveOnFinish = TRUE;
-        //[huey_stone_smoke removeFromParent];
-        [hueyRess addChild:huey_stone_smoke];
+
+        if(sign == 1){
+            [daveRess addChild:dave_stone_smoke];
+            [hueyRess addChild:huey_stone_smoke];
+        }
+        else{
+            [daveRess addChild:huey_stone_smoke];
+            [hueyRess addChild:dave_stone_smoke];
+        }
     }
     
     else{
@@ -840,15 +844,15 @@ BOOL _oldFalling[3];
 //sobering
 - (void)drunkDecrease:(CCTime)delta {
     if(_player == _dave) {
-        if(_drunkLevelDave > 0) _drunkLevelDave *= 0.9;
-        if(_drunkLevelDave < 1) _drunkLevelDave = 0;
+        if(_drunkLevelDave > 1) _drunkLevelDave *= 0.99;
+        if(_drunkLevelDave < 1) _drunkLevelDave = 1;
         
 //        if(_drunkLevelHuey > 0) _drunkLevelHuey *= 0.9;
 //        if(_drunkLevelHuey < 1) _drunkLevelHuey = 0;
     }
     else {
-        if(_drunkLevelHuey > 0) _drunkLevelHuey *= 0.9;
-        if(_drunkLevelHuey < 1) _drunkLevelHuey = 0;
+        if(_drunkLevelHuey > 1) _drunkLevelHuey *= 0.99;
+        if(_drunkLevelHuey < 1) _drunkLevelHuey = 1;
     }
 }
 
@@ -1296,13 +1300,15 @@ BOOL _oldFalling[3];
             [beerNodes[[index intValue]] addChild:temp];
 
             if ( ![player isEqual:@"DAVE"] ) {
-                _drunkLevelHuey = [player floatValue];
+                //_drunkLevelHuey = [player floatValue];
+                _drunkLevelHuey += 10;
             }
             }
         }
     }
     else if( _player == _huey && [itemName isEqual:@"DrunkLevel"] ){
-        _drunkLevelHuey = [player floatValue];
+        //_drunkLevelHuey = [player floatValue];
+        _drunkLevelHuey += 10;
     }
 }
 
@@ -1370,27 +1376,29 @@ BOOL _oldFalling[3];
 }
 
 +(void) updateDaveDrunkIndex:(NSString *)index{
-    if(_player == _huey){
+    if(_player == _huey && [index floatValue] >=1){
         _drunkLevelDave = [index floatValue];
-        if(_drunkLevelDave >= 30.0){
-            davebubble = YES;
-        }
-        else{
-            davebubble = NO;
-        }
+        
+    }
+    if(_drunkLevelDave >= 30.0){
+        davebubble = YES;
+    }
+    else{
+        davebubble = NO;
     }
 }
 
 +(void) updateHueyDrunkIndex:(NSString *)index{
-    if(_player == _dave){
+    if(_player == _dave && [index floatValue] >=1){
         _drunkLevelHuey = [index floatValue];
-        if(_drunkLevelHuey >= 30.0){
-            hueybubble = YES;
-        }
-        else{
-            hueybubble = NO;
-        }
     }
+    if(_drunkLevelHuey >= 30.0){
+        hueybubble = YES;
+    }
+    else{
+        hueybubble = NO;
+    }
+
 }
 
 -(void) touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event

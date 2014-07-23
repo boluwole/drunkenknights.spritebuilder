@@ -36,7 +36,7 @@ static CCSprite *_player;
 
 //Magician Spells
 #define MAGICIAN_INTERFERENCE (30)
-#define DURATION_STONES_MOVE (2)
+#define DURATION_STONES_MOVE (1)
 #define DISTANCE_RESS_STONES_MOVE (20)
 #define DISTANCE_FROM_PRINCESS_START (80)
 
