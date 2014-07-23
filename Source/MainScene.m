@@ -782,11 +782,14 @@ BOOL _oldFalling[3];
         //smoke
         dave_stone_smoke = (CCParticleSystem *)[CCBReader load:@"Smoke_Dave"];
         dave_stone_smoke.autoRemoveOnFinish = TRUE;
-        [daveRess.physicsNode addChild:dave_drunk_bubble];
+        //[dave_stone_smoke rem];
+        [daveRess addChild:dave_stone_smoke];
+
         
         huey_stone_smoke = (CCParticleSystem *)[CCBReader load:@"Smoke_Huey"];
         huey_stone_smoke.autoRemoveOnFinish = TRUE;
-        [hueyRess.physicsNode addChild:huey_stone_smoke];
+        //[huey_stone_smoke removeFromParent];
+        [hueyRess addChild:huey_stone_smoke];
     }
     
     else{
