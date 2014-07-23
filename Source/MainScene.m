@@ -774,9 +774,10 @@ BOOL _oldFalling[3];
         else{
             sign= 1 ;
         }
-        
-        id moveActionDaveRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp(sign*DISTANCE_RESS_STONES_MOVE,0)];
-        id moveActionHueyRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp(sign * (-1) * (DISTANCE_RESS_STONES_MOVE),0)];
+        float daveMove= DISTANCE_RESS_STONES_MOVE  ;
+        float hueyMove= (-1)*DISTANCE_RESS_STONES_MOVE  ;
+        id moveActionDaveRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp((sign*daveMove),0)];
+        id moveActionHueyRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp((sign*hueyMove),0)];
         [daveRess runAction: [CCActionSequence actions:moveActionDaveRess,nil]];
         [hueyRess runAction: [CCActionSequence actions:moveActionHueyRess,nil]];
         //smoke
