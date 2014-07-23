@@ -843,8 +843,8 @@ BOOL _oldFalling[3];
         if(_drunkLevelDave > 0) _drunkLevelDave *= 0.9;
         if(_drunkLevelDave < 1) _drunkLevelDave = 0;
         
-        if(_drunkLevelHuey > 0) _drunkLevelHuey *= 0.9;
-        if(_drunkLevelHuey < 1) _drunkLevelHuey = 0;
+//        if(_drunkLevelHuey > 0) _drunkLevelHuey *= 0.9;
+//        if(_drunkLevelHuey < 1) _drunkLevelHuey = 0;
     }
     else {
         if(_drunkLevelHuey > 0) _drunkLevelHuey *= 0.9;
@@ -1370,22 +1370,26 @@ BOOL _oldFalling[3];
 }
 
 +(void) updateDaveDrunkIndex:(NSString *)index{
-    _drunkLevelDave = [index floatValue];
-    if(_drunkLevelDave >= 30.0){
-        davebubble = YES;
-    }
-    else{
-        davebubble = NO;
+    if(_player == _huey){
+        _drunkLevelDave = [index floatValue];
+        if(_drunkLevelDave >= 30.0){
+            davebubble = YES;
+        }
+        else{
+            davebubble = NO;
+        }
     }
 }
 
 +(void) updateHueyDrunkIndex:(NSString *)index{
-    _drunkLevelHuey = [index floatValue];
-    if(_drunkLevelHuey >= 30.0){
-        hueybubble = YES;
-    }
-    else{
-        hueybubble = NO;
+    if(_player == _dave){
+        _drunkLevelHuey = [index floatValue];
+        if(_drunkLevelHuey >= 30.0){
+            hueybubble = YES;
+        }
+        else{
+            hueybubble = NO;
+        }
     }
 }
 
