@@ -111,7 +111,7 @@ BOOL _oldFalling[3];
     _princess = (CCSprite*)[CCBReader load:@"Princess"];
     [_physicsNode addChild:_princess];
     _princess.position = PRINCESS_START;
-    _princess.scale *= 0.30;
+    _princess.scale *= 0.40;
     princessStart = _princess.position;
     //_princessOldVelocity = _princess.physicsBody.velocity;
     _oldVelocities[PRINCESS] = _princess.physicsBody.velocity;
