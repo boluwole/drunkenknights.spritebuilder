@@ -107,7 +107,7 @@
 }
 
 //Update Client Side
-+ (void) updateEveryPosition:(CGPoint)msgH positionDave:(CGPoint)msgD positionPrincess:(CGPoint)msgP :(NSString*)zH :(NSString*)zD :(NSString*)zP :(NSString*) fallingH;
++ (void) updateEveryPosition:(CGPoint)msgH positionDave:(CGPoint)msgD positionPrincess:(CGPoint)msgP :(NSString*)zH :(NSString*)zD :(NSString*)zP :(NSString*) fallingH :(CGPoint) velocityH :(CGPoint) velocityD;
 
 + (void) itemInfo:(NSString *) msg;
 + (void) activateItems:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo: (NSString*)player;

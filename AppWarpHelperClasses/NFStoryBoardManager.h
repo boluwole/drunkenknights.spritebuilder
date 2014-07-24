@@ -31,6 +31,8 @@
 @property NSString* zorder_dave;
 @property NSString* zorder_princess;
 @property NSString* falling_huey;
+@property CGPoint velocity_huey;
+@property CGPoint velocity_dave;
 
 //opponent name
 @property NSString* opponentname;

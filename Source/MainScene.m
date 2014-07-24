@@ -24,6 +24,8 @@ static int beerNodesCounters[NUM_BEER_NODES];
 static NSMutableArray *activeSlimeLifetimes;
 static NSMutableArray *activeBarrelLifetimes;
 static bool isFallingHuey;
+static CGPoint velocityHuey;
+static CGPoint velocityDave;
 static float _drunkLevelDave;
 static float _drunkLevelHuey;
 static bool gongHit;
@@ -146,12 +148,12 @@ BOOL _oldFalling[3];
     cloud1.anchorPoint = ccp(0,0);
     cloud1.scaleY *= 1.2;
     cloud1.position = CLOUD1_POSN;
-    cloud1.opacity *= 0.6;
+    cloud1.opacity *= 0.3;
     [_physicsNode addChild: cloud1];
     
     cloud2.anchorPoint = ccp(0,0);
     cloud2.scaleY *= 1.2;
-    cloud2.opacity *= 0.6;
+    cloud2.opacity *= 0.3;
     cloud2.position=ccp([cloud1 boundingBox].size.width,0);
     [_physicsNode addChild:cloud2];
     
@@ -558,14 +560,31 @@ BOOL _oldFalling[3];
         _princess.physicsBody.sensor = true;
     }
     
-    if(ccpLengthSQ(_player.physicsBody.velocity) > 25) {
-        if(![[_player.animationManager runningSequenceName] isEqual:@"Walk"])
-                [_player.animationManager runAnimationsForSequenceNamed:@"Walk"];
+    
+    //current animation based on velocity
+    CGPoint daveVelocity = (_player == _dave) ? _player.physicsBody.velocity : velocityDave;
+    CGPoint hueyVelocity = (_player == _dave) ? _huey.physicsBody.velocity : velocityHuey;
+    
+    CCLOG(@"\n\n\nHUEY V: %f, %f\n\n\n",hueyVelocity.x,hueyVelocity.y);
+    
+    if(ccpLengthSQ(daveVelocity) > 25) {
+        if(![[_dave.animationManager runningSequenceName] isEqual:@"Walk"])
+                [_dave.animationManager runAnimationsForSequenceNamed:@"Walk"];
     }
     else {
-        if(![[_player.animationManager runningSequenceName] isEqual:@"Idle"])
+        if(![[_dave.animationManager runningSequenceName] isEqual:@"Idle"])
                     [_dave.animationManager runAnimationsForSequenceNamed:@"Idle"];
     }
+    
+    if(ccpLengthSQ(hueyVelocity) > 25) {
+        if(![[_huey.animationManager runningSequenceName] isEqual:@"Walk"])
+            [_huey.animationManager runAnimationsForSequenceNamed:@"Walk"];
+    }
+    else {
+        if(![[_huey.animationManager runningSequenceName] isEqual:@"Idle"])
+            [_huey.animationManager runAnimationsForSequenceNamed:@"Idle"];
+    }
+    
     
     if (_princess.zOrder > _stage.zOrder)[self checkGameEnd];
     if(gongAccess && gongHit) [self checkGong];
@@ -723,7 +742,7 @@ BOOL _oldFalling[3];
     if (_player == _dave) {
         [NetworkManager sendEveryPositionToServer:_huey.position poitionDave:_dave.position poitionPrincess:_princess.position
                                                  :[NSString stringWithFormat:@"%i",_huey.zOrder] :[NSString stringWithFormat:@"%i",_dave.zOrder] :[NSString stringWithFormat:@"%i",_princess.zOrder]
-                                                 :[NSString stringWithFormat:@"%i",falling[HUEY]]];
+                                                 :[NSString stringWithFormat:@"%i",falling[HUEY]] :_huey.physicsBody.velocity :_dave.physicsBody.velocity];
         
     
     }
@@ -1197,7 +1216,8 @@ BOOL _oldFalling[3];
     }
 }
 
-+ (void)updateEveryPosition:(CGPoint)msgH positionDave:(CGPoint)msgD positionPrincess:(CGPoint)msgP :(NSString*)zH :(NSString*)zD :(NSString*)zP :(NSString*) fallingH
++ (void)updateEveryPosition:(CGPoint)msgH positionDave:(CGPoint)msgD positionPrincess:(CGPoint)msgP :(NSString*)zH :(NSString*)zD :(NSString*)zP
+                           :(NSString*) fallingH :(CGPoint) velocityH :(CGPoint) velocityD
 {
     if (_player == _huey) {
         if (msgH.x != 0 && msgH.y != 0) {
@@ -1216,7 +1236,8 @@ BOOL _oldFalling[3];
         }
         
         isFallingHuey = [fallingH intValue];
-        
+        velocityHuey = velocityH;
+        velocityDave = velocityD;
     }
 }
 
