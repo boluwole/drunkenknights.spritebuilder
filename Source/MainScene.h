@@ -26,6 +26,8 @@
     CCNode *_cd_wheel;
     CCNode *arrow_down;
     CCNode *gong_wheel;
+    CCNode *cloud1;
+    CCNode *cloud2;
     int wheelStartCounter;
     bool startRotation;
     int slimeSound;

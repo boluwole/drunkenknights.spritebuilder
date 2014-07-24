@@ -103,6 +103,9 @@ BOOL _oldFalling[3];
     _oldVelocities[HUEY] = _huey.physicsBody.velocity;
     _oldPositions[HUEY] = _huey.position;
     
+    
+
+    
     //bubble
     huey_drunk_bubble = (CCParticleSystem *)[CCBReader load:@"bubble"];
     huey_drunk_bubble.autoRemoveOnFinish = TRUE;
@@ -136,6 +139,23 @@ BOOL _oldFalling[3];
     //daveRess.scale *= 0.4;
     //hueyRess.scale *= 0.4;
     
+    //clouds
+  //  CGSize size=[[CCDirector sharedDirector] viewSize ];
+    
+    cloud1=(CCSprite*)[CCBReader load:@"clouds"];
+    cloud2=(CCSprite*)[CCBReader load:@"clouds"];
+    cloud1.anchorPoint = ccp(0,0);
+    cloud1.scaleY *= 1.2;
+    cloud1.position = CLOUD1_POSN;
+    cloud1.opacity *= 0.6;
+    [_physicsNode addChild: cloud1];
+    
+    cloud2.anchorPoint = ccp(0,0);
+    cloud2.scaleY *= 1.2;
+    cloud2.opacity *= 0.6;
+    cloud2.position=ccp([cloud1 boundingBox].size.width,0);
+    [_physicsNode addChild:cloud2];
+    
     arrow_down=(CCSprite*)[CCBReader load:@"Arrow_down"];
     arrow_down.position =  ARROW_POSN;
     arrow_down.scale *= 0.05;
@@ -148,6 +168,7 @@ BOOL _oldFalling[3];
     [_physicsNode addChild:_cd_wheel];
     
     
+    [self schedule:@selector(moveClouds:) interval: 0.009f];
     //GONG
     gong=(CCSprite*)[CCBReader load: @"Gongs"];
     [_physicsNode addChild: gong];
@@ -295,7 +316,8 @@ BOOL _oldFalling[3];
     _dave.zOrder = _stage.zOrder + DAVE_Z;
     _huey.zOrder = _stage.zOrder + HUEY_Z;
     _princess.zOrder = _stage.zOrder + PRINCESS_Z;
-    
+    cloud1.zOrder=_princess.zOrder+3;
+    cloud2.zOrder=_princess.zOrder+3;
     
     [GameVariables setCurrentScene:@"MainScene"];
     //start game timer
@@ -303,6 +325,23 @@ BOOL _oldFalling[3];
     
 }
 
+
+-(void) moveClouds:(CCTime) delta{
+    
+    cloud1.position=ccp(cloud1.position.x-1, cloud1.position.y);
+    cloud2.position=ccp(cloud2.position.x-1, cloud2.position.y);
+    if(cloud1.position.x<-[cloud1 boundingBox].size.width){
+        
+        cloud1.position=ccp(cloud2.position.x+ [cloud2 boundingBox].size.width,cloud1.position.y);
+        
+    }
+    if(cloud2.position.x<-[cloud2 boundingBox].size.width){
+        
+        cloud2.position=ccp(cloud1.position.x+ [cloud1 boundingBox].size.width,cloud2.position.y);
+        
+    }
+    
+}
 
 -(void)checkGameEnd{
     

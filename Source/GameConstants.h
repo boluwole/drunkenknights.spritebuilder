@@ -40,6 +40,11 @@ static CCSprite *_player;
 #define DISTANCE_RESS_STONES_MOVE (20)
 #define DISTANCE_FROM_PRINCESS_START (80)
 
+
+//clouds
+#define CLOUD1_POSN ccp(0,0)
+
+
 //items
 #define ITEM_DROP_PERIOD (12)
 #define ITEM_ALIVE_PERIOD (-4)
