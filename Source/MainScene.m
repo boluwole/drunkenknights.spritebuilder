@@ -1236,8 +1236,8 @@ BOOL _oldFalling[3];
         }
         
         isFallingHuey = [fallingH intValue];
-        velocityHuey = velocityH;
-        velocityDave = velocityD;
+        if(ccpLengthSQ(velocityH) != 0) velocityHuey = velocityH;
+        if(ccpLengthSQ(velocityD) != 0) velocityDave = velocityD;
     }
 }
 
