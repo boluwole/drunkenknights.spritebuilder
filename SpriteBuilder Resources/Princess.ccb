@@ -64,7 +64,7 @@
 			<key>collisionType</key>
 			<string></string>
 			<key>cornerRadius</key>
-			<real>83.000030517578125</real>
+			<real>60.187530517578125</real>
 			<key>density</key>
 			<real>0.30000001192092896</real>
 			<key>dynamic</key>
@@ -76,8 +76,8 @@
 			<key>points</key>
 			<array>
 				<array>
-					<real>51.175750732421875</real>
-					<real>85.57421875</real>
+					<real>96.1796875</real>
+					<real>64.005752563476562</real>
 				</array>
 			</array>
 			<key>polygons</key>
@@ -114,7 +114,7 @@
 				<string>Point</string>
 				<key>value</key>
 				<array>
-					<real>0.417144775390625</real>
+					<real>0.5</real>
 					<real>0.3078765869140625</real>
 				</array>
 			</dict>
@@ -139,7 +139,7 @@
 				<key>value</key>
 				<array>
 					<string></string>
-					<string>Assets/statue.png</string>
+					<string>Assets/princess02.png</string>
 				</array>
 			</dict>
 			<dict>
