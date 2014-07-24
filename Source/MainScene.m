@@ -11,6 +11,7 @@
 
 @implementation MainScene{
     
+    CCNodeColor* _drunkenMeter;
     
 }
 static CCPhysicsNode *globalPhysicsNode;
@@ -83,7 +84,7 @@ BOOL _oldFalling[3];
     _dave.position = DAVE_START;
     _dave.scale *= 0.25;
     daveStart = _dave.position;
-    _drunkLevelDave = 10;
+    _drunkLevelDave = 20;
     //_daveOldVelocity = _dave.physicsBody.velocity;
     _oldVelocities[DAVE] = _dave.physicsBody.velocity;
     _oldPositions[DAVE] = _dave.position;
@@ -98,7 +99,7 @@ BOOL _oldFalling[3];
     _huey.position = HUEY_START;
     _huey.scale *= 0.25;
     hueyStart = _huey.position;
-    _drunkLevelHuey = 10;
+    _drunkLevelHuey = 20;
     //_hueyOldVelocity = _huey.physicsBody.velocity;
     _oldVelocities[HUEY] = _huey.physicsBody.velocity;
     _oldPositions[HUEY] = _huey.position;
@@ -143,7 +144,7 @@ BOOL _oldFalling[3];
     
     _cd_wheel=(CCSprite*)[CCBReader load:@"wheel_cooldown"];
     _cd_wheel.position = CD_WHEEL_POSITION;
-    _cd_wheel.scale *= 0.4;
+    _cd_wheel.scale *= 0.6;
     arrow_down.zOrder=_cd_wheel.zOrder+1;
     [_physicsNode addChild:_cd_wheel];
     
@@ -206,11 +207,14 @@ BOOL _oldFalling[3];
     [self addChild:arrowNode];
     
     //UI drunk meter
-    drunkMeter = [CCBReader load:@"Box"];
-    drunkMeter.position = ccp(10, 300);
-    drunkMeter.anchorPoint = ccp(0,0.5);
-    drunkMeter.scaleY *= 0.1;
-    [self addChild:drunkMeter];
+    //drunkMeter = [CCBReader load:@"Box"];
+    //drunkMeter.position = ccp(10, 300);
+    //drunkMeter.anchorPoint = ccp(0,0.5);
+    //drunkMeter.scaleY *= 0.1;
+    //[self addChild:drunkMeter];
+    
+    
+    //_drunkenMeter.scaleX = 0.5;
     
     //sobering up
     [self schedule:@selector(drunkDecrease:) interval:2.0];
@@ -224,10 +228,10 @@ BOOL _oldFalling[3];
     
     for(int i = 0; i < 3; i++) {
         itemBox[i]=[CCBReader load: @"Box"];
-        itemBox[i].scale *= 0.3;
+        itemBox[i].scale *= 0.5;
         [_physicsNode addChild:itemBox[i]];
         itemBox[i].position = ccp(INVENTORY_POSITION + INVENTORY_DISTANCE*i,INVENTORY_POSITION);
-        itemBox[i].opacity *= 0.6;
+        //itemBox[i].opacity *= 0.6;
         itemBox[i].zOrder = _stage.zOrder + INVENTORY_Z;
     }
     
@@ -538,7 +542,8 @@ BOOL _oldFalling[3];
             beerNodesCounters[beerPickedUp] = 0;
         }
         
-        drunkMeter.scaleX = ((_drunkLevelDave/10) + 0.5);
+        //drunkMeter.scaleX = ((_drunkLevelDave/10) + 0.5);
+        _drunkenMeter.scaleX = _drunkLevelDave/59 ;
         
         if(_drunkLevelDave > BUZZ_LEVEL) {
             [MoveManager drunkSwaying:_dave :_drunkLevelDave :timeElapsed];
@@ -548,7 +553,8 @@ BOOL _oldFalling[3];
         }
     }
     else {
-        drunkMeter.scaleX = ((_drunkLevelHuey/10) + 0.5);
+        //drunkMeter.scaleX = ((_drunkLevelHuey/10) + 0.5);
+        _drunkenMeter.scaleX = _drunkLevelHuey/59;
     }
     
     
@@ -844,14 +850,14 @@ BOOL _oldFalling[3];
 //sobering
 - (void)drunkDecrease:(CCTime)delta {
     if(_player == _dave) {
-        if(_drunkLevelDave > 1) _drunkLevelDave *= 0.99;
+        if(_drunkLevelDave > 1) _drunkLevelDave *= 0.95;
         if(_drunkLevelDave < 1) _drunkLevelDave = 1;
         
 //        if(_drunkLevelHuey > 0) _drunkLevelHuey *= 0.9;
 //        if(_drunkLevelHuey < 1) _drunkLevelHuey = 0;
     }
     else {
-        if(_drunkLevelHuey > 1) _drunkLevelHuey *= 0.99;
+        if(_drunkLevelHuey > 1) _drunkLevelHuey *= 0.95;
         if(_drunkLevelHuey < 1) _drunkLevelHuey = 1;
     }
 }

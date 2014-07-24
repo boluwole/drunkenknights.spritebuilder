@@ -43,7 +43,7 @@ static CCSprite *_player;
 //items
 #define ITEM_DROP_PERIOD (12)
 #define ITEM_ALIVE_PERIOD (-4)
-#define INVENTORY_DISTANCE (40)
+#define INVENTORY_DISTANCE (55)
 #define INVENTORY_POSITION (30)
 #define DAVE_RESS ccp(55,160)
 #define HUEY_RESS ccp(515,160)
@@ -73,7 +73,7 @@ static CCSprite *_player;
 
 //Wheel
 #define CD_WHEEL_POSITION ccp(510,50)
-#define ARROW_POSN ccp(510,75)
+#define ARROW_POSN ccp(510,95)
 
 //Portal
 #define PORTAL_POSITION_MAIN ccp(300,30)
