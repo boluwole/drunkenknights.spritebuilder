@@ -83,7 +83,14 @@
 			<true/>
 		</dict>
 		<key>Assets</key>
-		<dict/>
+		<dict>
+<<<<<<< HEAD
+			<key>isDirty</key>
+=======
+			<key>isSmartSpriteSheet</key>
+>>>>>>> 8a1cd26970b3334de94f19e48339437c031f81b6
+			<true/>
+		</dict>
 		<key>Sprites</key>
 		<dict/>
 		<key>ccbResources</key>
