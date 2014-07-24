@@ -28,8 +28,6 @@ static float _drunkLevelHuey;
 static bool gongHit;
 
 
-bool davebubble;
-bool hueybubble;
 bool playSlime;
 bool daveSlip;
 bool hueySlip;
@@ -685,19 +683,9 @@ BOOL _oldFalling[3];
     
     }
     //update bubble
-    if(davebubble == YES){
-        dave_drunk_bubble.position = ccpAdd(_dave.position, ccp(0, 10));
-    }
-    else{
-        dave_drunk_bubble.position = ccp(-100, -100);
-    }
-    
-    if(hueybubble == YES){
-        huey_drunk_bubble.position = ccpAdd(_huey.position, ccp(0, 10));
-    }
-    else{
-        huey_drunk_bubble.position = ccp(-100, -100);
-    }
+
+    dave_drunk_bubble.position = ccpAdd(_dave.position, ccp(0, 10));
+    huey_drunk_bubble.position = ccpAdd(_huey.position, ccp(0, 10));
     CCLOG(@"dave drunkness:%f and huey drunkness:%f", _drunkLevelDave, _drunkLevelHuey);
 
     //[NetworkManager sendDaveDrunknessToServer:[NSString stringWithFormat:@"%f", _drunkLevelDave] huey_index:[NSString stringWithFormat:@"%f",_drunkLevelHuey]];
@@ -1381,10 +1369,13 @@ BOOL _oldFalling[3];
         
     }
     if(_drunkLevelDave >= 30.0){
-        davebubble = YES;
+        //[_dave addChild:dave_drunk_bubble];
+        dave_drunk_bubble.scale = 1.0;
     }
     else{
-        davebubble = NO;
+        dave_drunk_bubble.scale = 0.1;
+        
+        
     }
 }
 
@@ -1393,10 +1384,10 @@ BOOL _oldFalling[3];
         _drunkLevelHuey = [index floatValue];
     }
     if(_drunkLevelHuey >= 30.0){
-        hueybubble = YES;
+        huey_drunk_bubble.scale = 1.0;
     }
     else{
-        hueybubble = NO;
+        huey_drunk_bubble.scale = 0.1;
     }
 
 }
