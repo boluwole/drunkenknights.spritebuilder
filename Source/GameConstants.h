@@ -46,6 +46,7 @@ static CCSprite *_player;
 
 
 //items
+#define TIME_FOR_ITEM_ACTIVATION (0)
 #define ITEM_DROP_PERIOD (12)
 #define ITEM_ALIVE_PERIOD (-4)
 #define INVENTORY_DISTANCE (55)
@@ -106,5 +107,4 @@ static CCSprite *_player;
 
 #define MAX_NUMBER_OF_RECORDS_DISPLAYED_IN_LB   20
 
-#define TIME_FOR_ITEM_ACTIVATION (12)
 

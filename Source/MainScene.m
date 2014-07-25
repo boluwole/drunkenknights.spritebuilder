@@ -77,7 +77,7 @@ BOOL _oldFalling[3];
     _physicsNode.collisionDelegate = self;
     opponentActivatedItem = nil;
     
-    itemActivate=NO;
+    itemActivate=YES;
     gameStartTime=0;
     checkEnd=YES;
     //load players & statue
