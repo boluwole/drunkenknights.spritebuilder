@@ -51,7 +51,7 @@
     [MainScene updateOpponent:msg];
 }
 
-+ (void) sendEveryPositionToServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP : (NSString*) fallingH :(CGPoint) velocityH :(CGPoint) velocityD
++ (void) sendEveryPositionToServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP :(NSString*) fallingH :(NSString*) fallingD :(CGPoint) velocityH :(CGPoint) velocityD
 {
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:NSStringFromCGPoint(msgH), @"position_huey",
                           NSStringFromCGPoint(msgD), @"position_dave",
@@ -60,16 +60,17 @@
                           zD, @"zorder_dave",
                           zP, @"zorder_princess",
                           fallingH, @"falling_huey",
+                          fallingD, @"falling_dave",
                           NSStringFromCGPoint(velocityD), @"velocity_dave",
                           NSStringFromCGPoint(velocityH), @"velocity_huey",
                           nil];
     [[NFStoryBoardManager sharedNFStoryBoardManager] updatePlayerDataToServerWithDataDict:dict];
 }
 
-+ (void) receiveEveryPositionFromServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP :(NSString*) fallingH :(CGPoint) velocityH :(CGPoint) velocityD
++ (void) receiveEveryPositionFromServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP :(NSString*) fallingH :(NSString*) fallingD :(CGPoint) velocityH :(CGPoint) velocityD
 {
     //CCLOG(@"\n\n\nVELOCITY_H: %f, %f",velocityH.x,velocityH.y);
-    [MainScene updateEveryPosition:msgH positionDave:msgD positionPrincess:msgP :zH :zD :zP :fallingH :velocityH :velocityD];
+    [MainScene updateEveryPosition:msgH positionDave:msgD positionPrincess:msgP :zH :zD :zP :fallingH :fallingD :velocityH :velocityD];
 }
 
 + (void) updateNameFromServer : (NSString*) name

@@ -24,6 +24,7 @@ static int beerNodesCounters[NUM_BEER_NODES];
 static NSMutableArray *activeSlimeLifetimes;
 static NSMutableArray *activeBarrelLifetimes;
 static bool isFallingHuey;
+static bool isFallingDave;
 static CGPoint velocityHuey;
 static CGPoint velocityDave;
 static float _drunkLevelDave;
@@ -104,7 +105,9 @@ BOOL _oldFalling[3];
     _oldVelocities[HUEY] = _huey.physicsBody.velocity;
     _oldPositions[HUEY] = _huey.position;
     
-    
+    //Shadows
+    shadow_Dave=(CCSprite*)[CCBReader load: @"Shadows"];
+    shadow_Huey=(CCSprite*)[CCBReader load: @"Shadows"];
 
     
     //bubble
@@ -323,6 +326,16 @@ BOOL _oldFalling[3];
     cloud1.zOrder=_princess.zOrder+3;
     cloud2.zOrder=_princess.zOrder+3;
     
+    shadow_Dave.zOrder= -1;
+    shadow_Huey.zOrder= -1;
+    shadow_Dave.position=SHADOW_OFFSET;
+    shadow_Huey.position=SHADOW_OFFSET;
+    shadow_Dave.scale = 1.8;
+    shadow_Dave.opacity = 0.6;
+    shadow_Huey.scale = 1.8;
+    shadow_Huey.opacity = 0.6;
+    [_dave addChild:shadow_Dave];
+    [_huey addChild:shadow_Huey];
     [GameVariables setCurrentScene:@"MainScene"];
     //start game timer
     startTime = [NSDate date];
@@ -565,7 +578,7 @@ BOOL _oldFalling[3];
     CGPoint daveVelocity = (_player == _dave) ? _player.physicsBody.velocity : velocityDave;
     CGPoint hueyVelocity = (_player == _dave) ? _huey.physicsBody.velocity : velocityHuey;
     
-    CCLOG(@"\n\n\nHUEY V: %f, %f\n\n\n",hueyVelocity.x,hueyVelocity.y);
+    //CCLOG(@"\n\n\nHUEY V: %f, %f\n\n\n",hueyVelocity.x,hueyVelocity.y);
     
     if(ccpLengthSQ(daveVelocity) > 25) {
         if(![[_dave.animationManager runningSequenceName] isEqual:@"Walk"])
@@ -739,10 +752,12 @@ BOOL _oldFalling[3];
     
     //NetWorking
     //Server
+    CCLOG(@"\n\nFALLINGHUEY: %i\n\n",(falling[HUEY]+1));
     if (_player == _dave) {
         [NetworkManager sendEveryPositionToServer:_huey.position poitionDave:_dave.position poitionPrincess:_princess.position
                                                  :[NSString stringWithFormat:@"%i",_huey.zOrder] :[NSString stringWithFormat:@"%i",_dave.zOrder] :[NSString stringWithFormat:@"%i",_princess.zOrder]
-                                                 :[NSString stringWithFormat:@"%i",falling[HUEY]] :_huey.physicsBody.velocity :_dave.physicsBody.velocity];
+                                                 :[NSString stringWithFormat:@"%i",(falling[HUEY]+1)] :[NSString stringWithFormat:@"%i",(falling[DAVE]+1)]
+                                                 :_huey.physicsBody.velocity :_dave.physicsBody.velocity];
         
     
     }
@@ -759,6 +774,17 @@ BOOL _oldFalling[3];
     else{
         [NetworkManager sendHueyDrunknessToServer:[NSString stringWithFormat:@"%f", _drunkLevelHuey]];
     }
+    
+    //update shadows
+    bool fallingHuey = (_player == _dave) ? falling[HUEY] : isFallingHuey;
+    bool fallingDave = (_player == _dave) ? falling[DAVE] : isFallingDave;
+    
+    //CCLOG(@"\n\nFALLING HUEY: %d\n\n",fallingHuey);
+    if(fallingHuey) shadow_Huey.visible = NO;
+    else shadow_Huey.visible = YES;
+    
+    if(fallingDave) shadow_Dave.visible = NO;
+    else shadow_Dave.visible = YES;
     
 }
 
@@ -933,11 +959,13 @@ BOOL _oldFalling[3];
     switch(playerNum) {
         case DAVE:
             [aud playEffect:@"Stage_Fall_Player.wav"];
+            //shadow_Dave.visible=NO;
             [self schedule:@selector(reviveDave:) interval:1.0f];
             [NetworkManager sendSound:(@"dave_drop")];
             break;
         case HUEY:
             [aud playEffect:@"Stage_Fall_Player.wav"];
+            //shadow_Huey.visible=NO;
             [self schedule:@selector(reviveHuey:) interval:1.0f];
             [NetworkManager sendSound:(@"huey_drop")];
             break;
@@ -967,6 +995,7 @@ BOOL _oldFalling[3];
         [self unschedule:@selector(reviveDave:)];
         [NetworkManager sendSound:@"dave_revive"];
         [aud playEffect:@"Dave_Laugh.mp3"];
+        //shadow_Dave.visible=YES;
     }
     
 }
@@ -994,6 +1023,7 @@ BOOL _oldFalling[3];
         [self unschedule:@selector(reviveHuey:)];
         [NetworkManager sendSound:@"huey_revive"];
         [aud playEffect:@"Huey_Laugh.mp3"];
+        //shadow_Huey.visible=YES;
     }
     
 }
@@ -1217,7 +1247,7 @@ BOOL _oldFalling[3];
 }
 
 + (void)updateEveryPosition:(CGPoint)msgH positionDave:(CGPoint)msgD positionPrincess:(CGPoint)msgP :(NSString*)zH :(NSString*)zD :(NSString*)zP
-                           :(NSString*) fallingH :(CGPoint) velocityH :(CGPoint) velocityD
+                           :(NSString*) fallingH :(NSString*) fallingD :(CGPoint) velocityH :(CGPoint) velocityD
 {
     if (_player == _huey) {
         if (msgH.x != 0 && msgH.y != 0) {
@@ -1235,7 +1265,14 @@ BOOL _oldFalling[3];
             _princess.zOrder = [zP intValue];
         }
         
-        isFallingHuey = [fallingH intValue];
+        if([fallingH intValue] != 0) {
+            isFallingHuey = [fallingH intValue]-1;
+        }
+        if([fallingD intValue] != 0) {
+            isFallingDave = [fallingD intValue]-1;
+        }
+        //CCLOG(@"\n\n\nisFALLINGHUEY: %d\n\n\n",isFallingHuey);
+        
         if(ccpLengthSQ(velocityH) != 0) velocityHuey = velocityH;
         if(ccpLengthSQ(velocityD) != 0) velocityDave = velocityD;
     }

@@ -70,6 +70,9 @@ static CCSprite *_player;
 #define PRINCESS_Z (3)
 #define INVENTORY_Z (5)
 
+//Shadow
+#define SHADOW_OFFSET ccp(80,20)
+
 //Gong
 #define GONG_POSITION ccp(285,275)
 #define GONG_DURATION (10)

@@ -81,9 +81,10 @@ static NFStoryBoardManager *nFStoryBoardManager;
     _zorder_huey = [dataDict objectForKey:@"zorder_huey"];
     _zorder_princess = [dataDict objectForKey:@"zorder_princess"];
     _falling_huey = [dataDict objectForKey:@"falling_huey"];
+    _falling_dave = [dataDict objectForKey:@"falling_dave"];
     _velocity_huey = CGPointFromString([dataDict objectForKey:@"velocity_huey"]);
     _velocity_dave = CGPointFromString([dataDict objectForKey:@"velocity_dave"]);
-        [NetworkManager receiveEveryPositionFromServer:_huey_position poitionDave:_dave_position poitionPrincess:_princess_position :_zorder_huey :_zorder_dave :_zorder_princess :_falling_huey :_velocity_huey :_velocity_dave];
+        [NetworkManager receiveEveryPositionFromServer:_huey_position poitionDave:_dave_position poitionPrincess:_princess_position :_zorder_huey :_zorder_dave :_zorder_princess :_falling_huey :_falling_dave :_velocity_huey :_velocity_dave];
     
     
     

@@ -28,6 +28,8 @@
     CCNode *gong_wheel;
     CCNode *cloud1;
     CCNode *cloud2;
+    CCNode *shadow_Dave;
+    CCNode *shadow_Huey;
     int wheelStartCounter;
     bool startRotation;
     int slimeSound;
@@ -107,7 +109,7 @@
 }
 
 //Update Client Side
-+ (void) updateEveryPosition:(CGPoint)msgH positionDave:(CGPoint)msgD positionPrincess:(CGPoint)msgP :(NSString*)zH :(NSString*)zD :(NSString*)zP :(NSString*) fallingH :(CGPoint) velocityH :(CGPoint) velocityD;
++ (void) updateEveryPosition:(CGPoint)msgH positionDave:(CGPoint)msgD positionPrincess:(CGPoint)msgP :(NSString*)zH :(NSString*)zD :(NSString*)zP :(NSString*) fallingH :(NSString*) fallingD :(CGPoint) velocityH :(CGPoint) velocityD;
 
 + (void) itemInfo:(NSString *) msg;
 + (void) activateItems:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo: (NSString*)player;

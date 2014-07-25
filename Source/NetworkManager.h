@@ -24,8 +24,8 @@
 + (void) sendCGPointToServer:(CGPoint) msg;
 + (void) receiveCGPointFromServer:(CGPoint) msg;
 //Movement
-+ (void) sendEveryPositionToServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP : (NSString*) fallingH :(CGPoint) velocityH :(CGPoint) velocityD;
-+ (void) receiveEveryPositionFromServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP : (NSString*) fallingH :(CGPoint) velocityH :(CGPoint) velocityD;
++ (void) sendEveryPositionToServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP : (NSString*) fallingH : (NSString*) fallingD :(CGPoint) velocityH :(CGPoint) velocityD;
++ (void) receiveEveryPositionFromServer:(CGPoint)msgH poitionDave:(CGPoint)msgD poitionPrincess:(CGPoint)msgP :(NSString*)zH : (NSString*)zD : (NSString*) zP : (NSString*) fallingH : (NSString*) fallingD :(CGPoint) velocityH :(CGPoint) velocityD;
 
 //receive opponent's name
 + (void) updateNameFromServer : (NSString*) name;
