@@ -527,8 +527,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1050"
             endingLineNumber = "1050"
-            landmarkName = "-princessMist:"
-            landmarkType = "5">
+            landmarkName = "@implementation MainScene"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
