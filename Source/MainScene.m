@@ -349,8 +349,13 @@ BOOL _oldFalling[3];
 
 -(void)checkGameEnd{
     
+//    BOOL daveFalling = CGRectContainsPoint([daveRess boundingBox], _princess.position);
+//    BOOL hueyFalling = CGRectContainsPoint([hueyRess boundingBox], _princess.position);
     
-    if(checkEnd && (CGRectContainsPoint([daveRess boundingBox], _princess.position) || CGRectContainsPoint([hueyRess boundingBox], _princess.position))) {
+    BOOL daveFalling = (ccpDistance(daveRess.position, _princess.position) <= 10) ? YES : NO;
+    BOOL hueyFalling = (ccpDistance(hueyRess.position, _princess.position) <= 10) ? YES : NO;;
+    
+    if(checkEnd && ( daveFalling | hueyFalling) ) {
         
         checkEnd=NO;
        // [aud playEffect:@"Game_Over.mp3"];
