@@ -763,7 +763,7 @@ BOOL _oldFalling[3];
         [NetworkManager sendEveryPositionToServer:_huey.position poitionDave:_dave.position poitionPrincess:_princess.position
                                                  :[NSString stringWithFormat:@"%i",_huey.zOrder] :[NSString stringWithFormat:@"%i",_dave.zOrder] :[NSString stringWithFormat:@"%i",_princess.zOrder]
                                                  :[NSString stringWithFormat:@"%i",(falling[HUEY]+1)] :[NSString stringWithFormat:@"%i",(falling[DAVE]+1)]
-                                                 :_huey.physicsBody.velocity :_dave.physicsBody.velocity];
+                                                 :ccpAdd(_huey.physicsBody.velocity,ccp(0.001,0.001)) :ccpAdd(_dave.physicsBody.velocity,ccp(0.001,0.001))];
         
     
     }
@@ -1279,8 +1279,8 @@ BOOL _oldFalling[3];
         }
         //CCLOG(@"\n\n\nisFALLINGHUEY: %d\n\n\n",isFallingHuey);
         
-        if(ccpLengthSQ(velocityH) != 0) velocityHuey = velocityH;
-        if(ccpLengthSQ(velocityD) != 0) velocityDave = velocityD;
+        if(ccpLengthSQ(velocityH) != 0) velocityHuey = ccpSub(velocityH,ccp(0.001,0.001));
+        if(ccpLengthSQ(velocityD) != 0) velocityDave = ccpSub(velocityD,ccp(0.001,0.001));
     }
 }
 
