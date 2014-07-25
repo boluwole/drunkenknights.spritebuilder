@@ -30,6 +30,8 @@ static CGPoint velocityDave;
 static float _drunkLevelDave;
 static float _drunkLevelHuey;
 static bool gongHit;
+static CCParticleSystem *dave_drunk_bubble;
+static CCParticleSystem *huey_drunk_bubble;
 
 
 bool playSlime;
@@ -44,8 +46,7 @@ OALSimpleAudio *aud;
 OALSimpleAudio *aud2;
 CCNode* tempItem1;
 CCNode* tempItem2;
-CCParticleSystem *dave_drunk_bubble;
-CCParticleSystem *huey_drunk_bubble;
+
 CCParticleSystem *dave_stone_smoke;
 CCParticleSystem *huey_stone_smoke;
 
@@ -92,7 +93,7 @@ BOOL _oldFalling[3];
     
     //bubble
     dave_drunk_bubble = (CCParticleSystem *)[CCBReader load:@"bubble"];
-    dave_drunk_bubble.autoRemoveOnFinish = TRUE;
+    //dave_drunk_bubble.autoRemoveOnFinish = TRUE;
     [_dave.physicsNode addChild:dave_drunk_bubble];
     
     _huey = (CCSprite*)[CCBReader load:@"_Huey"];
@@ -112,7 +113,7 @@ BOOL _oldFalling[3];
     
     //bubble
     huey_drunk_bubble = (CCParticleSystem *)[CCBReader load:@"bubble"];
-    huey_drunk_bubble.autoRemoveOnFinish = TRUE;
+    //huey_drunk_bubble.autoRemoveOnFinish = TRUE;
     //huey_drunk_bubble.position = _huey.position;
     [_huey.physicsNode addChild:huey_drunk_bubble];
     
@@ -362,8 +363,13 @@ BOOL _oldFalling[3];
 
 -(void)checkGameEnd{
     
+//    BOOL daveFalling = CGRectContainsPoint([daveRess boundingBox], _princess.position);
+//    BOOL hueyFalling = CGRectContainsPoint([hueyRess boundingBox], _princess.position);
     
-    if(checkEnd && (CGRectContainsPoint([daveRess boundingBox], _princess.position) || CGRectContainsPoint([hueyRess boundingBox], _princess.position))) {
+    BOOL daveFalling = (ccpDistance(daveRess.position, _princess.position) <= 10) ? YES : NO;
+    BOOL hueyFalling = (ccpDistance(hueyRess.position, _princess.position) <= 10) ? YES : NO;;
+    
+    if(checkEnd && ( daveFalling | hueyFalling) ) {
         
         checkEnd=NO;
        // [aud playEffect:@"Game_Over.mp3"];
@@ -765,7 +771,7 @@ BOOL _oldFalling[3];
 
     dave_drunk_bubble.position = ccpAdd(_dave.position, ccp(0, 10));
     huey_drunk_bubble.position = ccpAdd(_huey.position, ccp(0, 10));
-    CCLOG(@"dave drunkness:%f and huey drunkness:%f", _drunkLevelDave, _drunkLevelHuey);
+    //CCLOG(@"dave drunkness:%f and huey drunkness:%f", _drunkLevelDave, _drunkLevelHuey);
 
     //[NetworkManager sendDaveDrunknessToServer:[NSString stringWithFormat:@"%f", _drunkLevelDave] huey_index:[NSString stringWithFormat:@"%f",_drunkLevelHuey]];
     if(_player == _dave){
@@ -1473,13 +1479,10 @@ BOOL _oldFalling[3];
         
     }
     if(_drunkLevelDave >= 30.0){
-        //[_dave addChild:dave_drunk_bubble];
         dave_drunk_bubble.scale = 1.0;
     }
     else{
         dave_drunk_bubble.scale = 0.1;
-        
-        
     }
 }
 

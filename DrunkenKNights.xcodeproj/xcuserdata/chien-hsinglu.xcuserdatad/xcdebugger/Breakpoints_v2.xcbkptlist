@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/MainScene.m"
-            timestampString = "427855436.451515"
+            timestampString = "427948534.874503"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1113"
-            endingLineNumber = "1113"
-            landmarkName = "-touchMoved:withEvent:"
+            startingLineNumber = "1114"
+            endingLineNumber = "1114"
+            landmarkName = "-touchBegan:withEvent:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/MainScene.m"
-            timestampString = "427855436.451515"
+            timestampString = "427948534.874503"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1208"
-            endingLineNumber = "1208"
-            landmarkName = "+updateEveryPosition:positionDave:positionPrincess:::::"
+            startingLineNumber = "1209"
+            endingLineNumber = "1209"
+            landmarkName = "+updateOpponentName:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
