@@ -134,6 +134,12 @@ BOOL _oldFalling[3];
         _player = _huey;
     }
     
+    //indicator for player
+    CCSprite* indicator = (CCSprite*)[CCBReader load:@"Indicator"];
+    indicator.position = ccp(80,250);
+    //indicator.scale = 0.3;
+    [_player addChild:indicator];
+    
     
     daveRess = (CCSprite*)[CCBReader load:@"DaveRess"];
     hueyRess = (CCSprite*)[CCBReader load:@"HueyRess"];
