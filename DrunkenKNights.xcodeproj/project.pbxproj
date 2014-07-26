@@ -39,6 +39,9 @@
 		858F9C491957E94700F9E973 /* RemoteRoomData.m in Sources */ = {isa = PBXBuildFile; fileRef = 858F9C481957E94700F9E973 /* RemoteRoomData.m */; };
 		859AC0BA1943EE8400F68F35 /* Princess.m in Sources */ = {isa = PBXBuildFile; fileRef = 859AC0B91943EE8400F68F35 /* Princess.m */; };
 		85AF44E61982173500BCE368 /* Indicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AF44E51982173500BCE368 /* Indicator.m */; };
+		85AF44EA1983264800BCE368 /* BoxBarrel.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AF44E91983264800BCE368 /* BoxBarrel.m */; };
+		85AF44ED1983265400BCE368 /* BoxGhost.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AF44EC1983265400BCE368 /* BoxGhost.m */; };
+		85AF44F01983267200BCE368 /* BoxSlime.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AF44EF1983267200BCE368 /* BoxSlime.m */; };
 		85B6EA5C1953DDF2003D6771 /* GameVariables.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B6EA5B1953DDF2003D6771 /* GameVariables.m */; };
 		B71F5911188484E7003F4D28 /* iPad-old.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5907188484E7003F4D28 /* iPad-old.png */; };
 		B71F5912188484E7003F4D28 /* iPad-old@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5908188484E7003F4D28 /* iPad-old@2x.png */; };
@@ -147,6 +150,12 @@
 		859AC0B91943EE8400F68F35 /* Princess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Princess.m; path = Source/Princess.m; sourceTree = "<group>"; };
 		85AF44E41982173500BCE368 /* Indicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Indicator.h; path = Source/Indicator.h; sourceTree = "<group>"; };
 		85AF44E51982173500BCE368 /* Indicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Indicator.m; path = Source/Indicator.m; sourceTree = "<group>"; };
+		85AF44E81983264800BCE368 /* BoxBarrel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoxBarrel.h; sourceTree = "<group>"; };
+		85AF44E91983264800BCE368 /* BoxBarrel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoxBarrel.m; sourceTree = "<group>"; };
+		85AF44EB1983265400BCE368 /* BoxGhost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoxGhost.h; sourceTree = "<group>"; };
+		85AF44EC1983265400BCE368 /* BoxGhost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoxGhost.m; sourceTree = "<group>"; };
+		85AF44EE1983267200BCE368 /* BoxSlime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoxSlime.h; sourceTree = "<group>"; };
+		85AF44EF1983267200BCE368 /* BoxSlime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoxSlime.m; sourceTree = "<group>"; };
 		85B6EA5A1953DDF2003D6771 /* GameVariables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameVariables.h; path = Source/GameVariables.h; sourceTree = "<group>"; };
 		85B6EA5B1953DDF2003D6771 /* GameVariables.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameVariables.m; path = Source/GameVariables.m; sourceTree = "<group>"; };
 		B71F5907188484E7003F4D28 /* iPad-old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old.png"; path = "Icons/iPad-old.png"; sourceTree = "<group>"; };
@@ -430,6 +439,12 @@
 				858F9C481957E94700F9E973 /* RemoteRoomData.m */,
 				85AF44E41982173500BCE368 /* Indicator.h */,
 				85AF44E51982173500BCE368 /* Indicator.m */,
+				85AF44E81983264800BCE368 /* BoxBarrel.h */,
+				85AF44E91983264800BCE368 /* BoxBarrel.m */,
+				85AF44EB1983265400BCE368 /* BoxGhost.h */,
+				85AF44EC1983265400BCE368 /* BoxGhost.m */,
+				85AF44EE1983267200BCE368 /* BoxSlime.h */,
+				85AF44EF1983267200BCE368 /* BoxSlime.m */,
 			);
 			name = GameObjects;
 			sourceTree = "<group>";
@@ -591,10 +606,13 @@
 				F594CD14194B93BA00FE0029 /* PhysicsManager.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
 				F594CD37194BB62E00FE0029 /* RoomListener.m in Sources */,
+				85AF44EA1983264800BCE368 /* BoxBarrel.m in Sources */,
 				F594CD35194BB62E00FE0029 /* NFStoryBoardManager.m in Sources */,
 				F594CD33194BB62E00FE0029 /* AppWarpHelper.m in Sources */,
+				85AF44ED1983265400BCE368 /* BoxGhost.m in Sources */,
 				8517F464194FE2B500AD4D85 /* GameItemData.m in Sources */,
 				F5385AC8194A9C1000690095 /* Box.m in Sources */,
+				85AF44F01983267200BCE368 /* BoxSlime.m in Sources */,
 				F594CD36194BB62E00FE0029 /* NotificationListener.m in Sources */,
 				F594CD41194BC68200FE0029 /* NetworkManager.m in Sources */,
 				8517F461194D4CF000AD4D85 /* ItemShop.m in Sources */,

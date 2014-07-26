@@ -91,16 +91,16 @@ static bool princessSlime=YES;
     int randomNum = rand() % 3;
     switch(randomNum) {
         case BARREL:
-            item = [CCBReader load:@"Barrel"];
+            item = [CCBReader load:@"BoxBarrel"];
             break;
             
             
         case Slime:
-            item = [CCBReader load:@"Slime"];
+            item = [CCBReader load:@"BoxSlime"];
             break;
             
         case GHOST:
-            item = [CCBReader load: @"Ghost"];
+            item = [CCBReader load: @"BoxGhost"];
             break;
     }
     

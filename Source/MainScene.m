@@ -657,15 +657,15 @@ BOOL _oldFalling[3];
         
         //kill item
         if(currItem != nil) {
-            currItem.rotation+=10;
+            //currItem.rotation+=10;
             bool isFalling = (_player == _dave) ? falling[DAVE] : isFallingHuey;
             //item pickup
             if(CGRectContainsPoint([_player boundingBox], currItem.position) && !isFalling) {
                 if(itemsHeld < 3) {
-                    currItem.rotation = 0;
+                    //currItem.rotation = 0;
                     [ItemManager itemEntersInventory:currItem];
                     currItem.zOrder = itemBox[itemsHeld].zOrder - 1;
-                    [currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
+                    //[currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
                     
                     [_physicsNode removeChild:currItem];
                     currItem.scale = 1.0;
@@ -676,6 +676,18 @@ BOOL _oldFalling[3];
                     }
                     else {
                         [NetworkManager sendItemInfoMsgToServer:@"KILL_DAVE_ITEM"];
+                    }
+                    
+                    
+                    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"assets.plist"];
+                    if([currItem.name isEqualToString:@"BoxBarrel"]) {
+                        [(CCSprite*)currItem setSpriteFrame:[CCSpriteFrame frameWithImageNamed: @"Assets/barrel.png"]];
+                    }
+                    else if([currItem.name isEqualToString:@"BoxSlime"]) {
+                        [(CCSprite*)currItem setSpriteFrame:[CCSpriteFrame frameWithImageNamed: @"Assets/vomit.png"]];
+                    }
+                    else if([currItem.name isEqualToString:@"BoxGhost"]) {
+                        [(CCSprite*)currItem setSpriteFrame:[CCSpriteFrame frameWithImageNamed: @"Assets/ghost.png"]];
                     }
                     
                     

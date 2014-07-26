@@ -22,6 +22,7 @@ static NSString* playername;
 static NSString* decidePlayer;
 static NSString* currentRoomName;
 
+
 +(void) setDPlayerName: (NSString*) inputName
 {
     decidePlayer = inputName;
