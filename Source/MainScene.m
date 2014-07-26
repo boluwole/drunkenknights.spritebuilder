@@ -624,7 +624,11 @@ BOOL _oldFalling[3];
         }
         
         //drunkMeter.scaleX = ((_drunkLevelDave/10) + 0.5);
-        _drunkenMeter.scaleX = _drunkLevelDave/59 ;
+        
+        if (_drunkLevelDave > 50)
+            _drunkenMeter.scaleX = 1;
+        else
+            _drunkenMeter.scaleX = _drunkLevelDave/50 ;
         
         if(_drunkLevelDave > BUZZ_LEVEL) {
             [MoveManager drunkSwaying:_dave :_drunkLevelDave :timeElapsed];
@@ -634,8 +638,11 @@ BOOL _oldFalling[3];
         }
     }
     else {
-        //drunkMeter.scaleX = ((_drunkLevelHuey/10) + 0.5);
-        _drunkenMeter.scaleX = _drunkLevelHuey/59;
+        
+        if (_drunkLevelHuey > 50)
+            _drunkenMeter.scaleX = 1;
+        else
+            _drunkenMeter.scaleX = _drunkLevelHuey/50 ;
     }
     
     
@@ -679,15 +686,18 @@ BOOL _oldFalling[3];
                     }
                     
                     
-                    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"assets.plist"];
+                    //[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"assets.plist"];
                     if([currItem.name isEqualToString:@"BoxBarrel"]) {
-                        [(CCSprite*)currItem setSpriteFrame:[CCSpriteFrame frameWithImageNamed: @"Assets/barrel.png"]];
+                        //[(CCSprite*)currItem setSpriteFrame:[CCSpriteFrame frameWithImageNamed: @"Assets/barrel.png"]];
+                        currItem = [CCBReader load:@"Barrel"];
                     }
                     else if([currItem.name isEqualToString:@"BoxSlime"]) {
-                        [(CCSprite*)currItem setSpriteFrame:[CCSpriteFrame frameWithImageNamed: @"Assets/vomit.png"]];
+                        //[(CCSprite*)currItem setSpriteFrame:[CCSpriteFrame frameWithImageNamed: @"Assets/vomit.png"]];
+                        currItem = [CCBReader load:@"Slime"];
                     }
                     else if([currItem.name isEqualToString:@"BoxGhost"]) {
-                        [(CCSprite*)currItem setSpriteFrame:[CCSpriteFrame frameWithImageNamed: @"Assets/ghost.png"]];
+                        //[(CCSprite*)currItem setSpriteFrame:[CCSpriteFrame frameWithImageNamed: @"Assets/ghost.png"]];
+                        currItem = [CCBReader load:@"Ghost"];
                     }
                     
                     
