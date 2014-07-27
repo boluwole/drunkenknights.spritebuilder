@@ -77,7 +77,7 @@ static CCSprite *_player;
 //Gong
 #define GONG_POSITION ccp(285,275)
 #define GONG_DURATION (10)
-#define GONG_COOLDOWN (15)
+#define GONG_COOLDOWN (25)
 
 
 //Wheel

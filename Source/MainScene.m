@@ -670,12 +670,14 @@ BOOL _oldFalling[3];
             if(CGRectContainsPoint([_player boundingBox], currItem.position) && !isFalling) {
                 if(itemsHeld < 3) {
                     //currItem.rotation = 0;
+                    //[ItemManager itemEntersInventory:currItem];
+                    
+                    //[currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
                     [ItemManager itemEntersInventory:currItem];
                     currItem.zOrder = itemBox[itemsHeld].zOrder - 1;
-                    //[currItem setColor:[CCColor colorWithWhite:1.0 alpha:1.0]];
-                    
-                    [_physicsNode removeChild:currItem];
                     currItem.scale = 1.0;
+                    [_physicsNode removeChild:currItem];
+                    
                     
                     //Networking - Notice
                     if(_player == _dave) {
@@ -699,9 +701,13 @@ BOOL _oldFalling[3];
                         //[(CCSprite*)currItem setSpriteFrame:[CCSpriteFrame frameWithImageNamed: @"Assets/ghost.png"]];
                         currItem = [CCBReader load:@"Ghost"];
                     }
-                    
-                    
+                  
+                   // CCLOG(@"\n\nanchor point 1: %f, %f\n",currItem.anchorPoint.x,currItem.anchorPoint.y);
                     [itemBox[itemsHeld] addChild:currItem];
+                    
+            
+                    currItem.position = ccp(60.0,60.0);
+                    // CCLOG(@"\n\nanchor point 2: %f, %f\n",currItem.anchorPoint.x,currItem.anchorPoint.y);
                     
                     itemsHeld++;
                     //itemHasDroppedForThisPeriod = NO;
@@ -1225,6 +1231,7 @@ BOOL _oldFalling[3];
     
     if(validItemMove && itemActivate) {
         //touchLocation = [touch locationInNode:self];
+        activatedItem.physicsBody.collisionMask = @[];
         [activatedItem.parent removeChild:activatedItem];
         activatedItem.scale = 0.5;
         [_physicsNode addChild:activatedItem];
@@ -1340,6 +1347,9 @@ BOOL _oldFalling[3];
         
     }
     else if(validItemMove) {
+        
+         //CCLOG(@"\n\nanchor point 3: %f, %f\n",activatedItem.anchorPoint.x,activatedItem.anchorPoint.y);
+        
         [ItemManager itemEntersInventory:activatedItem];
         activatedItem.zOrder = itemBox[activatedItemIndex].zOrder - 1;
         [activatedItem.parent removeChild:activatedItem];
@@ -1350,7 +1360,20 @@ BOOL _oldFalling[3];
 }
 
 
-
+-(void) touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    // when touches are cancelled, meaning the user drags their finger off the screen or onto something else, release the catapult
+    [self releaseTouch];
+    if(validItemMove) {
+        [ItemManager itemEntersInventory:activatedItem];
+        activatedItem.zOrder = itemBox[activatedItemIndex].zOrder - 1;
+        [activatedItem.parent removeChild:activatedItem];
+        activatedItem.scale = 1.0;
+        [itemBox[activatedItemIndex] addChild:activatedItem];
+    }
+    validItemMove = NO;
+    
+}
 
 +(void) activateItems:(NSString *)itemName iPosition:(CGPoint)itemPosition playerInfo:(NSString *)player
 {
@@ -1525,20 +1548,6 @@ BOOL _oldFalling[3];
         huey_drunk_bubble.scale = 0.1;
     }
 
-}
-
--(void) touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    // when touches are cancelled, meaning the user drags their finger off the screen or onto something else, release the catapult
-    [self releaseTouch];
-    if(validItemMove) {
-        [ItemManager itemEntersInventory:activatedItem];
-        activatedItem.zOrder = itemBox[activatedItemIndex].zOrder - 1;
-        [_physicsNode removeChild:activatedItem];
-        [itemBox[activatedItemIndex] addChild:activatedItem];
-    }
-    validItemMove = NO;
-    
 }
 
 -(void) checkGong{
