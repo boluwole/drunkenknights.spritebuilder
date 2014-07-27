@@ -354,6 +354,14 @@ static UIAlertView * waitAlert;
         _currentItem--;
         [self loadItem: _currentItem : _itemImage];
     }
+    else
+    {
+        NSArray* itemArray = [GameItem getGameItems] ;
+        NSInteger itemCacheCount = [itemArray count];
+        
+        _currentItem = itemCacheCount -1;
+        [self loadItem: _currentItem : _itemImage];
+    }
     
 }
 
@@ -364,6 +372,11 @@ static UIAlertView * waitAlert;
     if (_currentItem < itemCacheCount - 1)
     {
         _currentItem++;
+        [self loadItem: _currentItem : _itemImage];
+    }
+    else
+    {
+        _currentItem = 0;
         [self loadItem: _currentItem : _itemImage];
     }
 }

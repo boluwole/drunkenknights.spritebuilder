@@ -351,7 +351,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "781"
             endingLineNumber = "781"
-            landmarkName = "+itemInfo:"
+            landmarkName = "-update:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -367,7 +367,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "776"
             endingLineNumber = "776"
-            landmarkName = "+itemInfo:"
+            landmarkName = "-update:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -431,7 +431,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "810"
             endingLineNumber = "810"
-            landmarkName = "-playTing:"
+            landmarkName = "-update:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -527,8 +527,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1050"
             endingLineNumber = "1050"
-            landmarkName = "@implementation MainScene"
-            landmarkType = "3">
+            landmarkName = "-reviveHuey:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -543,7 +543,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1118"
             endingLineNumber = "1118"
-            landmarkName = "-touchBegan:withEvent:"
+            landmarkName = "-princessMist:"
             landmarkType = "5">
             <Locations>
                <Location
@@ -649,7 +649,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1064"
             endingLineNumber = "1064"
-            landmarkName = "-princessMist:"
+            landmarkName = "-revivePrincess:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -713,7 +713,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "344"
             endingLineNumber = "344"
-            landmarkName = "-moveClouds:"
+            landmarkName = "-didLoadFromCCB"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -889,7 +889,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1300"
             endingLineNumber = "1300"
-            landmarkName = "+activateItems:iPosition:playerInfo:"
+            landmarkName = "+updateEveryPosition:positionDave:positionPrincess::::::::"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -905,7 +905,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1293"
             endingLineNumber = "1293"
-            landmarkName = "+activateItems:iPosition:playerInfo:"
+            landmarkName = "+updateEveryPosition:positionDave:positionPrincess::::::::"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -921,7 +921,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1269"
             endingLineNumber = "1269"
-            landmarkName = "-touchEnded:withEvent:"
+            landmarkName = "+updateOpponentName:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
