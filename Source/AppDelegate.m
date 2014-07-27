@@ -64,7 +64,7 @@
     if(NETWORKED){
         
         OALSimpleAudio *gameMusic= [OALSimpleAudio sharedInstance];
-        [gameMusic playEffect:@"Game_Music.mp3" loop:TRUE];
+        [gameMusic playEffect:@"Game_Music.mp3" volume:0.3f pitch:1.0f pan:0 loop:TRUE];
         return [CCBReader loadAsScene:@"SplashScreen"];
         
     }
