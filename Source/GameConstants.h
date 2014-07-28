@@ -55,7 +55,7 @@ static CCSprite *_player;
 #define HUEY_RESS ccp(515,160)
 #define PRINCESS_GHOST_PERIOD (5)
 #define Slime_LIFE (-7)
-#define Slime_MULTIPLIER (1.2)
+#define Slime_MULTIPLIER (2.0)
 
 #define NUM_BEER_NODES (4)
 #define BEER_BOTTLE_RESPAWN_TIME (10)
@@ -75,7 +75,7 @@ static CCSprite *_player;
 #define SHADOW_OFFSET ccp(80,20)
 
 //Gong
-#define GONG_POSITION ccp(285,275)
+#define GONG_POSITION ccp(285,295)
 #define GONG_DURATION (10)
 #define GONG_COOLDOWN (25)
 

@@ -19,7 +19,7 @@
 
 enum ItemType {
     BARREL = 0,
-    Slime = 1,
+    SLIME = 1,
     GHOST = 2,
     POWERUP = 3,
 };

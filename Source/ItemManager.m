@@ -88,14 +88,14 @@ static bool princessSlime=YES;
     CCNode* item;
     OALSimpleAudio *itemsSound=[OALSimpleAudio sharedInstance];
     [itemsSound playEffect:@"Item_PickUp.mp3"];
-    int randomNum = rand() % 3;
+    int randomNum = arc4random() % 3;
+    //CCLOG(@"\n\n RAND = %d \n\n", randomNum);
     switch(randomNum) {
         case BARREL:
             item = [CCBReader load:@"BoxBarrel"];
             break;
             
-            
-        case Slime:
+        case SLIME:
             item = [CCBReader load:@"BoxSlime"];
             break;
             
@@ -119,18 +119,21 @@ static bool princessSlime=YES;
     
     CGPoint MidPoint, vToMidPoint, MidPointPerp, result;
     
-    MidPoint = ccpMidpoint(_dave.position, _huey.position);
-    vToMidPoint = ccpSub(MidPoint,_dave.position);
-    MidPointPerp = (rand()%2 == 0) ? ccp(-vToMidPoint.y, vToMidPoint.x) : ccp(vToMidPoint.y, -vToMidPoint.x);
+    MidPoint = ccpMidpoint([MainScene returnDave].position, [MainScene returnHuey].position);
+    
+    vToMidPoint = ccpSub(MidPoint,[MainScene returnDave].position);
+    
+    MidPointPerp = (arc4random()%2 == 0) ? ccp(-vToMidPoint.y, vToMidPoint.x) : ccp(vToMidPoint.y, -vToMidPoint.x);
     MidPointPerp = ccpNormalize(MidPointPerp);
     
-    result = ccpAdd(MidPoint, ccpMult(MidPointPerp, 50+(rand()%100)));
+    result = ccpAdd(MidPoint, ccpMult(MidPointPerp, 50+(arc4random()%50)));
+    
     if([PhysicsManager detectFallOff:result :uiimage] == NO) {
         return result;
     }
     else {
         float r = 100;
-        float theta = ((rand()%6)*(360/6))*PI/180;
+        float theta = ((arc4random()%6)*(360/6))*PI/180;
         result = ccpAdd(PRINCESS_START,ccp(r*cos(theta),r*sin(theta)));
         return result;
     }

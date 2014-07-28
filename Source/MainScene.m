@@ -793,7 +793,7 @@ BOOL _oldFalling[3];
     
     //NetWorking
     //Server
-    CCLOG(@"\n\nFALLINGHUEY: %i\n\n",(falling[HUEY]+1));
+    //CCLOG(@"\n\nFALLINGHUEY: %i\n\n",(falling[HUEY]+1));
     if (_player == _dave) {
         [NetworkManager sendEveryPositionToServer:_huey.position poitionDave:_dave.position poitionPrincess:_princess.position
                                                  :[NSString stringWithFormat:@"%i",_huey.zOrder] :[NSString stringWithFormat:@"%i",_dave.zOrder] :[NSString stringWithFormat:@"%i",_princess.zOrder]
