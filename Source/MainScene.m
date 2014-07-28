@@ -33,7 +33,7 @@ static bool gongHit;
 static CCParticleSystem *dave_drunk_bubble;
 static CCParticleSystem *huey_drunk_bubble;
 
-
+bool gongActive;
 bool playSlime;
 bool daveSlip;
 bool hueySlip;
@@ -56,6 +56,7 @@ BOOL _oldFalling[3];
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
+    gongActive=NO;
     slimeSound=0;
     slimeSoundForDave=0;
     daveSlip=YES;
@@ -158,12 +159,12 @@ BOOL _oldFalling[3];
     cloud1.anchorPoint = ccp(0,0);
     cloud1.scaleY *= 1.2;
     cloud1.position = CLOUD1_POSN;
-    cloud1.opacity *= 0.3;
+    cloud1.opacity *= 0.38;
     [_physicsNode addChild: cloud1];
     
     cloud2.anchorPoint = ccp(0,0);
     cloud2.scaleY *= 1.2;
-    cloud2.opacity *= 0.3;
+    cloud2.opacity *= 0.38;
     cloud2.position=ccp([cloud1 boundingBox].size.width,0);
     [_physicsNode addChild:cloud2];
     
@@ -618,7 +619,7 @@ BOOL _oldFalling[3];
     //dave authorities over beer bottle pickups
     if(_player == _dave) {
         int beerPickedUp =
-        [ItemManager checkBeerBottles:_dave :_huey :(&_drunkLevelDave) :(&_drunkLevelHuey) :beerNodes];
+        [ItemManager checkBeerBottles:_dave :_huey :falling[DAVE] :falling[HUEY] :(&_drunkLevelDave) :(&_drunkLevelHuey) :beerNodes];
         if(beerPickedUp >= 0) {
             beerNodesCounters[beerPickedUp] = 0;
         }
@@ -886,18 +887,31 @@ BOOL _oldFalling[3];
     float dist = ccpDistance(daveRess.position, princessStart);
     if( (int)dist >= DISTANCE_FROM_PRINCESS_START ){
         
-        if(daveRess.position.x > princessStart.x){
-            sign= -1 ;
-        }
-        else{
-            sign= 1 ;
-        }
+        
+        bool gongOn=[self returnGongActive];
+        
+//        if(daveRess.position.x > princessStart.x){
+//            sign= -1 ;
+//        }
+//        else{
+//            sign= 1 ;
+//        }
         float daveMove= DISTANCE_RESS_STONES_MOVE  ;
         float hueyMove= (-1)*DISTANCE_RESS_STONES_MOVE  ;
-        id moveActionDaveRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp((sign*daveMove),0)];
-        id moveActionHueyRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp((sign*hueyMove),0)];
-        [daveRess runAction: [CCActionSequence actions:moveActionDaveRess,nil]];
-        [hueyRess runAction: [CCActionSequence actions:moveActionHueyRess,nil]];
+        
+        if(!gongOn){
+            id moveActionDaveRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp((daveMove),0)];
+            id moveActionHueyRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp((hueyMove),0)];
+            [daveRess runAction: [CCActionSequence actions:moveActionDaveRess,nil]];
+            [hueyRess runAction: [CCActionSequence actions:moveActionHueyRess,nil]];
+        }
+        else{
+            
+            id moveActionDaveRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp((-1 * daveMove),0)];
+            id moveActionHueyRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp((-1 * hueyMove),0)];
+            [daveRess runAction: [CCActionSequence actions:moveActionDaveRess,nil]];
+            [hueyRess runAction: [CCActionSequence actions:moveActionHueyRess,nil]];
+        }
         //smoke
         dave_stone_smoke = (CCParticleSystem *)[CCBReader load:@"Smoke_Dave"];
         dave_stone_smoke.autoRemoveOnFinish = TRUE;
@@ -1147,12 +1161,28 @@ BOOL _oldFalling[3];
     
     float w = _player.boundingBox.size.width;
     float h = _player.boundingBox.size.height;
-    CGRect playerTouchBounds = CGRectMake([_player boundingBox].origin.x-w, [_player boundingBox].origin.y-h, w*2, h*2);
+    CGRect playerTouchBounds = CGRectMake([_player boundingBox].origin.x-w, [_player boundingBox].origin.y-h, w*4, h*4);
     //CGRect playerTouchBounds = CGRectMake(_player.position.x-200,_player.position.y-200,400,400);
 
     
+    //item usage
+    bool usingItems = NO;
+    if(itemActivate){
+        for(int i = 0; i < itemsHeld; i++) {
+            if(CGRectContainsPoint([itemBox[i] boundingBox], touchLocation)) {
+                NSArray* child = itemBox[i].children;
+                activatedItem = (CCNode*)child[0];
+                activatedItemIndex = i;
+                validItemMove = YES;
+                usingItems = YES;
+                [self princessGoThru];
+                break;
+            }
+        }
+    }
+    
     // start catapult dragging when a touch inside of the catapult arm occurs
-    if (CGRectContainsPoint(playerTouchBounds, touchLocation))
+    if (CGRectContainsPoint(playerTouchBounds, touchLocation) && !usingItems)
         //&& abs(ccpLengthSQ(_dave.physicsBody.velocity)) < 64)//abs(_dave.physicsBody.velocity.x) < 0.5 && abs(_dave.physicsBody.velocity.y) < 0.5)
     {
         validMove = YES;
@@ -1166,20 +1196,7 @@ BOOL _oldFalling[3];
         validMove = NO;
     }
     
-    //item usage
-    
-    if(itemActivate){
-    for(int i = 0; i < itemsHeld; i++) {
-        if(CGRectContainsPoint([itemBox[i] boundingBox], touchLocation)) {
-            NSArray* child = itemBox[i].children;
-            activatedItem = (CCNode*)child[0];
-            activatedItemIndex = i;
-            validItemMove = YES;
-            [self princessGoThru];
-            break;
-        }
-    }
-    }
+ 
 }
 
 - (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
@@ -1215,7 +1232,7 @@ BOOL _oldFalling[3];
         //place arrow
         launchDirection = [MoveManager calculateMoveVector:start :end];
         
-        float len = ccpLength(launchDirection) / ARROW_DOTS;
+        float len = (ccpLength(launchDirection) / ARROW_DOTS) / 2;
         
         CGPoint arrowDirection = (ccpNormalize(launchDirection));
         
@@ -1556,6 +1573,7 @@ BOOL _oldFalling[3];
         
         
         [aud playEffect:@"export.mp3"];
+        gongActive=YES;
         if(gongColorChange){
             [gong setColor:[CCColor colorWithRed:0.5 green:0.8 blue:0.9 alpha:0.5]];
             gongColorChange=NO;
@@ -1588,6 +1606,7 @@ BOOL _oldFalling[3];
     
     if(gongCounter == GONG_DURATION) {
        [aud playEffect:@"gong_reactivate.wav"];
+        gongActive=NO;
         CGPoint daveRes = daveRess.position;
         daveRess.position = hueyRess.position;
         hueyRess.position = daveRes;
@@ -1635,6 +1654,12 @@ BOOL _oldFalling[3];
         }
         
     }
+}
+
+-(bool) returnGongActive{
+    
+    return gongActive;
+    
 }
 
 - (void) activateItemAbilities: (CCNode*) item {
