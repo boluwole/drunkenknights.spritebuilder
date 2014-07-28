@@ -884,11 +884,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/MainScene.m"
-            timestampString = "428203573.527035"
+            timestampString = "428206885.225942"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1321"
-            endingLineNumber = "1321"
+            startingLineNumber = "1324"
+            endingLineNumber = "1324"
             landmarkName = "+updateEveryPosition:positionDave:positionPrincess::::::::"
             landmarkType = "5">
          </BreakpointContent>
@@ -900,11 +900,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/MainScene.m"
-            timestampString = "428203573.527035"
+            timestampString = "428206885.225942"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1314"
-            endingLineNumber = "1314"
+            startingLineNumber = "1317"
+            endingLineNumber = "1317"
             landmarkName = "+updateEveryPosition:positionDave:positionPrincess::::::::"
             landmarkType = "5">
          </BreakpointContent>
@@ -916,11 +916,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/MainScene.m"
-            timestampString = "428203573.527035"
+            timestampString = "428206885.225942"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1290"
-            endingLineNumber = "1290"
+            startingLineNumber = "1293"
+            endingLineNumber = "1293"
             landmarkName = "+updateOpponentName:"
             landmarkType = "5">
          </BreakpointContent>

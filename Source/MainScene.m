@@ -1161,12 +1161,28 @@ BOOL _oldFalling[3];
     
     float w = _player.boundingBox.size.width;
     float h = _player.boundingBox.size.height;
-    CGRect playerTouchBounds = CGRectMake([_player boundingBox].origin.x-w, [_player boundingBox].origin.y-h, w*2, h*2);
+    CGRect playerTouchBounds = CGRectMake([_player boundingBox].origin.x-w, [_player boundingBox].origin.y-h, w*4, h*4);
     //CGRect playerTouchBounds = CGRectMake(_player.position.x-200,_player.position.y-200,400,400);
 
     
+    //item usage
+    bool usingItems = NO;
+    if(itemActivate){
+        for(int i = 0; i < itemsHeld; i++) {
+            if(CGRectContainsPoint([itemBox[i] boundingBox], touchLocation)) {
+                NSArray* child = itemBox[i].children;
+                activatedItem = (CCNode*)child[0];
+                activatedItemIndex = i;
+                validItemMove = YES;
+                usingItems = YES;
+                [self princessGoThru];
+                break;
+            }
+        }
+    }
+    
     // start catapult dragging when a touch inside of the catapult arm occurs
-    if (CGRectContainsPoint(playerTouchBounds, touchLocation))
+    if (CGRectContainsPoint(playerTouchBounds, touchLocation) && !usingItems)
         //&& abs(ccpLengthSQ(_dave.physicsBody.velocity)) < 64)//abs(_dave.physicsBody.velocity.x) < 0.5 && abs(_dave.physicsBody.velocity.y) < 0.5)
     {
         validMove = YES;
@@ -1180,20 +1196,7 @@ BOOL _oldFalling[3];
         validMove = NO;
     }
     
-    //item usage
-    
-    if(itemActivate){
-    for(int i = 0; i < itemsHeld; i++) {
-        if(CGRectContainsPoint([itemBox[i] boundingBox], touchLocation)) {
-            NSArray* child = itemBox[i].children;
-            activatedItem = (CCNode*)child[0];
-            activatedItemIndex = i;
-            validItemMove = YES;
-            [self princessGoThru];
-            break;
-        }
-    }
-    }
+ 
 }
 
 - (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
@@ -1229,7 +1232,7 @@ BOOL _oldFalling[3];
         //place arrow
         launchDirection = [MoveManager calculateMoveVector:start :end];
         
-        float len = ccpLength(launchDirection) / ARROW_DOTS;
+        float len = (ccpLength(launchDirection) / ARROW_DOTS) / 2;
         
         CGPoint arrowDirection = (ccpNormalize(launchDirection));
         
