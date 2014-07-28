@@ -904,6 +904,7 @@ BOOL _oldFalling[3];
             id moveActionHueyRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp((hueyMove),0)];
             [daveRess runAction: [CCActionSequence actions:moveActionDaveRess,nil]];
             [hueyRess runAction: [CCActionSequence actions:moveActionHueyRess,nil]];
+            sign = 1;
         }
         else{
             
@@ -911,6 +912,7 @@ BOOL _oldFalling[3];
             id moveActionHueyRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp((-1 * hueyMove),0)];
             [daveRess runAction: [CCActionSequence actions:moveActionDaveRess,nil]];
             [hueyRess runAction: [CCActionSequence actions:moveActionHueyRess,nil]];
+            sign=0;
         }
         //smoke
         dave_stone_smoke = (CCParticleSystem *)[CCBReader load:@"Smoke_Dave"];
