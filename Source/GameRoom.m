@@ -240,4 +240,14 @@
     
 }
 
+
+- (void)goBack {
+    
+    [[WarpClient getInstance] leaveRoom: [GameVariables getCurrentRoom]];
+    
+    CCScene *gameRoomScene = [CCBReader loadAsScene:@"SplashScreen"];
+    [[CCDirector sharedDirector] replaceScene:gameRoomScene];
+}
+
+
 @end

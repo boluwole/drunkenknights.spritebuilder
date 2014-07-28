@@ -12,6 +12,8 @@
 @implementation SplashScreen
 {
     CCLabelTTF *_lblUpdate ;
+    CCButton *_btnStart;
+    CCButton *_btnTutorial;
 }
 
 // is called when CCB file has completed loading
@@ -19,8 +21,16 @@
     
     [GameVariables setCurrentScene:@"SplashScreen"];
     
-    [self enterGame];
-    
+    NSString* pname = [GameVariables getPlayerName] ;
+    if (pname == nil || [pname isEqualToString:@""]){
+        [self enterGame];
+    }
+    else
+    {
+        [_btnTutorial setVisible:YES];
+        [_btnStart setVisible:YES];
+        [_lblUpdate setVisible:NO];
+    }
 }
 
 //generate UUID and login to appwarp uniquely
@@ -57,10 +67,9 @@
     if ([ _status isEqualToString: @"connected" ])
     {
         
+        [_btnTutorial setVisible:YES];
+        [_btnStart setVisible:YES];
         [_lblUpdate setVisible:NO];
-        CCScene *gameRoomScene = [CCBReader loadAsScene:@"GameRoom"];
-        [[CCDirector sharedDirector] replaceScene:gameRoomScene];
-        
         
         [self unschedule:@selector(loginMonitor:)];
     }
@@ -80,6 +89,19 @@
 
 }
 
+-(void) startGame
+{
+    CCScene *gameRoomScene = [CCBReader loadAsScene:@"GameRoom"];
+    [[CCDirector sharedDirector] replaceScene:gameRoomScene];
+    
+}
+
+-(void) startTutorial
+{
+    CCScene *tutorialScene = [CCBReader loadAsScene:@"Tutorial1"];
+    [[CCDirector sharedDirector] replaceScene:tutorialScene];
+    
+}
 
 //delegate for alert on conneciton error
 -(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{

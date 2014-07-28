@@ -35,6 +35,8 @@
 		8517F464194FE2B500AD4D85 /* GameItemData.m in Sources */ = {isa = PBXBuildFile; fileRef = 8517F463194FE2B500AD4D85 /* GameItemData.m */; };
 		853E68101944C53200C3DA9B /* Dave.m in Sources */ = {isa = PBXBuildFile; fileRef = 853E680F1944C53200C3DA9B /* Dave.m */; };
 		853E68161944CDD200C3DA9B /* Huey.m in Sources */ = {isa = PBXBuildFile; fileRef = 853E68151944CDD200C3DA9B /* Huey.m */; };
+		855F76611985E8D50061749C /* Tutorial1.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F76601985E8D50061749C /* Tutorial1.m */; };
+		855F76651985E9E30061749C /* Tutorial2.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F76641985E9E30061749C /* Tutorial2.m */; };
 		858F9C421957C16A00F9E973 /* GameRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 858F9C411957C16A00F9E973 /* GameRoom.m */; };
 		858F9C491957E94700F9E973 /* RemoteRoomData.m in Sources */ = {isa = PBXBuildFile; fileRef = 858F9C481957E94700F9E973 /* RemoteRoomData.m */; };
 		859AC0BA1943EE8400F68F35 /* Princess.m in Sources */ = {isa = PBXBuildFile; fileRef = 859AC0B91943EE8400F68F35 /* Princess.m */; };
@@ -142,6 +144,10 @@
 		853E680F1944C53200C3DA9B /* Dave.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Dave.m; path = Source/Dave.m; sourceTree = "<group>"; };
 		853E68141944CDD200C3DA9B /* Huey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Huey.h; path = Source/Huey.h; sourceTree = "<group>"; };
 		853E68151944CDD200C3DA9B /* Huey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Huey.m; path = Source/Huey.m; sourceTree = "<group>"; };
+		855F765F1985E8D50061749C /* Tutorial1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tutorial1.h; sourceTree = "<group>"; };
+		855F76601985E8D50061749C /* Tutorial1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tutorial1.m; sourceTree = "<group>"; };
+		855F76631985E9E30061749C /* Tutorial2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tutorial2.h; sourceTree = "<group>"; };
+		855F76641985E9E30061749C /* Tutorial2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tutorial2.m; sourceTree = "<group>"; };
 		858F9C401957C16A00F9E973 /* GameRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameRoom.h; path = Source/GameRoom.h; sourceTree = "<group>"; };
 		858F9C411957C16A00F9E973 /* GameRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameRoom.m; path = Source/GameRoom.m; sourceTree = "<group>"; };
 		858F9C471957E94700F9E973 /* RemoteRoomData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemoteRoomData.h; path = Source/RemoteRoomData.h; sourceTree = "<group>"; };
@@ -308,6 +314,10 @@
 				F594CD42194BCD2000FE0029 /* ManagerIncludes.h */,
 				8517F45B194D4CD900AD4D85 /* SplashScreen.h */,
 				8517F45C194D4CD900AD4D85 /* SplashScreen.m */,
+				855F765F1985E8D50061749C /* Tutorial1.h */,
+				855F76601985E8D50061749C /* Tutorial1.m */,
+				855F76631985E9E30061749C /* Tutorial2.h */,
+				855F76641985E9E30061749C /* Tutorial2.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -595,7 +605,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				853E68101944C53200C3DA9B /* Dave.m in Sources */,
+				855F76611985E8D50061749C /* Tutorial1.m in Sources */,
 				859AC0BA1943EE8400F68F35 /* Princess.m in Sources */,
+				855F76651985E9E30061749C /* Tutorial2.m in Sources */,
 				F594CD0D194B7E6F00FE0029 /* MoveManager.m in Sources */,
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
 				858F9C421957C16A00F9E973 /* GameRoom.m in Sources */,
