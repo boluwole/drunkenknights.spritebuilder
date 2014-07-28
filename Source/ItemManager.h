@@ -25,7 +25,7 @@ enum ItemType {
 };
 
 
-+ (int) checkBeerBottles : (CCSprite*) dave :(CCSprite*) huey :(float*) daveDrunkLevel :(float*) hueyDrunkLevel :(__strong CCNode*[]) beerNodes;
++ (int) checkBeerBottles : (CCSprite*) dave :(CCSprite*) huey :(BOOL) daveFalling :(BOOL) hueyFalling :(float*) daveDrunkLevel :(float*) hueyDrunkLevel :(__strong CCNode*[]) beerNodes;
 + (CCNode*)dropItem;;
 + (CGPoint)itemDisplay;
 + (int) useItem: (__strong CCNode*[]) itemBoxes : (int) index : (int) itemsHeld;

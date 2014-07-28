@@ -619,7 +619,7 @@ BOOL _oldFalling[3];
     //dave authorities over beer bottle pickups
     if(_player == _dave) {
         int beerPickedUp =
-        [ItemManager checkBeerBottles:_dave :_huey :(&_drunkLevelDave) :(&_drunkLevelHuey) :beerNodes];
+        [ItemManager checkBeerBottles:_dave :_huey :falling[DAVE] :falling[HUEY] :(&_drunkLevelDave) :(&_drunkLevelHuey) :beerNodes];
         if(beerPickedUp >= 0) {
             beerNodesCounters[beerPickedUp] = 0;
         }

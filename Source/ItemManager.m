@@ -17,14 +17,14 @@ static bool hueySlime=YES;
 static bool princessSlime=YES;
 
 //return index of beer bottle that needs to start a respawn counter, -1 if none
-+ (int) checkBeerBottles : (CCSprite*) dave :(CCSprite*) huey :(float*) daveDrunkLevel :(float*) hueyDrunkLevel :(__strong CCNode*[]) beerNodes {
++ (int) checkBeerBottles : (CCSprite*) dave :(CCSprite*) huey :(BOOL) daveFalling :(BOOL) hueyFalling :(float*) daveDrunkLevel :(float*) hueyDrunkLevel :(__strong CCNode*[]) beerNodes {
     
     for(int i = 0; i < NUM_BEER_NODES; i++) {
         
         NSArray* child = beerNodes[i].children;
         
         if(child.count > 0) {
-            if(CGRectContainsPoint([dave boundingBox], beerNodes[i].position) && (*daveDrunkLevel) < DRUNK_METER_CAP) {
+            if(CGRectContainsPoint([dave boundingBox], beerNodes[i].position) && (*daveDrunkLevel) < DRUNK_METER_CAP && !daveFalling) {
                 
                 CCNode* temp = (CCNode*)child[0];
                 
@@ -48,7 +48,7 @@ static bool princessSlime=YES;
                 
                 return i;
             }
-            else if(CGRectContainsPoint([huey boundingBox], beerNodes[i].position) && (*hueyDrunkLevel) < DRUNK_METER_CAP) {
+            else if(CGRectContainsPoint([huey boundingBox], beerNodes[i].position) && (*hueyDrunkLevel) < DRUNK_METER_CAP && !hueyFalling) {
                 
                 CCNode* temp = (CCNode*)child[0];
                 
