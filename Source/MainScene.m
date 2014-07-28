@@ -33,7 +33,7 @@ static bool gongHit;
 static CCParticleSystem *dave_drunk_bubble;
 static CCParticleSystem *huey_drunk_bubble;
 
-
+bool gongActive;
 bool playSlime;
 bool daveSlip;
 bool hueySlip;
@@ -56,6 +56,7 @@ BOOL _oldFalling[3];
 
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
+    gongActive=NO;
     slimeSound=0;
     slimeSoundForDave=0;
     daveSlip=YES;
@@ -158,12 +159,12 @@ BOOL _oldFalling[3];
     cloud1.anchorPoint = ccp(0,0);
     cloud1.scaleY *= 1.2;
     cloud1.position = CLOUD1_POSN;
-    cloud1.opacity *= 0.3;
+    cloud1.opacity *= 0.38;
     [_physicsNode addChild: cloud1];
     
     cloud2.anchorPoint = ccp(0,0);
     cloud2.scaleY *= 1.2;
-    cloud2.opacity *= 0.3;
+    cloud2.opacity *= 0.38;
     cloud2.position=ccp([cloud1 boundingBox].size.width,0);
     [_physicsNode addChild:cloud2];
     
@@ -886,18 +887,31 @@ BOOL _oldFalling[3];
     float dist = ccpDistance(daveRess.position, princessStart);
     if( (int)dist >= DISTANCE_FROM_PRINCESS_START ){
         
-        if(daveRess.position.x > princessStart.x){
-            sign= -1 ;
-        }
-        else{
-            sign= 1 ;
-        }
+        
+        bool gongOn=[self returnGongActive];
+        
+//        if(daveRess.position.x > princessStart.x){
+//            sign= -1 ;
+//        }
+//        else{
+//            sign= 1 ;
+//        }
         float daveMove= DISTANCE_RESS_STONES_MOVE  ;
         float hueyMove= (-1)*DISTANCE_RESS_STONES_MOVE  ;
-        id moveActionDaveRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp((sign*daveMove),0)];
-        id moveActionHueyRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp((sign*hueyMove),0)];
-        [daveRess runAction: [CCActionSequence actions:moveActionDaveRess,nil]];
-        [hueyRess runAction: [CCActionSequence actions:moveActionHueyRess,nil]];
+        
+        if(!gongOn){
+            id moveActionDaveRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp((daveMove),0)];
+            id moveActionHueyRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp((hueyMove),0)];
+            [daveRess runAction: [CCActionSequence actions:moveActionDaveRess,nil]];
+            [hueyRess runAction: [CCActionSequence actions:moveActionHueyRess,nil]];
+        }
+        else{
+            
+            id moveActionDaveRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp((-1 * daveMove),0)];
+            id moveActionHueyRess = [CCActionMoveBy actionWithDuration:DURATION_STONES_MOVE position:ccp((-1 * hueyMove),0)];
+            [daveRess runAction: [CCActionSequence actions:moveActionDaveRess,nil]];
+            [hueyRess runAction: [CCActionSequence actions:moveActionHueyRess,nil]];
+        }
         //smoke
         dave_stone_smoke = (CCParticleSystem *)[CCBReader load:@"Smoke_Dave"];
         dave_stone_smoke.autoRemoveOnFinish = TRUE;
@@ -1556,6 +1570,7 @@ BOOL _oldFalling[3];
         
         
         [aud playEffect:@"export.mp3"];
+        gongActive=YES;
         if(gongColorChange){
             [gong setColor:[CCColor colorWithRed:0.5 green:0.8 blue:0.9 alpha:0.5]];
             gongColorChange=NO;
@@ -1588,6 +1603,7 @@ BOOL _oldFalling[3];
     
     if(gongCounter == GONG_DURATION) {
        [aud playEffect:@"gong_reactivate.wav"];
+        gongActive=NO;
         CGPoint daveRes = daveRess.position;
         daveRess.position = hueyRess.position;
         hueyRess.position = daveRes;
@@ -1635,6 +1651,12 @@ BOOL _oldFalling[3];
         }
         
     }
+}
+
+-(bool) returnGongActive{
+    
+    return gongActive;
+    
 }
 
 - (void) activateItemAbilities: (CCNode*) item {
