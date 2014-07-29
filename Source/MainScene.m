@@ -399,7 +399,7 @@ int gameTime;
 -(void) keepGameEndTime: (CCTime) delta{
     
     gameTime++;
-    if(gameTime>=2){
+    if(gameTime>=3){
         
         //gameEnd=YES;
         //CCLOG(@"\nGameEnd is ON");
@@ -439,7 +439,7 @@ int gameTime;
         NSString* defeat = @"Sorry, You Sad Drunk";
         NSString* gameEndMessage;
         
-        if(CGRectContainsRect([daveRess boundingBox], [_princess boundingBox])) {
+        if(CGRectContainsPoint([daveRess boundingBox], _princess.position)) {
             
             _princess.opacity=1;
             DaveWinParticle=(CCParticleSystem*)[CCBReader load: @"Princess_Particle_Dave"];
@@ -1044,7 +1044,7 @@ int gameTime;
     if(_player == _huey) {
         currItem = [CCBReader load:name];
         currItem.scale*=0.3;
-        [currItem setColor:[CCColor colorWithWhite:0.5 alpha:1.0]];
+      //  [currItem setColor:[CCColor colorWithWhite:0.5 alpha:1.0]];
         currItem.position = msg;
         currItem.physicsBody.collisionMask = @[];
         
