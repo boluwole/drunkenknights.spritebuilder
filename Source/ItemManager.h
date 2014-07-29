@@ -44,5 +44,4 @@ enum ItemType {
 +(void) setHueySlime: (bool) hs;
 +(void) setPrincessSlime: (bool) ps;
 
-
 @end

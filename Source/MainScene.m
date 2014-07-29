@@ -49,6 +49,8 @@ CCNode* tempItem2;
 
 CCParticleSystem *dave_stone_smoke;
 CCParticleSystem *huey_stone_smoke;
+CCParticleSystem *DaveWinParticle;
+CCParticleSystem *HueyWinParticle;
 
 CGPoint _oldVelocities[3];
 CGPoint _oldPositions[3];
@@ -77,7 +79,6 @@ BOOL _oldFalling[3];
     globalPhysicsNode = _physicsNode;
     _physicsNode.collisionDelegate = self;
     opponentActivatedItem = nil;
-    
     itemActivate=YES;
     gameStartTime=0;
     checkEnd=YES;
@@ -112,6 +113,13 @@ BOOL _oldFalling[3];
     shadow_Huey=(CCSprite*)[CCBReader load: @"Shadows"];
 
     
+    //Princess End
+    princess_end=(CCSprite*)[CCBReader load: @"Princess_Normal"];
+    princess_end.scale*=2;
+    princess_end.position=PRINCESS_END;
+    
+
+    
     //bubble
     huey_drunk_bubble = (CCParticleSystem *)[CCBReader load:@"bubble"];
     //huey_drunk_bubble.autoRemoveOnFinish = TRUE;
@@ -121,7 +129,7 @@ BOOL _oldFalling[3];
     _princess = (CCSprite*)[CCBReader load:@"Princess"];
     [_physicsNode addChild:_princess];
     _princess.position = PRINCESS_START;
-    _princess.scale *= 0.40;
+    _princess.scale = 0.35;
     princessStart = _princess.position;
     //_princessOldVelocity = _princess.physicsBody.velocity;
     _oldVelocities[PRINCESS] = _princess.physicsBody.velocity;
@@ -217,6 +225,7 @@ BOOL _oldFalling[3];
         reviveCounter[i] = 0;
     }
     
+
     
     
     //UI arrow indicator
@@ -368,6 +377,18 @@ BOOL _oldFalling[3];
     
 }
 
+-(void)makePrincessDisappear: (CCTime) delta{
+    
+    _princess.opacity=_princess.opacity-0.1;
+    
+    if(_princess.opacity <= 0){
+        
+        [self unschedule:@selector(makePrincessDisappear:)];
+        
+    }
+    
+}
+
 -(void)checkGameEnd{
     
 //    BOOL daveFalling = CGRectContainsPoint([daveRess boundingBox], _princess.position);
@@ -376,6 +397,10 @@ BOOL _oldFalling[3];
     BOOL daveFalling = (ccpDistance(daveRess.position, _princess.position) <= 10) ? YES : NO;
     BOOL hueyFalling = (ccpDistance(hueyRess.position, _princess.position) <= 10) ? YES : NO;;
     
+    
+//    DaveWinParticle=(CCParticleSystem*)[CCBReader load: @"Princess_Particle_Dave"];
+//    HueyWinParticle=(CCParticleSystem*)[CCBReader load: @"Princess_Particle_Huey"];
+    
     if(checkEnd && ( daveFalling | hueyFalling) ) {
         
         checkEnd=NO;
@@ -383,23 +408,42 @@ BOOL _oldFalling[3];
         NSString* gameEndMessage;
         NSString* victory = @"The Day Is Yours!";
         NSString* defeat = @"Sorry, You Sad Drunk";
+        
         if(CGRectContainsPoint([daveRess boundingBox], _princess.position)) {
+            
+            _princess.opacity=1;
+            DaveWinParticle=(CCParticleSystem*)[CCBReader load: @"Princess_Particle_Dave"];
+            [_princess addChild:DaveWinParticle];
+            DaveWinParticle.zOrder=_princess.zOrder-1;
+            DaveWinParticle.position=ccp(50,50);
+            DaveWinParticle.autoRemoveOnFinish = TRUE;
+
+             [self schedule:@selector(makePrincessDisappear:) interval:0.1f];
+            
             gameEndMessage = (_player == _dave) ? victory : defeat;
+            
             if(gameEndMessage == victory){
                 
                 [aud playEffect:@"gameOverWin.mp3"];
-                
             }
             
             else{
                 
                 [aud playEffect:@"gameOverLoser.wav"];
+
                 
             }
             
             
         }
         else {
+            _princess.opacity=1;
+            HueyWinParticle=(CCParticleSystem*)[CCBReader load: @"Princess_Particle_Huey"];
+            [_princess addChild:HueyWinParticle];
+            HueyWinParticle.zOrder=_princess.zOrder-1;
+            HueyWinParticle.position=ccp(50,50);
+            HueyWinParticle.autoRemoveOnFinish=TRUE;
+            [self schedule:@selector(makePrincessDisappear:) interval:0.1f];
             gameEndMessage = (_player == _dave) ? defeat : victory;
             
             if(gameEndMessage == victory){
@@ -1136,9 +1180,10 @@ BOOL _oldFalling[3];
         
         ghostCount=0;
         _princess.opacity=1;
-        _princess.physicsBody.collisionMask=NULL;
+        
         
         if ( _player == _dave ) {
+            _princess.physicsBody.collisionMask=NULL;
             [NetworkManager sendDeActivateItemsToServer:activatedItem.name iPosition:activatedItem.position playerInfo:@"dave" iIndex:[NSString stringWithFormat:@"-1"]];
         }
         else {
@@ -1446,7 +1491,7 @@ BOOL _oldFalling[3];
     }
     else if ( [itemName isEqual:@"Ghost"] ) {
         ghostOn=NO;
-        if(_player != _huey) {
+        if(_player == _dave) {
             _princess.physicsBody.collisionMask = NULL;
         }
         _princess.opacity = 1.0f;

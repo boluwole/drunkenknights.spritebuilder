@@ -20,6 +20,7 @@ static CCSprite *_player;
 #define DAVE_START ccp(105,160)
 #define HUEY_START ccp(465,160)
 #define PRINCESS_START ccp(285,160)
+#define PRINCESS_END ccp(60,150);
 
 
 //MOVEMENT

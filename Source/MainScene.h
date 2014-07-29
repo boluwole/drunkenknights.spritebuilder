@@ -30,6 +30,8 @@
     CCNode *cloud2;
     CCNode *shadow_Dave;
     CCNode *shadow_Huey;
+    CCNode *princess_end;
+    
     int wheelStartCounter;
     bool startRotation;
     int slimeSound;

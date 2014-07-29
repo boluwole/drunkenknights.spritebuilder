@@ -106,7 +106,7 @@ static bool princessSlime=YES;
     
     //[_physicsNode addChild:currItem];
     item.scale = 0.3;
-    [item setColor:[CCColor colorWithWhite:0.5 alpha:1.0]];
+    //[item setColor:[CCColor colorWithWhite:0.5 alpha:1.0]];
     item.position = [ItemManager itemDisplay];
     item.physicsBody.collisionMask = @[];
     return item;
