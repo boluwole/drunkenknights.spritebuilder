@@ -223,8 +223,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "563"
             endingLineNumber = "563"
-            landmarkName = "-update:"
-            landmarkType = "5">
+            landmarkName = "@implementation MainScene"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -271,7 +271,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "603"
             endingLineNumber = "603"
-            landmarkName = "-update:"
+            landmarkName = "-slimeSoundCounter:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -287,7 +287,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "613"
             endingLineNumber = "613"
-            landmarkName = "-update:"
+            landmarkName = "-reactivateSlimeSound"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -319,7 +319,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "613"
             endingLineNumber = "613"
-            landmarkName = "-update:"
+            landmarkName = "-reactivateSlimeSound"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -511,7 +511,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1070"
             endingLineNumber = "1070"
-            landmarkName = "-reviveHuey:"
+            landmarkName = "-respawnBeerBottles:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -527,7 +527,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1138"
             endingLineNumber = "1138"
-            landmarkName = "-princessMist:"
+            landmarkName = "-reviveDave:"
             landmarkType = "5">
             <Locations>
                <Location
@@ -633,7 +633,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1084"
             endingLineNumber = "1084"
-            landmarkName = "-reviveHuey:"
+            landmarkName = "-drunkDecrease:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -841,7 +841,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "379"
             endingLineNumber = "379"
-            landmarkName = "-checkGameEnd"
+            landmarkName = "-moveClouds:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -857,7 +857,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "372"
             endingLineNumber = "372"
-            landmarkName = "-checkGameEnd"
+            landmarkName = "-moveClouds:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -873,7 +873,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1324"
             endingLineNumber = "1324"
-            landmarkName = "+updateEveryPosition:positionDave:positionPrincess::::::::"
+            landmarkName = "-touchMoved:withEvent:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -889,7 +889,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1317"
             endingLineNumber = "1317"
-            landmarkName = "+updateEveryPosition:positionDave:positionPrincess::::::::"
+            landmarkName = "-touchMoved:withEvent:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -905,7 +905,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1293"
             endingLineNumber = "1293"
-            landmarkName = "+updateOpponentName:"
+            landmarkName = "-touchBegan:withEvent:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

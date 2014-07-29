@@ -423,8 +423,8 @@ int gameTime;
 //    BOOL daveFalling = CGRectContainsPoint([daveRess boundingBox], _princess.position);
 //    BOOL hueyFalling = CGRectContainsPoint([hueyRess boundingBox], _princess.position);
     
-    BOOL daveFalling = (ccpDistance(daveRess.position, _princess.position) <= 10) ? YES : NO;
-    BOOL hueyFalling = (ccpDistance(hueyRess.position, _princess.position) <= 10) ? YES : NO;;
+    BOOL daveFalling = (ccpDistance(daveRess.position, _princess.position) <= 15) ? YES : NO;
+    BOOL hueyFalling = (ccpDistance(hueyRess.position, _princess.position) <= 15) ? YES : NO;;
     
     
 //    DaveWinParticle=(CCParticleSystem*)[CCBReader load: @"Princess_Particle_Dave"];
@@ -439,7 +439,7 @@ int gameTime;
         NSString* defeat = @"Sorry, You Sad Drunk";
         NSString* gameEndMessage;
         
-        if(CGRectContainsPoint([daveRess boundingBox], _princess.position)) {
+        if(CGRectContainsRect([daveRess boundingBox], [_princess boundingBox])) {
             
             _princess.opacity=1;
             DaveWinParticle=(CCParticleSystem*)[CCBReader load: @"Princess_Particle_Dave"];
