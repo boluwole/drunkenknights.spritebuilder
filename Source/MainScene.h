@@ -17,6 +17,8 @@
 
 @interface MainScene : CCScene <CCPhysicsCollisionDelegate> {
     
+    BOOL gameResult;
+    
     CCPhysicsNode *_physicsNode;
     CCPhysicsNode *_backPhysicsNode;
     CCPhysicsNode *_temp_PhysicsNode;

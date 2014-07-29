@@ -42,6 +42,7 @@ bool playerCharacterSet;
 bool ghostOn;
 bool replayVomit;
 bool replayVomit_dave;
+bool gameEnd;
 OALSimpleAudio *aud;
 OALSimpleAudio *aud2;
 CCNode* tempItem1;
@@ -56,8 +57,12 @@ CGPoint _oldVelocities[3];
 CGPoint _oldPositions[3];
 BOOL _oldFalling[3];
 
+int gameTime;
+
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
+    gameEnd=NO;
+    gameTime=0;
     gongActive=NO;
     slimeSound=0;
     slimeSoundForDave=0;
@@ -380,10 +385,34 @@ BOOL _oldFalling[3];
 -(void)makePrincessDisappear: (CCTime) delta{
     
     _princess.opacity=_princess.opacity-0.1;
-    
+    gong.opacity=gong.opacity-0.1;
+    daveRess.opacity=daveRess.opacity-0.1;
+    hueyRess.opacity=hueyRess.opacity-0.1;
     if(_princess.opacity <= 0){
         
         [self unschedule:@selector(makePrincessDisappear:)];
+        
+    }
+    
+}
+
+-(void) keepGameEndTime: (CCTime) delta{
+    
+    gameTime++;
+    if(gameTime>=2){
+        
+        //gameEnd=YES;
+        //CCLOG(@"\nGameEnd is ON");
+        [self unschedule:@selector(keepGameEndTime:)];
+        
+        if(gameResult) {
+            CCScene *GameWin = [CCBReader loadAsScene:@"GameWin"];
+            [[CCDirector sharedDirector] replaceScene:GameWin];
+        }
+        else {
+            CCScene *GameLose = [CCBReader loadAsScene:@"GameLose"];
+            [[CCDirector sharedDirector] replaceScene:GameLose];
+        }
         
     }
     
@@ -405,9 +434,10 @@ BOOL _oldFalling[3];
         
         checkEnd=NO;
        // [aud playEffect:@"Game_Over.mp3"];
-        NSString* gameEndMessage;
+        
         NSString* victory = @"The Day Is Yours!";
         NSString* defeat = @"Sorry, You Sad Drunk";
+        NSString* gameEndMessage;
         
         if(CGRectContainsPoint([daveRess boundingBox], _princess.position)) {
             
@@ -418,19 +448,32 @@ BOOL _oldFalling[3];
             DaveWinParticle.position=ccp(50,50);
             DaveWinParticle.autoRemoveOnFinish = TRUE;
 
-             [self schedule:@selector(makePrincessDisappear:) interval:0.1f];
+            [self schedule:@selector(makePrincessDisappear:) interval:0.1f];
+            [self schedule:@selector(keepGameEndTime:) interval: 1.0f];
             
             gameEndMessage = (_player == _dave) ? victory : defeat;
+            gameResult = (_player == _dave) ? YES : NO;
             
             if(gameEndMessage == victory){
                 
                 [aud playEffect:@"gameOverWin.mp3"];
+//                if(gameEnd){
+//                //[NSThread sleepForTimeInterval:3];
+//                CCScene *GameWin = [CCBReader loadAsScene:@"GameWin"];
+//                [[CCDirector sharedDirector] replaceScene:GameWin];
+//               }
+                
             }
             
             else{
                 
                 [aud playEffect:@"gameOverLoser.wav"];
-
+                
+//                if(gameEnd){
+//                
+//                 CCScene *GameLose = [CCBReader loadAsScene:@"GameLose"];
+//                [[CCDirector sharedDirector] replaceScene:GameLose];
+//                }
                 
             }
             
@@ -444,17 +487,30 @@ BOOL _oldFalling[3];
             HueyWinParticle.position=ccp(50,50);
             HueyWinParticle.autoRemoveOnFinish=TRUE;
             [self schedule:@selector(makePrincessDisappear:) interval:0.1f];
+            [self schedule:@selector(keepGameEndTime:) interval: 1.0f];
+
             gameEndMessage = (_player == _dave) ? defeat : victory;
+            gameResult = (_player == _dave) ? NO : YES;
             
             if(gameEndMessage == victory){
                 
                 [aud playEffect:@"gameOverWin.mp3"];
+                
+//                if(gameEnd){
+//                CCScene *GameWin = [CCBReader loadAsScene:@"GameWin"];
+//                [[CCDirector sharedDirector] replaceScene:GameWin];
+//                }
                 
             }
             
             else{
                 
                 [aud playEffect:@"gameOverLoser.wav"];
+                
+//                if(gameEnd){
+//                CCScene *GameWin = [CCBReader loadAsScene:@"GameWin"];
+//                [[CCDirector sharedDirector] replaceScene:GameWin];
+//                }
                 
             }
 
@@ -465,12 +521,12 @@ BOOL _oldFalling[3];
         _princess.physicsBody.velocity = CGPointZero;
         
         
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"GG Nubs!"
-                                                       message: gameEndMessage
-                                                      delegate: self
-                                             cancelButtonTitle:nil
-                                             otherButtonTitles:@"Return to Lobby",nil];
-        [alert show];
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"GG Nubs!"
+//                                                       message: gameEndMessage
+//                                                      delegate: self
+//                                             cancelButtonTitle:nil
+//                                             otherButtonTitles:@"Return to Lobby",nil];
+//        [alert show];
     }
     
 }

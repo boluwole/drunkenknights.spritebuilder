@@ -39,6 +39,8 @@
 		855F76651985E9E30061749C /* Tutorial2.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F76641985E9E30061749C /* Tutorial2.m */; };
 		858F9C421957C16A00F9E973 /* GameRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 858F9C411957C16A00F9E973 /* GameRoom.m */; };
 		858F9C491957E94700F9E973 /* RemoteRoomData.m in Sources */ = {isa = PBXBuildFile; fileRef = 858F9C481957E94700F9E973 /* RemoteRoomData.m */; };
+		859A1EBD19874BC4002F7DD4 /* GameWin.m in Sources */ = {isa = PBXBuildFile; fileRef = 859A1EBC19874BC4002F7DD4 /* GameWin.m */; };
+		859A1EC119874BD2002F7DD4 /* GameLose.m in Sources */ = {isa = PBXBuildFile; fileRef = 859A1EC019874BD2002F7DD4 /* GameLose.m */; };
 		859AC0BA1943EE8400F68F35 /* Princess.m in Sources */ = {isa = PBXBuildFile; fileRef = 859AC0B91943EE8400F68F35 /* Princess.m */; };
 		85AF44E61982173500BCE368 /* Indicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AF44E51982173500BCE368 /* Indicator.m */; };
 		85AF44EA1983264800BCE368 /* BoxBarrel.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AF44E91983264800BCE368 /* BoxBarrel.m */; };
@@ -152,6 +154,10 @@
 		858F9C411957C16A00F9E973 /* GameRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameRoom.m; path = Source/GameRoom.m; sourceTree = "<group>"; };
 		858F9C471957E94700F9E973 /* RemoteRoomData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemoteRoomData.h; path = Source/RemoteRoomData.h; sourceTree = "<group>"; };
 		858F9C481957E94700F9E973 /* RemoteRoomData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RemoteRoomData.m; path = Source/RemoteRoomData.m; sourceTree = "<group>"; };
+		859A1EBB19874BC4002F7DD4 /* GameWin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameWin.h; sourceTree = "<group>"; };
+		859A1EBC19874BC4002F7DD4 /* GameWin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameWin.m; sourceTree = "<group>"; };
+		859A1EBF19874BD2002F7DD4 /* GameLose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameLose.h; sourceTree = "<group>"; };
+		859A1EC019874BD2002F7DD4 /* GameLose.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameLose.m; sourceTree = "<group>"; };
 		859AC0B81943EE8400F68F35 /* Princess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Princess.h; path = Source/Princess.h; sourceTree = "<group>"; };
 		859AC0B91943EE8400F68F35 /* Princess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Princess.m; path = Source/Princess.m; sourceTree = "<group>"; };
 		85AF44E41982173500BCE368 /* Indicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Indicator.h; path = Source/Indicator.h; sourceTree = "<group>"; };
@@ -318,6 +324,10 @@
 				855F76601985E8D50061749C /* Tutorial1.m */,
 				855F76631985E9E30061749C /* Tutorial2.h */,
 				855F76641985E9E30061749C /* Tutorial2.m */,
+				859A1EBB19874BC4002F7DD4 /* GameWin.h */,
+				859A1EBC19874BC4002F7DD4 /* GameWin.m */,
+				859A1EBF19874BD2002F7DD4 /* GameLose.h */,
+				859A1EC019874BD2002F7DD4 /* GameLose.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -611,11 +621,13 @@
 				F594CD0D194B7E6F00FE0029 /* MoveManager.m in Sources */,
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
 				858F9C421957C16A00F9E973 /* GameRoom.m in Sources */,
+				859A1EC119874BD2002F7DD4 /* GameLose.m in Sources */,
 				85AF44E61982173500BCE368 /* Indicator.m in Sources */,
 				8517F45D194D4CD900AD4D85 /* SplashScreen.m in Sources */,
 				F594CD34194BB62E00FE0029 /* ConnectionListener.m in Sources */,
 				F59F9FEC1949579200AD2AEC /* ArrowHead.m in Sources */,
 				F594CD14194B93BA00FE0029 /* PhysicsManager.m in Sources */,
+				859A1EBD19874BC4002F7DD4 /* GameWin.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
 				F594CD37194BB62E00FE0029 /* RoomListener.m in Sources */,
 				85AF44EA1983264800BCE368 /* BoxBarrel.m in Sources */,
